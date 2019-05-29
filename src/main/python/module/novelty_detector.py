@@ -1,0 +1,181 @@
+import numpy as np
+from sklearn import svm
+from keras.models import Model
+from keras.layers import GlobalAveragePooling2D
+import numpy as np
+import imageio
+import glob
+import os
+import skimage.transform
+import joblib
+
+class NoveltyDetector:
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor'):
+        """
+        Extract feature by neural network and detector train normal samples then predict new data
+        nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
+        'InceptionResNetV2', 'MobileNet', 'MobileNetV2', 'DenseNet', 'NASNet'
+        detector_name: 'RobustCovariance', 'IsolationForest'(Default), 'LocalOutlierFactor'
+        """
+        self.nth_layer = nth_layer
+        self.nn_name = nn_name
+        self.input_shape = None
+        self.nu = None
+        self.gamma = None
+        self.kernel = None
+        self.pretrained_nn = None
+        self.extracting_model = None
+
+        if detector_name == 'RobustCovariance':
+            from sklearn.covariance import EllipticEnvelope
+            self.clf = EllipticEnvelope()
+            print('Novelty Detector: Robust covariance')
+        elif detector_name == 'LocalOutlierFactor':
+            from sklearn.neighbors import LocalOutlierFactor
+            self.clf = LocalOutlierFactor(novelty=True)
+            print('Novelty Detector: Local Outlier Factor')
+        else: # detector_name == 'IsolationForest':
+            from sklearn.ensemble import IsolationForest
+            self.clf = IsolationForest()
+            print('Novelty Detector: Isolation Forest')
+
+    def _load_NN_model(self, input_shape=(229, 229, 3)):
+        """
+        This method should be called after loading images to set input shape.
+        """
+        if self.extracting_model is not None:
+            return
+        
+        self.input_shape = input_shape
+        print('Input image size is', self.input_shape)
+
+        if self.nn_name == 'Xception':
+            from keras.applications.xception import Xception
+            pretrained_func = Xception
+            print('Neural Network: {}'.format(self.nn_name))
+#        elif self.nn_name == 'ResNetV2':
+#            from keras.applications.resnet_v2 import ResNet152V2
+#            pretrained_func = ResNet152V2
+#            print('Neural Network: {}'.format(self.nn_name))
+#        elif self.nn_name == 'ResNeXt':
+#            from keras.applications.resnext import ResNeXt101
+#            pretrained_func = ResNeXt101
+#            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'InceptionV3':
+            from keras.applications.inception_v3 import InceptionV3
+            pretrained_func = InceptionV3
+            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'InceptionResNetV2':
+            from keras.applications.inception_resnet_v2 import InceptionResNetV2
+            pretrained_func = InceptionResNetV2
+            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'MobileNet':
+            from keras.applications.mobile_net import MobileNet
+            pretrained_func = MobileNet
+            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'MobileNetV2':
+            from keras.applications.mobilenet_v2 import MobileNetV2
+            pretrained_func = MobileNetV2
+            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'DenseNet':
+            from keras.applications.densenet import DenseNet201
+            pretrained_func = DenseNet201
+            print('Neural Network: {}'.format(self.nn_name))
+        elif self.nn_name == 'NASNet':
+            from keras.applications.nasnet import NASNetLarge
+            pretrained_func = NASNetLarge
+            print('Neural Network: {}'.format(self.nn_name))
+        else:# self.nn_name == 'ResNet':
+            from keras.applications.resnet50 import ResNet50
+            pretrained_func = ResNet50
+            print('Neural Network: {}'.format(self.nn_name))
+
+        self.pretrained_nn = pretrained_func(include_top=False, weights='imagenet', input_tensor=None, input_shape=self.input_shape, pooling=False)
+        
+        len_pretrained_nn = len(self.pretrained_nn.layers)
+        if not 0 < self.nth_layer < len_pretrained_nn:
+            raise Exception('0 < nth_layer < {}'.format(len_pretrained_nn))
+
+        self.extracting_model = self._get_nth_layer(self.nth_layer, self.pretrained_nn)
+        return self.extracting_model
+
+    def _get_nth_layer(self, nth_layer, nn_model):
+        model = Model(inputs=nn_model.input, outputs=nn_model.layers[nth_layer].output)
+        if len(model.output_shape) > 2:
+            x = model.output
+            x = GlobalAveragePooling2D()(x)
+            model = Model(inputs=model.input, outputs=x)
+        return model
+
+    def fit(self, imgs):
+        self._load_NN_model(imgs[0].shape)
+        feature = self.extracting_model.predict(imgs)
+        self.clf.fit(feature)
+
+    def fit_paths(self, paths):
+        imgs = self._read_imgs(paths)
+        self.fit(imgs)
+        
+    def fit_in_dir(self, dir_path, kernel='rbf', nu=0.05, gamma='scale'):
+        """
+        Fit to images in a directory. Training can take minutes depending on a dataset.
+        dir_path: A path to directory containing training images
+        """
+        paths = self._get_paths_in_dir(dir_path)
+        self.fit_paths(paths)
+
+    def predict(self, imgs):
+        """ Return the list of signed distance of each images from SVM super-plane.
+        Keyword arguments:
+        paths -- list of image paths like [./dir/img1.jpg, ./dir/img2.jpg, ...]
+        """
+        self._load_NN_model(imgs[0].shape)
+        feature = self.extracting_model.predict(imgs)
+        predicted_scores = self.clf.decision_function(feature)
+        return predicted_scores
+
+    def predict_paths(self, paths):
+        imgs = self._read_imgs(paths)
+        return self.predict(imgs)
+
+    def predict_in_dir(self, dir_path):
+        """ Predict images in the dir_oath by VGG16+oneClassSVM and returns (paths, scores)"""
+        dir_path = os.path.expanduser(dir_path)
+        paths = self._get_paths_in_dir(dir_path)
+        return paths, self.predict_paths(paths)
+
+    def _read_imgs(self, paths):
+        paths = [ os.path.expanduser(path) for path in paths]
+        if self.input_shape is None:
+            self.input_shape = imageio.imread(paths[0], as_gray=False, pilmode='RGB').shape
+        imgs = []
+        for path in paths:
+            img = imageio.imread(path, as_gray=False, pilmode='RGB').astype(np.float)
+            img = skimage.transform.resize(img, self.input_shape[:2])
+            img /= 255
+            imgs.append(img)
+        imgs = np.array(imgs)
+        imgs = imgs.reshape(-1, *self.input_shape)        
+        return imgs
+
+    def _get_paths_in_dir(self, dir_path):
+        dir_path = os.path.expanduser(dir_path)
+        if not os.path.exists(dir_path):
+            raise IOError(dir_path, 'does not exist')
+        imgs = []
+        paths = glob.glob(os.path.join(dir_path, '*.jpg'))
+        paths.extend(glob.glob(os.path.join(dir_path, '*.jpeg')))
+        paths.extend(glob.glob(os.path.join(dir_path, '*.png')))
+        paths.extend(glob.glob(os.path.join(dir_path, '*.gif')))
+        paths.extend(glob.glob(os.path.join(dir_path, '*.bmp')))
+        return paths
+
+    def save_ocsvm(self, path):
+        """ Saving one class svm weights like self.save_ocsvm('filename.joblib'). """
+        path = os.path.expanduser(path)
+        joblib.dump(self.clf, path, compress=True)
+
+    def load_ocsvm(self, path):
+        """ Loading one class svm weights saved by joblib. """
+        path = os.path.expanduser(path)
+        self.clf = joblib.load(path)

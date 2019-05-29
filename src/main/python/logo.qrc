@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>assets/images/SDTest_logo_icon.png</file>
+    <file>assets/images/SDTest_logo_title.png</file>
+    <file>assets/images/SDTest_logo.png</file>
+  </qresource>
+</RCC>
