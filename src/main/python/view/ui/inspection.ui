@@ -272,7 +272,7 @@ QPushButton:pressed#inspect_button
           <string notr="true">margin: 0px;</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="default_result">
           <property name="autoFillBackground">
