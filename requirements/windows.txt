@@ -1,0 +1,4 @@
+###### Requirements without Version Specifiers ######
+pypiwin32
+
+###### Requirements with Version Specifiers ######

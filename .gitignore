@@ -26,10 +26,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# fbs
-target/
-venv/
-
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -119,8 +115,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# PyCharm
+# JetBrains IDE
 .idea/
+*.iml
+
+# fbs
+target/
+venv/
 
 # OS dependent
 .DS_Store

@@ -1,11 +1,7 @@
 ###### Requirements without Version Specifiers ######
 fbs
-keras
 matplotlib
 sklearn
-tensorflow
-imageio
-scikit-image
 joblib
 seaborn
 numpy
@@ -14,3 +10,7 @@ pyqtdeploy
 ###### Requirements with Version Specifiers ######
 PyQt5 == 5.9.2
 PyInstaller == 3.4
+tensorflow == 1.*
+keras == 2.*
+imageio == 2.*
+scikit-image == 0.*
