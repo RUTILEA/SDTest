@@ -6,6 +6,7 @@ joblib
 seaborn
 numpy
 pyqtdeploy
+opencv-contrib-python
 
 ###### Requirements with Version Specifiers ######
 PyQt5 == 5.9.2
