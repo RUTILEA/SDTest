@@ -117,6 +117,7 @@ class LearningModel(QObject):
 
     def on_training_finished(self):
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
