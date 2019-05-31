@@ -111,12 +111,13 @@ class LearningModel(QObject):
         self.__threshold = new_value
         Project.save_latest_threshold(new_value)
 
-    def train(self):
+    def start_training(self):
         self.training_start.emit()
         self.__training_thread.start()
 
     def on_training_finished(self):
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
