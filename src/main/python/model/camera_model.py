@@ -2,6 +2,7 @@ from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettin
 from datetime import datetime
 from typing import Dict
 from PyQt5.QtCore import pyqtSignal, QObject
+import cv2
 
 
 class CameraModel(QObject):
@@ -60,6 +61,10 @@ class CameraModel(QObject):
             cam.unlock()
 
     def on_image_saved(self, id, image_path):
+        img = cv2.imread(image_path)
+        width, height = 640, 480
+        img = cv2.resize(img, (width, height))
+        cv2.imwrite(image_path, img)
         self.image_saved.emit(image_path)
 
     def start(self):
