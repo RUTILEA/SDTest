@@ -60,13 +60,13 @@
   <customwidget>
    <class>DatasetWidget</class>
    <extends>QWidget</extends>
-   <header>src/view/dataset.h</header>
+   <header>view/dataset.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TestWidget</class>
    <extends>QWidget</extends>
-   <header>src/view/test.h</header>
+   <header>view/test.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
