@@ -54,6 +54,8 @@ class DatasetWidget(QWidget):
                                str(Dataset.images_path(Dataset.Category.TEST_NG))])
         self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
 
+        LearningModel.default().training_finished.connect(self.on_finished_training)
+
     def _reload_images(self, category: Dataset.Category):
         # reset selection
         self.selected_thumbnails.clear()
@@ -149,6 +151,9 @@ class DatasetWidget(QWidget):
         selected_category = self.__selected_dataset_category()
         if str(Dataset.images_path(selected_category)) == directory:
             self._reload_images(selected_category)
+
+    def on_finished_training(self):
+        self.__reload_recent_training_date()
 
     def __selected_dataset_category(self) -> Optional[Dataset.Category]:
         current_item = self.ui.image_list_widget.currentItem()
