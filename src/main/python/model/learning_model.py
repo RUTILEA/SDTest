@@ -90,7 +90,7 @@ class LearningModel(QObject):
 
     def __init__(self):
         super().__init__()
-        self.__model = NoveltyDetector(nth_layer=102, nn_name='ResNet', detector_name='IsolationForest')
+        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor')
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
