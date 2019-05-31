@@ -62,8 +62,9 @@ class CameraModel(QObject):
 
     def on_image_saved(self, id, image_path):
         img = cv2.imread(image_path)
-        width, height = 640, 480
-        img = cv2.resize(img, (width, height))
+        img_height, img_width, _ = img.shape
+        resize_height = int(640 / img_width * img_height)
+        img = cv2.resize(img, (640, resize_height))
         cv2.imwrite(image_path, img)
         self.image_saved.emit(image_path)
 
