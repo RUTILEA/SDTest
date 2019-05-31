@@ -111,7 +111,7 @@ class LearningModel(QObject):
         self.__threshold = new_value
         Project.save_latest_threshold(new_value)
 
-    def train(self):
+    def start_training(self):
         self.training_start.emit()
         self.__training_thread.start()
 

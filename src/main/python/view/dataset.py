@@ -144,7 +144,7 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
-        LearningModel.default().train()
+        LearningModel.default().start_training()
         self.__reload_recent_training_date()
 
     def on_dataset_directory_changed(self, directory: str):
