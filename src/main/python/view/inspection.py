@@ -41,7 +41,7 @@ class InspectionWidget(QWidget):
 
         self.ui.result.setCurrentWidget(self.ui.default_result)
 
-        loader_gif_path = pathlib.Path('../assets/images/loader.gif').resolve()
+        loader_gif_path = pathlib.Path('../../../assets/images/loader.gif').resolve()
         self.loader_movie = QMovie(str(loader_gif_path))
         self.loader_movie.setScaledSize(QSize(30, 8))
         self.loader_movie.start()
