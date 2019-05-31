@@ -45,9 +45,7 @@ class CameraModel(QObject):
             cam_image_capture.captureDestination()
             cam_image_capture.imageSaved.connect(self.on_image_saved)
             self.__cam_image_captures[str(cam_name)] = cam_image_capture
-
             cam.statusChanged.connect(self.set_resolution)
-        self.set_resolution()
 
     def capture(self, directory: str):
         for i, cam_name in enumerate(self.selected_cam_names):
@@ -75,7 +73,6 @@ class CameraModel(QObject):
     def set_resolution(self):
         for cam_name, cam in self.cams.items():
             image_settings = QImageEncoderSettings()
-            image_settings.setResolution(640, 480)
             for size in cam.supportedViewfinderResolutions():
                 if 600 <= size.width() <= 700:
                     image_settings.setResolution(size.width(), size.height())
