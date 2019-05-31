@@ -98,6 +98,7 @@ class InspectionWidget(QWidget):
         if score >= Project.latest_threshold():
             self.ui.result.setCurrentWidget(self.ui.OK)
             move(image_path, inspected_image_dir_path + '/OK_' + image_name)
+            self.ui.ok_score.setText('Score: ' + str(score))
             self.ok_counter += 1
         else:
             ng_image = QPixmap(str(image_path))
