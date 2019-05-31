@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/dataset.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/dataset.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #

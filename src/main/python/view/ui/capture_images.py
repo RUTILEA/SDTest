@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/tazama/src/view/ui/capture_images.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/capture_images.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
