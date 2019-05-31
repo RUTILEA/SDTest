@@ -47,7 +47,8 @@ class Project:
         if training_date_str is None:
             return None
         else:
-            return datetime.fromisoformat(training_date_str)
+            # datetime.fromisoformat is available in python 3.7 and later
+            return datetime.strptime(training_date_str, "%Y-%m-%dT%H:%M:%S.%f")
 
     @classmethod
     def save_latest_training_date(cls, training_date: datetime = datetime.now()):
