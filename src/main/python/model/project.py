@@ -15,29 +15,29 @@ class Project:
     __latest_training_date_key = "latest_training_date"
 
     @classmethod
-    def project_path(cls):
+    def project_path(cls) -> str:
         return cls.__settings_dict[cls.__project_path_key]
 
     @classmethod
-    def save_project_path(cls, input_data):
+    def save_project_path(cls, input_data: str):
         cls.__settings_dict[cls.__project_path_key] = input_data
         cls.__save_settings()
 
     @classmethod
-    def number_of_angles(cls):
+    def number_of_angles(cls) -> int:
         return cls.__settings_dict[cls.__number_of_angles_key]
 
     @classmethod
-    def save_number_of_angles(cls, input_data):
+    def save_number_of_angles(cls, input_data: int):
         cls.__settings_dict[cls.__number_of_angles_key] = input_data
         cls.__save_settings()
 
     @classmethod
-    def latest_threshold(cls):
+    def latest_threshold(cls) -> float:
         return cls.__settings_dict[cls.__latest_threshold_key]
 
     @classmethod
-    def save_latest_threshold(cls, input_data):
+    def save_latest_threshold(cls, input_data: float):
         cls.__settings_dict[cls.__latest_threshold_key] = input_data
         cls.__save_settings()
 
@@ -55,7 +55,7 @@ class Project:
         cls.__save_settings()
 
     @classmethod
-    def project_name(cls):
+    def project_name(cls) -> str:
         return cls.__settings_dict[cls.__project_name_key]
 
     @classmethod
@@ -73,7 +73,7 @@ class Project:
         json.dump(settings_dict, fw, indent=4)
 
     @classmethod
-    def generate_project_file(cls, project_path, project_name):
+    def generate_project_file(cls, project_path: str, project_name: str):
         cls.__settings_dict = {
             cls.__project_path_key: project_path,
             cls.__project_name_key: project_name,
