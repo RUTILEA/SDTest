@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
             self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
             self.ui.optimization_action.setChecked(True)
 
-        loader_gif_path = pathlib.Path('../assets/images/loader.gif').resolve()
+        loader_gif_path = pathlib.Path('../../../assets/images/loader.gif').resolve()
         self.loader = QMovie(str(loader_gif_path))
         self.loader.start()
         self.loader_label = QLabel()
