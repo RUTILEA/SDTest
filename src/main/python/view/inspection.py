@@ -85,6 +85,7 @@ class InspectionWidget(QWidget):
         self.ui.loader_label.setMovie(self.loader_movie)
 
     def on_image_saved(self, image_path):
+        # FIXME: refactor the structure of camera model class not to call this function from camera_model.capture
         if os.path.basename(os.path.dirname(image_path)) == 'tmp':
             self.learning_model.predict([image_path])
 
