@@ -3,7 +3,7 @@ from model.project import Project
 from model.learning_model import LearningModel
 from view.ui.inspection import Ui_inspection
 from view.camera_list import CameraList
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QPixmap, QMovie
 from shutil import move
@@ -70,6 +70,10 @@ class InspectionWidget(QWidget):
         self.ui.NG_counter_label.setText(str(self.ng_counter))
 
     def on_clicked_select_camera_button(self):
+        if not CameraModel.get_available_camera_names():
+            QMessageBox.warning(None, 'エラー', 'カメラが接続されていません', QMessageBox.Close)
+            return
+
         if self.select_camera_widget.isHidden():
             self.select_camera_widget = CameraList()
             self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
