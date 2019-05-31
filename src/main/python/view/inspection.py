@@ -85,7 +85,8 @@ class InspectionWidget(QWidget):
         self.ui.loader_label.setMovie(self.loader_movie)
 
     def on_image_saved(self, image_path):
-        self.learning_model.predict([image_path])
+        if os.path.basename(os.path.dirname(image_path)) == 'tmp':
+            self.learning_model.predict([image_path])
 
     def on_finished_predicting(self, result):
         image_path = result['image_paths'][0]
