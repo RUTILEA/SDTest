@@ -1,13 +1,15 @@
+import glob
+import os
 import numpy as np
+
 from sklearn import svm
 from keras.models import Model
 from keras.layers import GlobalAveragePooling2D
 import numpy as np
 import imageio
-import glob
-import os
 import skimage.transform
 import joblib
+import pyod
 
 class NoveltyDetector:
     def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor'):
@@ -30,10 +32,13 @@ class NoveltyDetector:
             from sklearn.covariance import EllipticEnvelope
             self.clf = EllipticEnvelope()
             print('Novelty Detector: Robust covariance')
-        elif detector_name == 'LocalOutlierFactor':
+        elif detector_name == 'LocalOutlierFactor' or detector_name.lower()=='lof':
             from sklearn.neighbors import LocalOutlierFactor
             self.clf = LocalOutlierFactor(novelty=True)
             print('Novelty Detector: Local Outlier Factor')
+        elif detector_name.lower() in ['aboi', 'fastaboi']:
+            from pyod.models.abod import ABOD
+            self.clf = ABOD()
         else: # detector_name == 'IsolationForest':
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
