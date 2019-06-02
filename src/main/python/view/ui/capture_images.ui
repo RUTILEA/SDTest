@@ -24,24 +24,6 @@
   <property name="windowTitle">
    <string>カメラで撮影</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QPushButton#capture_button
-{
-   margin: 0 10;
-   padding: 0 0;
-   background-color: #3e3e3e;
-   border: 1px solid #3e3e3e;
-   border-radius: 25px;
-   color: #f5f5f5;
-   height:40px;
-}
-
-QPushButton:pressed#capture_button
-{
-   background-color: #4298F9;
-   border: 1px solid #4298F9;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -64,9 +46,6 @@ QPushButton:pressed#capture_button
          <property name="text">
           <string>カメラを変更</string>
          </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
         </widget>
        </item>
       </layout>
@@ -74,71 +53,20 @@ QPushButton:pressed#capture_button
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QPushButton" name="capture_button">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>114</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>114</width>
-           <height>50</height>
-          </size>
+         <property name="styleSheet">
+          <string notr="true">padding: 3px 20px;</string>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_f5f5f5_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_f5f5f5_none.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
+          <string>撮影</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
@@ -147,7 +75,7 @@ QPushButton:pressed#capture_button
   </layout>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../icon.qrc"/>
  </resources>
  <connections/>
 </ui>

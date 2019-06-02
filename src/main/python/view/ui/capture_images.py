@@ -21,22 +21,6 @@ class Ui_CaptureImages(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         CaptureImages.setFont(font)
-        CaptureImages.setStyleSheet("QPushButton#capture_button\n"
-"{\n"
-"   margin: 0 10;\n"
-"   padding: 0 0;\n"
-"   background-color: #3e3e3e;\n"
-"   border: 1px solid #3e3e3e;\n"
-"   border-radius: 25px;\n"
-"   color: #f5f5f5;\n"
-"   height:40px;\n"
-"}\n"
-"\n"
-"QPushButton:pressed#capture_button\n"
-"{\n"
-"   background-color: #4298F9;\n"
-"   border: 1px solid #4298F9;\n"
-"}")
         self.verticalLayout = QtWidgets.QVBoxLayout(CaptureImages)
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -53,33 +37,20 @@ class Ui_CaptureImages(object):
         sizePolicy.setHeightForWidth(self.select_camera_button.sizePolicy().hasHeightForWidth())
         self.select_camera_button.setSizePolicy(sizePolicy)
         self.select_camera_button.setStyleSheet("padding: 3px 20px;")
-        self.select_camera_button.setAutoDefault(False)
         self.select_camera_button.setObjectName("select_camera_button")
         self.horizontalLayout_2.addWidget(self.select_camera_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
         self.capture_button = QtWidgets.QPushButton(CaptureImages)
-        self.capture_button.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.capture_button.sizePolicy().hasHeightForWidth())
         self.capture_button.setSizePolicy(sizePolicy)
-        self.capture_button.setMinimumSize(QtCore.QSize(114, 50))
-        self.capture_button.setMaximumSize(QtCore.QSize(114, 50))
-        self.capture_button.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.capture_button.setIcon(icon)
-        self.capture_button.setIconSize(QtCore.QSize(24, 24))
-        self.capture_button.setAutoDefault(False)
+        self.capture_button.setStyleSheet("padding: 3px 20px;")
         self.capture_button.setObjectName("capture_button")
         self.horizontalLayout.addWidget(self.capture_button)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.verticalLayout.addLayout(self.verticalLayout_2)
 
@@ -90,6 +61,7 @@ class Ui_CaptureImages(object):
         _translate = QtCore.QCoreApplication.translate
         CaptureImages.setWindowTitle(_translate("CaptureImages", "カメラで撮影"))
         self.select_camera_button.setText(_translate("CaptureImages", "カメラを変更"))
+        self.capture_button.setText(_translate("CaptureImages", "撮影"))
 
 
 import icon_rc

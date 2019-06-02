@@ -34,41 +34,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QPushButton#new_project_button
-{
-   margin: 0 15 0 60;
-   padding: 0 20;
-   background-color: #3e3e3e;
-   border: 1px solid #3e3e3e;
-   border-radius:20px;
-   color: #f5f5f5;
-   font-weight: bold;
-   font-size: 13px;
-   height:40px;
-}
-
-QPushButton#open_project_button
-{
-   margin: 0 60 0 15;
-   padding: 0 20;
-   background-color: #3e3e3e;
-   border: 1px solid #666666;
-   border-radius:20px;
-   color: #f5f5f5;
-   font-weight: bold;
-   font-size: 13px;
-   height:40px;
-}
-
-
-QPushButton:pressed#new_project_button,
-QPushButton:pressed#open_project_button
-{
-   background-color: #4298F9;
-   border: 1px solid #4298F9;
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_1">
@@ -127,7 +92,7 @@ QPushButton:pressed#open_project_button
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../../logo.qrc">:/logo/assets/images/SDTest_logo.png</pixmap>
+          <pixmap resource="../../logo.qrc">:/logo/assets/images/SDTest_logo.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -264,13 +229,13 @@ font-size: 14px;
          </property>
          <property name="minimumSize">
           <size>
-           <width>240</width>
+           <width>150</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>240</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
@@ -279,10 +244,6 @@ font-size: 14px;
          </property>
          <property name="text">
           <string>新規プロジェクト </string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -310,32 +271,25 @@ font-size: 14px;
        <item>
         <widget class="QPushButton" name="open_project_button">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>240</width>
+           <width>150</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>240</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="text">
           <string>開く</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -372,8 +326,9 @@ font-size: 14px;
   <tabstop>open_project_button</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../icon.qrc"/>
-  <include location="../../../logo.qrc"/>
+  <include location="../../icon.qrc"/>
+  <include location="../../logo.qrc"/>
+  <include location="../../logo.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -68,7 +68,7 @@ class Ui_Dataset(object):
         self.images_scroll_area.setWidgetResizable(True)
         self.images_scroll_area.setObjectName("images_scroll_area")
         self.images_scroll_area_widget_contents = QtWidgets.QWidget()
-        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 434))
+        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 448))
         self.images_scroll_area_widget_contents.setStyleSheet("border: none;\n"
 "")
         self.images_scroll_area_widget_contents.setObjectName("images_scroll_area_widget_contents")
@@ -140,39 +140,20 @@ class Ui_Dataset(object):
         font.setBold(True)
         font.setWeight(75)
         self.train_button.setFont(font)
-        self.train_button.setStyleSheet("QPushButton#train_button\n"
-"{\n"
-"   margin: 0 0px;\n"
-"   padding: 0 20px;\n"
-"   border-radius: 20px;\n"
-"   background-color: #3e3e3e;\n"
-"   border: 1px solid #666666;\n"
-"   color: #f5f5f5;\n"
-"   height: 42px;\n"
-"}\n"
-"\n"
-"QPushButton:pressed#train_button\n"
-"{\n"
-"   background-color: #4298F9;\n"
-"   border: 1px solid #4298F9;\n"
-"}")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/dumbbell#ffffff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.train_button.setIcon(icon4)
         self.train_button.setIconSize(QtCore.QSize(24, 24))
         self.train_button.setFlat(False)
         self.train_button.setObjectName("train_button")
         self.training_area.addWidget(self.train_button)
         self.verticalLayout_2.addLayout(self.training_area)
         self.select_images_action = QtWidgets.QAction(Dataset)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.select_images_action.setIcon(icon5)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.select_images_action.setIcon(icon4)
         self.select_images_action.setObjectName("select_images_action")
         self.camera_action = QtWidgets.QAction(Dataset)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.camera_action.setIcon(icon6)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.camera_action.setIcon(icon5)
         self.camera_action.setObjectName("camera_action")
 
         self.retranslateUi(Dataset)

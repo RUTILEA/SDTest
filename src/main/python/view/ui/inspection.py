@@ -52,7 +52,6 @@ class Ui_inspection(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.select_camera_button.sizePolicy().hasHeightForWidth())
         self.select_camera_button.setSizePolicy(sizePolicy)
-        self.select_camera_button.setStyleSheet("padding: auto 20px;")
         self.select_camera_button.setObjectName("select_camera_button")
         self.horizontalLayout_3.addWidget(self.select_camera_button)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -61,21 +60,7 @@ class Ui_inspection(object):
         self.horizontalWidget1 = QtWidgets.QWidget(inspection)
         self.horizontalWidget1.setMinimumSize(QtCore.QSize(0, 80))
         self.horizontalWidget1.setMaximumSize(QtCore.QSize(16777215, 80))
-        self.horizontalWidget1.setStyleSheet("QPushButton#inspect_button\n"
-"{\n"
-"   padding: 0 40px;\n"
-"   border-radius: 25px;\n"
-"   border: 1px solid #3e3e3e;\n"
-"   color: #f5f5f5;\n"
-"   height: 52px;\n"
-"   background-color: #3e3e3e;\n"
-"}\n"
-"\n"
-"QPushButton:pressed#inspect_button\n"
-"{\n"
-"   background-color: #4298F9;\n"
-"   border: 1px solid #4298F9;\n"
-"}")
+        self.horizontalWidget1.setStyleSheet("")
         self.horizontalWidget1.setObjectName("horizontalWidget1")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalWidget1)
         self.horizontalLayout_4.setContentsMargins(-1, 1, -1, -1)
@@ -83,16 +68,6 @@ class Ui_inspection(object):
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem4)
         self.inspect_button = QtWidgets.QPushButton(self.horizontalWidget1)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        font.setBold(True)
-        font.setWeight(75)
-        self.inspect_button.setFont(font)
-        self.inspect_button.setStyleSheet("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/ionicons_2-0-1_eye_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.inspect_button.setIcon(icon)
-        self.inspect_button.setIconSize(QtCore.QSize(32, 32))
         self.inspect_button.setObjectName("inspect_button")
         self.horizontalLayout_4.addWidget(self.inspect_button)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
