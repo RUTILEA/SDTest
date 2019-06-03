@@ -27,6 +27,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
             self.build_settings['environment'],
             callback=self._on_sentry_init
         )
+
     def _on_sentry_init(self):
         scope = self.sentry_exception_handler.scope
         from fbs_runtime import platform
@@ -45,6 +46,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         self.app.setStyle(QStyleFactory.create('Fusion'))
 
         return self.app.exec_()
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
