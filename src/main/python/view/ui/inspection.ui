@@ -235,7 +235,7 @@ min-height: 100px;
           <string notr="true">margin: 0px;</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="default_result">
           <property name="autoFillBackground">
@@ -305,7 +305,7 @@ background-color: #00000000;</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png</pixmap>
+              <pixmap resource="../../../resources/base/qrc/icon.qrc">:/icon/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>false</bool>
@@ -598,8 +598,7 @@ border:none;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../icon.qrc"/>
-  <include location="../../../icon.qrc"/>
+  <include location="../../../resources/base/qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

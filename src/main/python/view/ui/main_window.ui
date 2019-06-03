@@ -97,8 +97,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</iconset>
+    <iconset resource="../../../resources/base/qrc/icon.qrc">
+     <normaloff>:/icon/fonts/fontawesome/eye#3e3e3e.png</normaloff>:/icon/fonts/fontawesome/eye#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>検品</string>
@@ -109,8 +109,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</iconset>
+    <iconset resource="../../../resources/base/qrc/icon.qrc">
+     <normaloff>:/icon/fonts/fontawesome/brain#3e3e3e.png</normaloff>:/icon/fonts/fontawesome/brain#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>学習</string>
@@ -124,8 +124,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</iconset>
+    <iconset resource="../../../resources/base/qrc/icon.qrc">
+     <normaloff>:/icon/fonts/fontawesome/history#3e3e3e.png</normaloff>:/icon/fonts/fontawesome/history#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>レポート</string>
@@ -171,7 +171,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../../resources/base/qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

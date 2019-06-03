@@ -73,7 +73,7 @@ class Ui_Test(object):
 "")
         self.about_threshold_button.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.about_threshold_button.setIcon(icon)
         self.about_threshold_button.setIconSize(QtCore.QSize(28, 28))
         self.about_threshold_button.setObjectName("about_threshold_button")
@@ -192,7 +192,7 @@ class Ui_Test(object):
         self.horizontalLayout.addWidget(self.stacked_widget)
 
         self.retranslateUi(Test)
-        self.stacked_widget.setCurrentIndex(1)
+        self.stacked_widget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Test)
 
     def retranslateUi(self, Test):

@@ -64,4 +64,3 @@ class Ui_CaptureImages(object):
         self.capture_button.setText(_translate("CaptureImages", "撮影"))
 
 
-import icon_rc

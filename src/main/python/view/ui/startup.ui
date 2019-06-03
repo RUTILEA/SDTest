@@ -92,7 +92,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../logo.qrc">:/logo/assets/images/SDTest_logo.png</pixmap>
+          <pixmap resource="../../../resources/base/qrc/logo.qrc">:/logo/images/SDTest_logo.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -326,9 +326,8 @@ font-size: 14px;
   <tabstop>open_project_button</tabstop>
  </tabstops>
  <resources>
-  <include location="../../icon.qrc"/>
-  <include location="../../logo.qrc"/>
-  <include location="../../logo.qrc"/>
+  <include location="../../../resources/base/qrc/icon.qrc"/>
+  <include location="../../../resources/base/qrc/logo.qrc"/>
  </resources>
  <connections/>
 </ui>

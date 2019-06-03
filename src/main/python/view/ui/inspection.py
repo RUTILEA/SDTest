@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'inspection.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_inspection(object):
     def setupUi(self, inspection):
@@ -129,7 +130,7 @@ class Ui_inspection(object):
         self.OK_big_icon_label.setStyleSheet("border: none;\n"
 "background-color: #00000000;")
         self.OK_big_icon_label.setText("")
-        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png"))
+        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png"))
         self.OK_big_icon_label.setScaledContents(False)
         self.OK_big_icon_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.OK_big_icon_label.setObjectName("OK_big_icon_label")
@@ -263,7 +264,7 @@ class Ui_inspection(object):
         self.verticalLayout_6.addItem(spacerItem11)
 
         self.retranslateUi(inspection)
-        self.result.setCurrentIndex(0)
+        self.result.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(inspection)
 
     def retranslateUi(self, inspection):
@@ -276,6 +277,7 @@ class Ui_inspection(object):
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
+
 
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 import icon_rc

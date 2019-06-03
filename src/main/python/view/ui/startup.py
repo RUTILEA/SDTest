@@ -44,7 +44,7 @@ class Ui_StartupWidget(object):
         font.setStrikeOut(False)
         self.logo_icon_label.setFont(font)
         self.logo_icon_label.setText("")
-        self.logo_icon_label.setPixmap(QtGui.QPixmap(":/logo/assets/images/SDTest_logo.png"))
+        self.logo_icon_label.setPixmap(QtGui.QPixmap(":/logo/images/SDTest_logo.png"))
         self.logo_icon_label.setScaledContents(True)
         self.logo_icon_label.setAlignment(QtCore.Qt.AlignCenter)
         self.logo_icon_label.setObjectName("logo_icon_label")

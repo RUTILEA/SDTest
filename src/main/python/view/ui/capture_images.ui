@@ -74,8 +74,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
