@@ -90,7 +90,7 @@ class LearningModel(QObject):
 
     def __init__(self):
         super().__init__()
-        self.__model = NoveltyDetector(nth_layer=102, nn_name='ResNet', detector_name='IsolationForest')
+        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor')
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
@@ -111,12 +111,13 @@ class LearningModel(QObject):
         self.__threshold = new_value
         Project.save_latest_threshold(new_value)
 
-    def train(self):
+    def start_training(self):
         self.training_start.emit()
         self.__training_thread.start()
 
     def on_training_finished(self):
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 

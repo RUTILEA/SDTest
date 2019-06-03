@@ -19,7 +19,7 @@ class TestWidget(QWidget):
         self.ui = Ui_Test()
         self.ui.setupUi(self)
 
-        loader_gif_path = Path('../assets/images/loader.gif').resolve()
+        loader_gif_path = Path('../../../assets/images/loader.gif').resolve()
         self.loader = QMovie(str(loader_gif_path))
         self.loader.setScaledSize(QSize(30, 8))
         self.ui.loading_gif_label.setMovie(self.loader)

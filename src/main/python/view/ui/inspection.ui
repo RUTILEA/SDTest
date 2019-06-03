@@ -305,7 +305,7 @@ background-color: #00000000;</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="../../icon.qrc">:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png</pixmap>
+              <pixmap>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>false</bool>
@@ -331,6 +331,21 @@ border: none;</string>
              </property>
              <property name="text">
               <string>この製品は良品です</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="ok_score">
+             <property name="styleSheet">
+              <string notr="true">color: #aaaaaa;
+background-color: #00000000;
+border: none;</string>
+             </property>
+             <property name="text">
+              <string/>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -484,7 +499,7 @@ border:none;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../icon.qrc">:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</pixmap>
+             <pixmap>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</pixmap>
             </property>
             <property name="margin">
              <number>0</number>
@@ -518,7 +533,7 @@ border:none;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../icon.qrc">:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</pixmap>
+             <pixmap>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</pixmap>
             </property>
            </widget>
           </item>

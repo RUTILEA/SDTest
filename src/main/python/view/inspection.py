@@ -3,7 +3,7 @@ from model.project import Project
 from model.learning_model import LearningModel
 from view.ui.inspection import Ui_inspection
 from view.camera_list import CameraList
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QPixmap, QMovie
 from shutil import move
@@ -41,7 +41,7 @@ class InspectionWidget(QWidget):
 
         self.ui.result.setCurrentWidget(self.ui.default_result)
 
-        loader_gif_path = pathlib.Path('../assets/images/loader.gif').resolve()
+        loader_gif_path = pathlib.Path('../../../assets/images/loader.gif').resolve()
         self.loader_movie = QMovie(str(loader_gif_path))
         self.loader_movie.setScaledSize(QSize(30, 8))
         self.loader_movie.start()
@@ -70,6 +70,10 @@ class InspectionWidget(QWidget):
         self.ui.NG_counter_label.setText(str(self.ng_counter))
 
     def on_clicked_select_camera_button(self):
+        if not CameraModel.get_available_camera_names():
+            QMessageBox.warning(None, 'エラー', 'カメラが接続されていません', QMessageBox.Close)
+            return
+
         if self.select_camera_widget.isHidden():
             self.select_camera_widget = CameraList()
             self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
@@ -85,7 +89,9 @@ class InspectionWidget(QWidget):
         self.ui.loader_label.setMovie(self.loader_movie)
 
     def on_image_saved(self, image_path):
-        self.learning_model.predict([image_path])
+        # FIXME: refactor the structure of camera model class not to call this function from camera_model.capture
+        if os.path.basename(os.path.dirname(image_path)) == 'tmp':
+            self.learning_model.predict([image_path])
 
     def on_finished_predicting(self, result):
         image_path = result['image_paths'][0]
@@ -96,6 +102,7 @@ class InspectionWidget(QWidget):
         if score >= Project.latest_threshold():
             self.ui.result.setCurrentWidget(self.ui.OK)
             move(image_path, inspected_image_dir_path + '/OK_' + image_name)
+            self.ui.ok_score.setText('Score: ' + str(score))
             self.ok_counter += 1
         else:
             ng_image = QPixmap(str(image_path))

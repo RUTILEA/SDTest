@@ -1,13 +1,15 @@
-import os, sys
-sys.path.append(os.getcwd())
-from module.novelty_detector import NoveltyDetector
 import argparse
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
+from novelty_detector import NoveltyDetector
+
 
 def execute_cmdline():
     parser = argparse.ArgumentParser()
     parser.add_argument('-path',
-                        default='src/module/examples/testimages/campbelle',
-                        help='''path to image directory like src/module/examples/testimages/campbelle.
+                        default='testimages/campbelle',
+                        help='''path to image directory like examples/testimages/campbelle.
                         Expect path/train/OK, path/test/OK, and path/test/NG exist''',
                         type=str)
     
@@ -19,13 +21,14 @@ def execute_cmdline():
                         type=str)
 
     parser.add_argument('-l', '--layer',
-                        required=True,
-                        help='Select which layer to use as feature',
+                        nargs='?',
+                        default=24,
+                        help='Select which layer to use as feature. Less channels work better.',
                         type=int)
     
     parser.add_argument('-detector', '--detector_name',
-                        default='IsolationForest',
-                        help='Select novelty detector among RobustCovariance, IsolationForest(Default), LocalOutlierFactor',
+                        default='LocalOutlierFactor',
+                        help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default)',
                         type=str)
     
     parser.add_argument('-img', '--image_name',
