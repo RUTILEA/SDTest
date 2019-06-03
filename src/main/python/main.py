@@ -2,9 +2,11 @@ from fbs_runtime.application_context import ApplicationContext
 from PyQt5.QtWidgets import QStyleFactory
 from view.startup import StartupWidget
 from model.camera_model import CameraModel
+from model.fbs import AppInfo
 
 import sys
-import pathlib
+import multiprocessing
+
 
 class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
     def run(self):                             # 2. Implement run()
@@ -12,7 +14,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
 
         # TODO:カメラ選択画面から使うカメラを選択できるようにする
         self.window = StartupWidget()
-        self.window.setWindowTitle(self.build_settings['app_name'] + ' Version ' + self.build_settings['version'])
+        self.window.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
         self.window.show()
 
         # スタイルをwindows共用に(for develop)
@@ -21,6 +23,8 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         return self.app.exec_()
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
+
     appctxt = AppContext()                      # 4. Instantiate the subclass
     exit_code = appctxt.run()                   # 5. Invoke run()
     sys.exit(exit_code)

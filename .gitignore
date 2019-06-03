@@ -122,6 +122,7 @@ dmypy.json
 # fbs
 target/
 venv/
+src/freeze/base/version
 
 # OS dependent
 .DS_Store

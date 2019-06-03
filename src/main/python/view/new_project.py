@@ -4,6 +4,7 @@ from view.main_window import MainWindow
 from PyQt5.QtWidgets import QWidget, QFileDialog
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtCore import QRegExp, pyqtSignal
+from model.fbs import AppInfo
 import os.path
 
 '''
@@ -71,7 +72,7 @@ class NewProjectDialog(QWidget):
         # プロジェクトファイル作成部分
         project_path = save_location_path
         Project.generate_project_file(project_path, project_name)
-        window_title = project_name + ' - SDTest'
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
         self.main_window = MainWindow()
         self.main_window.setWindowTitle(window_title)
         self.main_window.show()
