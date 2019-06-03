@@ -1,4 +1,4 @@
-from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettings, QCameraInfo
+from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettings, QCameraInfo, QCameraFocus
 from datetime import datetime
 from typing import Dict
 from PyQt5.QtCore import pyqtSignal, QObject
@@ -39,6 +39,15 @@ class CameraModel(QObject):
             cam_name = QCamera.deviceDescription(device_obj)
 
             cam = QCamera(device_obj)
+            focus: QCameraFocus = cam.focus()
+            focus.setFocusMode(QCameraFocus.InfinityFocus)
+            print(cam.lockStatus())
+            print(focus.isAvailable())
+
+            # focus.setFocusPointMode(QCameraFocus.FocusPointCenter)
+            # cam.lockStatus(QCamera.LockFocus)
+            cam.searchAndLock(QCamera.LockFocus)
+            print(cam.lockStatus())
             self.cams[str(cam_name)] = cam
 
             cam_image_capture = QCameraImageCapture(cam)
@@ -79,6 +88,12 @@ class CameraModel(QObject):
 
     def set_resolution(self):
         for cam_name, cam in self.cams.items():
+            print(cam.lockStatus())
+            # focus: QCameraFocus = cam.focus()
+            # print(focus.isAvailable())
+            # focus.setFocusMode(QCameraFocus.ManualFocus)
+            # focus.setFocusPointMode(QCameraFocus.FocusPointCenter)
+            # cam.lockStatus(QCamera.LockFocus)
             image_settings = QImageEncoderSettings()
             for size in cam.supportedViewfinderResolutions():
                 if 600 <= size.width() <= 700:
