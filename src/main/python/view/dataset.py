@@ -2,7 +2,7 @@ import os
 import shutil
 from typing import Optional, Set
 from pathlib import Path
-from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QSize
+from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QRect, QSize
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.ui.dataset import Ui_Dataset
@@ -112,6 +112,12 @@ class DatasetWidget(QWidget):
         self.preview_window.show()
         self.preview_window.activateWindow()
         self.preview_window.raise_()
+
+        # move preview to center
+        preview_geometry: QRect = self.preview_window.frameGeometry()
+        screen_center = QDesktopWidget().availableGeometry().center()
+        preview_geometry.moveCenter(screen_center)
+        self.preview_window.move(preview_geometry.topLeft())
 
     def on_clicked_camera_button(self):
         selected_category = self.__selected_dataset_category()
