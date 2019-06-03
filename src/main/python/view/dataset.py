@@ -2,9 +2,9 @@ import os
 import shutil
 from typing import Optional, Set
 from pathlib import Path
-from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal
+from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QSize
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox
+from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.ui.dataset import Ui_Dataset
 from view.image_capture_dialog import ImageCaptureDialog
 from model.project import Project
@@ -238,3 +238,19 @@ class ThumbnailSelectionOverlay(QWidget):
             self.setStyleSheet('')
         self.selection_changed.emit(self.selected)
 
+
+class PreviewWindow(QLabel):
+    def set_thumbnail(self, thumbnail: Thumbnail):
+        self.setWindowTitle(thumbnail.path.name)
+
+        desktop_size: QSize = QDesktopWidget().availableGeometry().size()
+        max_size = QSize(desktop_size.width() - 50, desktop_size.height() - 50)
+        image_size: QSize = thumbnail.pixmap.size()
+        scaled_size = image_size.scaled(max_size, Qt.KeepAspectRatio)
+        if image_size.width() < scaled_size.width():
+            preview_size = image_size
+        else:
+            preview_size = scaled_size
+
+        self.setFixedSize(preview_size)
+        self.setPixmap(thumbnail.pixmap.scaled(preview_size))
