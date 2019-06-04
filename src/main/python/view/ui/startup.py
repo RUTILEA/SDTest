@@ -21,6 +21,39 @@ class Ui_StartupWidget(object):
         StartupWidget.setSizePolicy(sizePolicy)
         StartupWidget.setMinimumSize(QtCore.QSize(520, 404))
         StartupWidget.setMaximumSize(QtCore.QSize(520, 404))
+        StartupWidget.setStyleSheet("QPushButton#new_project_button\n"
+"{\n"
+"   margin: 0 15 0 60;\n"
+"   padding: 0 20;\n"
+"   background-color: #3e3e3e;\n"
+"   border: 1px solid #3e3e3e;\n"
+"   border-radius:20px;\n"
+"   color: #f5f5f5;\n"
+"   font-weight: bold;\n"
+"   font-size: 13px;\n"
+"   height:40px;\n"
+"}\n"
+"\n"
+"QPushButton#open_project_button\n"
+"{\n"
+"   margin: 0 60 0 15;\n"
+"   padding: 0 20;\n"
+"   background-color: #3e3e3e;\n"
+"   border: 1px solid #666666;\n"
+"   border-radius:20px;\n"
+"   color: #f5f5f5;\n"
+"   font-weight: bold;\n"
+"   font-size: 13px;\n"
+"   height:40px;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:pressed#new_project_button,\n"
+"QPushButton:pressed#open_project_button\n"
+"{\n"
+"   background-color: #4298F9;\n"
+"   border: 1px solid #4298F9;\n"
+"}")
         self.verticalLayout = QtWidgets.QVBoxLayout(StartupWidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayout_1 = QtWidgets.QVBoxLayout()
@@ -92,9 +125,11 @@ class Ui_StartupWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.new_project_button.sizePolicy().hasHeightForWidth())
         self.new_project_button.setSizePolicy(sizePolicy)
-        self.new_project_button.setMinimumSize(QtCore.QSize(150, 0))
-        self.new_project_button.setMaximumSize(QtCore.QSize(150, 16777215))
-        self.new_project_button.setStyleSheet("")
+        self.new_project_button.setMinimumSize(QtCore.QSize(240, 0))
+        self.new_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.new_project_button.setIcon(icon)
         self.new_project_button.setIconSize(QtCore.QSize(16, 16))
         self.new_project_button.setCheckable(False)
         self.new_project_button.setChecked(False)
@@ -109,8 +144,11 @@ class Ui_StartupWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.open_project_button.sizePolicy().hasHeightForWidth())
         self.open_project_button.setSizePolicy(sizePolicy)
-        self.open_project_button.setMinimumSize(QtCore.QSize(150, 0))
-        self.open_project_button.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.open_project_button.setMinimumSize(QtCore.QSize(240, 0))
+        self.open_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.open_project_button.setIcon(icon1)
         self.open_project_button.setIconSize(QtCore.QSize(16, 16))
         self.open_project_button.setObjectName("open_project_button")
         self.horizontalLayout.addWidget(self.open_project_button)
