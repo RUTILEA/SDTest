@@ -127,7 +127,7 @@ QPushButton:pressed#open_project_button
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../../resources/base/qrc/logo.qrc">:/logo/images/SDTest_logo.png</pixmap>
+          <pixmap resource="../../qrc/logo.qrc">:/logo/resources/base/images/SDTest_logo.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -234,6 +234,9 @@ font-size: 14px;
        <property name="textFormat">
         <enum>Qt::PlainText</enum>
        </property>
+       <property name="pixmap">
+        <pixmap>:/icon2/fonts/fontawesome/octicons_4-3-0_light-bulb_32_4_3e3e3e_none.png</pixmap>
+       </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
@@ -275,20 +278,11 @@ font-size: 14px;
           </size>
          </property>
          <property name="text">
-          <string>新規プロジェクト </string>
+          <string>新規プロジェク ト</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../resources/base/qrc/icon.qrc">
-           <normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
+          <iconset resource="../../qrc/icon.qrc">
+           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</iconset>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -328,8 +322,8 @@ font-size: 14px;
           <string>開く</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../resources/base/qrc/icon.qrc">
-           <normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</iconset>
+          <iconset resource="../../qrc/icon.qrc">
+           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -366,8 +360,8 @@ font-size: 14px;
   <tabstop>open_project_button</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../resources/base/qrc/icon.qrc"/>
-  <include location="../../../resources/base/qrc/logo.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
+  <include location="../../qrc/logo.qrc"/>
  </resources>
  <connections/>
 </ui>

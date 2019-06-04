@@ -130,7 +130,7 @@ class Ui_inspection(object):
         self.OK_big_icon_label.setStyleSheet("border: none;\n"
 "background-color: #00000000;")
         self.OK_big_icon_label.setText("")
-        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png"))
+        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png"))
         self.OK_big_icon_label.setScaledContents(False)
         self.OK_big_icon_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.OK_big_icon_label.setObjectName("OK_big_icon_label")
@@ -226,7 +226,7 @@ class Ui_inspection(object):
         self.OK_icon_label.setStyleSheet("border:none;\n"
 "")
         self.OK_icon_label.setText("")
-        self.OK_icon_label.setPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png"))
+        self.OK_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png"))
         self.OK_icon_label.setObjectName("OK_icon_label")
         self.horizontalLayout_2.addWidget(self.OK_icon_label)
         self.OK_counter_label = QtWidgets.QLabel(self.counter)
@@ -243,7 +243,7 @@ class Ui_inspection(object):
         self.NG_icon_label.setStyleSheet("border:none;\n"
 "")
         self.NG_icon_label.setText("")
-        self.NG_icon_label.setPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png"))
+        self.NG_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png"))
         self.NG_icon_label.setObjectName("NG_icon_label")
         self.horizontalLayout_2.addWidget(self.NG_icon_label)
         self.NG_counter_label = QtWidgets.QLabel(self.counter)
@@ -280,4 +280,4 @@ class Ui_inspection(object):
 
 
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
-import icon_rc
+from qrc import icon_rc

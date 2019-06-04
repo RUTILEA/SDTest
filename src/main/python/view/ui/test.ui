@@ -127,8 +127,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../../../resources/base/qrc/icon.qrc">
-               <normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</normaloff>:/icon/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</iconset>
+              <iconset resource="../../qrc/icon.qrc">
+               <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -462,7 +462,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../resources/base/qrc/icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

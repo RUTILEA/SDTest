@@ -57,19 +57,19 @@ class Ui_MainWindow(object):
         self.inspection_action.setCheckable(True)
         self.inspection_action.setChecked(False)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/eye#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/eye#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.inspection_action.setIcon(icon)
         self.inspection_action.setObjectName("inspection_action")
         self.optimization_action = QtWidgets.QAction(MainWindow)
         self.optimization_action.setCheckable(True)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/brain#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/brain#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.optimization_action.setIcon(icon1)
         self.optimization_action.setObjectName("optimization_action")
         self.past_result_action = QtWidgets.QAction(MainWindow)
         self.past_result_action.setCheckable(True)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icon/fonts/fontawesome/history#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/history#3e3e3e.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.past_result_action.setIcon(icon2)
         self.past_result_action.setObjectName("past_result_action")
         self.action_open = QtWidgets.QAction(MainWindow)
@@ -99,7 +99,6 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.past_result_action)
 
         self.retranslateUi(MainWindow)
-        self.main_stacked_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -121,4 +120,4 @@ class Ui_MainWindow(object):
         self.action_quit_SDTest.setText(_translate("MainWindow", "SDTestを終了"))
 
 
-import icon_rc
+from qrc import icon_rc
