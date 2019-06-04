@@ -1,12 +1,10 @@
-from fbs_runtime.application_context import ApplicationContext
 from PyQt5.QtWidgets import QStyleFactory
 from view.startup import StartupWidget
-from model.camera_model import CameraModel
 from fbs_runtime.application_context import ApplicationContext, cached_property, is_frozen
 from fbs_runtime.excepthook.sentry import SentryExceptionHandler
 
 import sys
-import pathlib
+
 
 class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
 
