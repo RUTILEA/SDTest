@@ -83,7 +83,7 @@ Download the latest [release][link-github-release] and run the installer.
 
 1. Run Qt Designer and create a .qrc file into [src/main/python/][dir-python].
 2. After editing the resources, convert the .qrc file to .py file by the command 
-   `pyrcc5 -o FILENAME.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be stored together there.
+   `pyrcc5 -o --import-from qrc FILENAME_rc.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be stored together there.
 
 ### Deployment
 - `fbs freeze` turns the app's source code into a standalone executable. This creates the folder `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
