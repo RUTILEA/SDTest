@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icon">
+    <file>../fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png</file>
+    <file>../fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png</file>
     <file>../fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</file>
     <file>../fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</file>
     <file>../fonts/fontawesome/brain#3e3e3e.png</file>
