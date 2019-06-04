@@ -264,7 +264,7 @@ class Ui_inspection(object):
         self.verticalLayout_6.addItem(spacerItem11)
 
         self.retranslateUi(inspection)
-        self.result.setCurrentIndex(1)
+        self.result.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(inspection)
 
     def retranslateUi(self, inspection):
