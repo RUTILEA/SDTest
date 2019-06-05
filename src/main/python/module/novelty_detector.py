@@ -28,18 +28,20 @@ class NoveltyDetector:
         self.pretrained_nn = None
         self.extracting_model = None
 
-        if detector_name == 'RobustCovariance':
+        detector_name_lower = detector_name.lower()
+        if detector_name_lower == 'robustcovariance':
             from sklearn.covariance import EllipticEnvelope
             self.clf = EllipticEnvelope()
             print('Novelty Detector: Robust covariance')
-        elif detector_name == 'LocalOutlierFactor' or detector_name.lower()=='lof':
+        elif detector_name_lower in ['localoutlierfactor', 'lof']:
             from sklearn.neighbors import LocalOutlierFactor
             self.clf = LocalOutlierFactor(novelty=True)
             print('Novelty Detector: Local Outlier Factor')
-        elif detector_name.lower() in ['aboi', 'fastaboi']:
+        elif detector_name_lower in ['abod', 'fastabod', 'anglebasedoutlierdetection']:
             from pyod.models.abod import ABOD
             self.clf = ABOD()
-        else: # detector_name == 'IsolationForest':
+            print('Novelty Detector: Angle Based Outlier Detection')
+        elif detector_name_lower in ['iforest', 'isolationforest']:
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
