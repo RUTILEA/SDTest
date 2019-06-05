@@ -102,11 +102,13 @@ class NoveltyDetector:
         vgg_model = VGG16(include_top=False, input_tensor=Input(shape=self.input_shape))
         x = vgg_model.output
         x = GlobalAveragePooling2D()(x)
+        x = Dense(1024, activation='relu')(x)
+        x = Dense(10, activation='relu')(x)
         self.pretrained_nn = Model(inputs=vgg_model.input, outputs=x)
         # json_string = open(file_name + '.json').read()
         # self.pretrained_nn = model_from_json(json_string)
         self.pretrained_nn.load_weights(file_name + '.h5')
-        self.pretrained_nn.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
+        # self.pretrained_nn.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
         len_pretrained_nn = len(self.pretrained_nn.layers)
         if not 0 < self.nth_layer < len_pretrained_nn:

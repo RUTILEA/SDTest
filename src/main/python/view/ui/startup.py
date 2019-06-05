@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/startup.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/startup.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -172,5 +172,5 @@ class Ui_StartupWidget(object):
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
 
 
-import icon_rc
-import logo_rc
+from qrc import icon_rc
+from qrc import logo_rc

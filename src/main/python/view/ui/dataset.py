@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/dataset.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/dataset.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -200,4 +200,4 @@ class Ui_Dataset(object):
         self.camera_action.setToolTip(_translate("Dataset", "カメラで撮影"))
 
 
-import icon_rc
+from qrc import icon_rc

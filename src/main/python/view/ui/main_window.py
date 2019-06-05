@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/main_window.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -121,4 +121,4 @@ class Ui_MainWindow(object):
         self.action_quit_SDTest.setText(_translate("MainWindow", "SDTestを終了"))
 
 
-import icon_rc
+from qrc import icon_rc

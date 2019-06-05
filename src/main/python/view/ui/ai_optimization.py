@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/tazama/src/view/ui/ai_optimization.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/ai_optimization.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -44,5 +44,5 @@ class Ui_AIOptimization(object):
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.test_tab), _translate("AIOptimization", "性能評価"))
 
 
-from view.dataset import DatasetWidget
-from view.test import TestWidget
+from src.view.dataset import DatasetWidget
+from src.view.test import TestWidget
