@@ -19,6 +19,8 @@ class NoveltyDetector:
         """
         self.nth_layer = nth_layer
         self.nn_name = nn_name
+        # self.input_shape = (420,280,3)
+        # self.input_shape = (224,224,3)
         self.input_shape = None
         self.nu = None
         self.gamma = None
@@ -90,8 +92,22 @@ class NoveltyDetector:
             pretrained_func = ResNet50
             print('Neural Network: {}'.format(self.nn_name))
 
-        self.pretrained_nn = pretrained_func(include_top=False, weights='imagenet', input_tensor=None, input_shape=self.input_shape, pooling=False)
-        
+        # self.pretrained_nn = pretrained_func(include_top=False, weights='imagenet', input_tensor=None, input_shape=self.input_shape, pooling=False)
+        file_name = 'tuned_train599'
+        from keras.models import model_from_json
+        import json
+        from keras.layers import Dense, Input
+        from keras.applications.vgg16 import VGG16
+        from keras.optimizers import SGD
+        vgg_model = VGG16(include_top=False, input_tensor=Input(shape=self.input_shape))
+        x = vgg_model.output
+        x = GlobalAveragePooling2D()(x)
+        self.pretrained_nn = Model(inputs=vgg_model.input, outputs=x)
+        # json_string = open(file_name + '.json').read()
+        # self.pretrained_nn = model_from_json(json_string)
+        self.pretrained_nn.load_weights(file_name + '.h5')
+        self.pretrained_nn.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
+
         len_pretrained_nn = len(self.pretrained_nn.layers)
         if not 0 < self.nth_layer < len_pretrained_nn:
             raise Exception('0 < nth_layer < {}'.format(len_pretrained_nn))
@@ -151,11 +167,12 @@ class NoveltyDetector:
         imgs = []
         for path in paths:
             img = imageio.imread(path, as_gray=False, pilmode='RGB').astype(np.float)
+            # print(self.input_shape)
             img = skimage.transform.resize(img, self.input_shape[:2])
             img /= 255
             imgs.append(img)
         imgs = np.array(imgs)
-        imgs = imgs.reshape(-1, *self.input_shape)        
+        imgs = imgs.reshape(-1, *self.input_shape)
         return imgs
 
     def _get_paths_in_dir(self, dir_path):
