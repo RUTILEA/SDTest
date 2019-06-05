@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/tazama/src/view/ui/inspection.ui'
+# Form implementation generated from reading ui file 'inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_inspection(object):
     def setupUi(self, inspection):
@@ -172,6 +171,14 @@ class Ui_inspection(object):
         self.OK_message_label.setAlignment(QtCore.Qt.AlignCenter)
         self.OK_message_label.setObjectName("OK_message_label")
         self.verticalLayout_4.addWidget(self.OK_message_label)
+        self.ok_score = QtWidgets.QLabel(self.OK)
+        self.ok_score.setStyleSheet("color: #aaaaaa;\n"
+"background-color: #00000000;\n"
+"border: none;")
+        self.ok_score.setText("")
+        self.ok_score.setAlignment(QtCore.Qt.AlignCenter)
+        self.ok_score.setObjectName("ok_score")
+        self.verticalLayout_4.addWidget(self.ok_score)
         spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_4.addItem(spacerItem7)
         self.result.addWidget(self.OK)
@@ -294,7 +301,6 @@ class Ui_inspection(object):
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
-
 
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 import icon_rc

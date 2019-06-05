@@ -1,5 +1,5 @@
 ###### Requirements without Version Specifiers ######
-fbs
+fbs[sentry]
 matplotlib
 sklearn
 joblib
