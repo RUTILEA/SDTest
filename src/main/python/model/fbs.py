@@ -10,10 +10,12 @@ class AppInfo(ApplicationContext):
 
     def version(self):
         version = self.build_settings['version']
-        version_path = dirname(__file__) + '/../../../freeze/base/version'
 
-        if exists(version_path):
-            version += ' Build ' + Path(version_path).read_text()
+        # Add the latest commit hash as build number
+        if exists(dirname(__file__) + '/../../../freeze/base/version'):
+            version += ' Build ' + Path(dirname(__file__) + '/../../../freeze/base/version').read_text()
+        elif exists(dirname(__file__) + '/../version'):
+            version += ' Build ' + Path(dirname(__file__) + '/../version').read_text()
 
         return version
 
