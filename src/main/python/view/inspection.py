@@ -130,14 +130,15 @@ class InspectionWidget(QWidget):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
 
     def on_clicked_inspection_existing_image_button(self):
-        image_path, _ = QFileDialog.getOpenFileName(self, 'Open Directory', os.path.expanduser('~'))
-        if image_path:
-            _, ext = os.path.splitext(image_path)
+        original_image_path, _ = QFileDialog.getOpenFileName(self, 'Open Directory', os.path.expanduser('~'))
+        if original_image_path:
+            _, ext = os.path.splitext(original_image_path)
             # TODO: manage image name format (e.x. use Dataset.generate_image_path())
             timestamp = str(datetime.now().isoformat()).replace(':', '-')
             file_name = f'camera_0_{timestamp}.{ext}'
-            copy2(image_path, Project.project_path() + '/tmp/' + file_name)
-            self.learning_model.predict([Project.project_path() + '/tmp/' + file_name])
+            copied_image_path = Project.project_path() + '/tmp/' + file_name
+            copy2(original_image_path, copied_image_path)
+            self.learning_model.predict([copied_image_path])
             self.ui.inspect_button.setDisabled(True)
             self.ui.inspect_existing_image_button.setDisabled(True)
 
