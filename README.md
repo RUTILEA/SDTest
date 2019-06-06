@@ -83,15 +83,26 @@ Download the latest [release][link-github-release] and run the installer.
 
 1. Run Qt Designer and create a .qrc file into [src/main/python/][dir-python].
 2. After editing the resources, convert the .qrc file to .py file by the command 
-   `pyrcc5 -o --import-from qrc FILENAME_rc.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be stored together there.
+   `pyrcc5 -o --import-from qrc FILENAME_rc.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be 
+   stored together there.
 
 ### Deployment
-- `src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
+- `src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder 
+  `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
+- `src\build.py installer` generates the app's installer into `targets/`. On Windows, this would be an executable 
+  called `SDTestSetup.exe`. Before you can use the installer command on Windows, please install [NSIS][link-nsis] and 
+  add its installation directory to your `PATH` environment variable. 
 
 #### Debugging of the standalone executable
 - `src\build.py clean`
 - `src\build.py freeze --debug`
-- `./target/SDTest/SDTest.exe` executes the app and you can debug it on console like `fbs run`
+- `./target/SDTest/SDTest.exe` executes the app and you can debug it on console like `src\build.py run`
+
+#### Code-Sign the executables
+- Both `freeze` and `installer` commands automatically code-sign the generated `.exe` files on Windows if the 
+  certificate file exists. You must place a certificate file at `src/freeze/base/SDTest.pfx` first. Please note that 
+  the file extension of the certificate must be `.pfx`, otherwise it may be shared in the PUBLIC repository.
+- Currently automatic code-signing is only implemented for Windows. For others will be supported soon.
 
 ## Support
 - Report issues on the [GitHub issue tracker][link-github-issues]
@@ -108,6 +119,7 @@ Download the latest [release][link-github-release] and run the installer.
 [link-pycharm]: https://www.jetbrains.com/pycharm/
 [link-intellij]: https://www.jetbrains.com/idea/
 [link-vscode]: https://code.visualstudio.com/
+[link-nsis]: http://nsis.sourceforge.net/Main_Page
 [link-github-issues]: https://github.com/RUTILEA/SDTest/issues
 [link-github-pull-request]: https://help.github.com/articles/creating-a-pull-request/
 [link-github-fork]: https://help.github.com/articles/fork-a-repo/

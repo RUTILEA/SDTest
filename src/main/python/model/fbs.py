@@ -1,5 +1,4 @@
 from fbs_runtime.application_context import ApplicationContext
-from fbs import path
 from os.path import exists, abspath, dirname
 from pathlib import Path
 
