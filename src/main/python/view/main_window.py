@@ -7,6 +7,7 @@ from view.ai_optimization import AIOptimizationWidget
 from view.past_result import PastResultWidget
 from model.project import Project
 from model.learning_model import LearningModel
+from model.fbs import AppInfo
 from pathlib import Path
 from PyQt5.QtGui import QMovie
 
@@ -94,12 +95,12 @@ class MainWindow(QMainWindow):
 
     def on_triggered_action_open(self):
         save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
-                                                         'SDTestプロジェクト(*.sdt);;すべて(*.*)')[0]
+                                                         AppInfo().app_name() + ' プロジェクト(*.sdt);;すべて(*.*)')[0]
         if not save_location_path:
             return
         Project.load_settings_file(save_location_path)
         project_name = os.path.basename(os.path.splitext(save_location_path)[0])
-        window_title = project_name + ' - SDTest'
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
         self.setWindowTitle(window_title)
         self.show()
         self.setup_tool_bar()
@@ -115,8 +116,8 @@ class MainWindow(QMainWindow):
 
     def on_triggered_action_version(self):
         self.msgBox = QMessageBox()
-        self.msgBox.setText('SDTest\nversion 0.5\nby RUTILEA')
-        self.msgBox.setWindowTitle('SDTest version0.5')
+        self.msgBox.setText(AppInfo().app_name() + '\nVersion ' + AppInfo().version() + '\n(c) ' + AppInfo().author())
+        self.msgBox.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
         self.msgBox.exec()
 
     def closeEvent(self, QCloseEvent):
