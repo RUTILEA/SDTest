@@ -70,7 +70,7 @@ Download the latest [release][link-github-release] and run the installer.
 - `pip install -r requirements/(YOUR-OS).txt` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
 
 ### Run the app
-- `fbs run` executes the app and you can debug it on console
+- `src\build.py run` executes the app and you can debug it on console
 
 ### Create an UI file (.ui)
 
@@ -86,11 +86,11 @@ Download the latest [release][link-github-release] and run the installer.
    `pyrcc5 -o --import-from qrc FILENAME_rc.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be stored together there.
 
 ### Deployment
-- `fbs freeze` turns the app's source code into a standalone executable. This creates the folder `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
+- `src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
 
 #### Debugging of the standalone executable
-- `fbs clean`
-- `fbs freeze --debug`
+- `src\build.py clean`
+- `src\build.py freeze --debug`
 - `./target/SDTest/SDTest.exe` executes the app and you can debug it on console like `fbs run`
 
 ## Support
