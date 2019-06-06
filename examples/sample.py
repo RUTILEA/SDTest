@@ -30,7 +30,7 @@ def execute_cmdline():
     
     parser.add_argument('-detector', '--detector_name',
                         default='LocalOutlierFactor',
-                        help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default)',
+                        help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default), ABOD',
                         type=str)
     
     parser.add_argument('-img', '--image_name',
