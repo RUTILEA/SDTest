@@ -41,7 +41,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         self.window.show()
 
         # スタイルをwindows共用に(for develop)
-        self.app.setStyle(QStyleFactory.create('Fusion'))
+        # self.app.setStyle(QStyleFactory.create('Fusion'))
 
         return self.app.exec_()
 

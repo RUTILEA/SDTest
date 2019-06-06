@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>../../resources/base/images/loader.gif</file>
+    <file>../../resources/base/images/SDTest_logo.png</file>
+  </qresource>
+</RCC>

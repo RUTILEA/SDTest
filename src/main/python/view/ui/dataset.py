@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/dataset.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/dataset.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -37,23 +37,23 @@ class Ui_Dataset(object):
         self.image_list_widget.setObjectName("image_list_widget")
         item_0 = QtWidgets.QTreeWidgetItem(self.image_list_widget)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/dumbbell#666666.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/dumbbell#666666.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item_0.setIcon(0, icon)
         item_0.setFlags(QtCore.Qt.ItemIsEnabled)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item_1.setIcon(0, icon1)
         item_0 = QtWidgets.QTreeWidgetItem(self.image_list_widget)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/test_custom#666666.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/test_custom#666666.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item_0.setIcon(0, icon2)
         item_0.setFlags(QtCore.Qt.ItemIsEnabled)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
         item_1.setIcon(0, icon1)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item_1.setIcon(0, icon3)
         self.image_list_widget.header().setVisible(False)
         self.dataset_area.addWidget(self.image_list_widget)
@@ -68,7 +68,7 @@ class Ui_Dataset(object):
         self.images_scroll_area.setWidgetResizable(True)
         self.images_scroll_area.setObjectName("images_scroll_area")
         self.images_scroll_area_widget_contents = QtWidgets.QWidget()
-        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 434))
+        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 448))
         self.images_scroll_area_widget_contents.setStyleSheet("border: none;\n"
 "")
         self.images_scroll_area_widget_contents.setObjectName("images_scroll_area_widget_contents")
@@ -140,39 +140,20 @@ class Ui_Dataset(object):
         font.setBold(True)
         font.setWeight(75)
         self.train_button.setFont(font)
-        self.train_button.setStyleSheet("QPushButton#train_button\n"
-"{\n"
-"   margin: 0 0px;\n"
-"   padding: 0 20px;\n"
-"   border-radius: 20px;\n"
-"   background-color: #3e3e3e;\n"
-"   border: 1px solid #666666;\n"
-"   color: #f5f5f5;\n"
-"   height: 42px;\n"
-"}\n"
-"\n"
-"QPushButton:pressed#train_button\n"
-"{\n"
-"   background-color: #4298F9;\n"
-"   border: 1px solid #4298F9;\n"
-"}")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/dumbbell#ffffff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.train_button.setIcon(icon4)
         self.train_button.setIconSize(QtCore.QSize(24, 24))
         self.train_button.setFlat(False)
         self.train_button.setObjectName("train_button")
         self.training_area.addWidget(self.train_button)
         self.verticalLayout_2.addLayout(self.training_area)
         self.select_images_action = QtWidgets.QAction(Dataset)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.select_images_action.setIcon(icon5)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.select_images_action.setIcon(icon4)
         self.select_images_action.setObjectName("select_images_action")
         self.camera_action = QtWidgets.QAction(Dataset)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.camera_action.setIcon(icon6)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.camera_action.setIcon(icon5)
         self.camera_action.setObjectName("camera_action")
 
         self.retranslateUi(Dataset)
@@ -194,10 +175,10 @@ class Ui_Dataset(object):
         self.camera_and_images_button.setText(_translate("Dataset", "追加"))
         self.latest_training_date_label.setText(_translate("Dataset", "前回のトレーニング 2019/04/24"))
         self.train_button.setText(_translate("Dataset", "トレーニング"))
-        self.select_images_action.setText(_translate("Dataset", "既存の画像"))
+        self.select_images_action.setText(_translate("Dataset", "既存の画像 "))
         self.select_images_action.setToolTip(_translate("Dataset", "既存の画像"))
         self.camera_action.setText(_translate("Dataset", "カメラで撮影"))
         self.camera_action.setToolTip(_translate("Dataset", "カメラで撮影"))
 
 
-import icon_rc
+from qrc import icon_rc

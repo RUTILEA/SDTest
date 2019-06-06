@@ -3,12 +3,13 @@ from model.project import Project
 from model.learning_model import LearningModel
 from view.ui.inspection import Ui_inspection
 from view.camera_list import CameraList
-from PyQt5.QtWidgets import QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget, QMessageBox, QFileDialog
 from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QPixmap, QMovie
-from shutil import move
+from shutil import move, copy2
 import os
 import pathlib
+from datetime import datetime
 
 
 class InspectionWidget(QWidget):
@@ -38,6 +39,8 @@ class InspectionWidget(QWidget):
 
         self.ui.select_camera_button.clicked.connect(self.on_clicked_select_camera_button)
         self.ui.inspect_button.clicked.connect(self.on_clicked_inspect_button)
+
+        self.ui.inspect_existing_image_button.clicked.connect(self.on_clicked_inspection_existing_image_button)
 
         self.ui.result.setCurrentWidget(self.ui.default_result)
 
@@ -85,6 +88,7 @@ class InspectionWidget(QWidget):
 
     def on_clicked_inspect_button(self):
         self.ui.inspect_button.setDisabled(True)
+        self.ui.inspect_existing_image_button.setDisabled(True)
         self.camera_model.capture(Project.project_path() + '/tmp')
         self.ui.loader_label.setMovie(self.loader_movie)
 
@@ -113,6 +117,7 @@ class InspectionWidget(QWidget):
             move(image_path, inspected_image_dir_path + '/NG_' + image_name)
             self.ng_counter += 1
         self.ui.inspect_button.setDisabled(False)
+        self.ui.inspect_existing_image_button.setDisabled(False)
 
     def on_clicked_camera_list(self, camera_name):
         self.camera_model.selected_cam_names = [camera_name]
@@ -123,4 +128,16 @@ class InspectionWidget(QWidget):
 
     def set_camera_to_camera_preview(self):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
+
+    def on_clicked_inspection_existing_image_button(self):
+        image_path, _ = QFileDialog.getOpenFileName(self, 'Open Directory', os.path.expanduser('~'))
+        if image_path:
+            _, ext = os.path.splitext(image_path)
+            # TODO: manage image name format (e.x. use Dataset.generate_image_path())
+            timestamp = str(datetime.now().isoformat()).replace(':', '-')
+            file_name = f'camera_0_{timestamp}.{ext}'
+            copy2(image_path, Project.project_path() + '/tmp/' + file_name)
+            self.learning_model.predict([image_path])
+            self.ui.inspect_button.setDisabled(True)
+            self.ui.inspect_existing_image_button.setDisabled(True)
 
