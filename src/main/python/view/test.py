@@ -6,6 +6,7 @@ from matplotlib import pyplot
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
+from matplotlib.lines import Line2D
 import seaborn as sns
 from view.ui.test import Ui_Test
 from model.learning_model import LearningModel
@@ -53,6 +54,9 @@ class TestWidget(QWidget):
         sns.distplot(results.distances_of_ok_images, kde=True, rug=True, label='TEST OK')  # FIXME: label
         sns.distplot(results.distances_of_ng_images, kde=True, rug=True, label='TEST NG')
         pyplot.legend()
+        self.threshold_line: Line2D = pyplot.axvline(x=self.learning_model.threshold,
+                                                     color='#FFA00E',
+                                                     linestyle='dashed')
 
         # preset slider value
         distance_range = results.max_distance - results.min_distance
@@ -103,3 +107,5 @@ class TestWidget(QWidget):
         # display threshold
         thresh_round = round(self.learning_model.threshold, 4)
         self.ui.threshold_label.setText(str(thresh_round))
+        self.threshold_line.set_xdata(self.learning_model.threshold)
+        self.threshold_line.axes.figure.canvas.draw()
