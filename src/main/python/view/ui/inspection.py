@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/inspection.ui'
+# Form implementation generated from reading ui file 'inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_inspection(object):
     def setupUi(self, inspection):
@@ -70,6 +69,9 @@ class Ui_inspection(object):
         self.inspect_button = QtWidgets.QPushButton(self.horizontalWidget1)
         self.inspect_button.setObjectName("inspect_button")
         self.horizontalLayout_4.addWidget(self.inspect_button)
+        self.inspect_existing_image_button = QtWidgets.QPushButton(self.horizontalWidget1)
+        self.inspect_existing_image_button.setObjectName("inspect_existing_image_button")
+        self.horizontalLayout_4.addWidget(self.inspect_existing_image_button)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem5)
         self.verticalLayout.addWidget(self.horizontalWidget1)
@@ -272,12 +274,12 @@ class Ui_inspection(object):
         inspection.setWindowTitle(_translate("inspection", "Form"))
         self.select_camera_button.setText(_translate("inspection", "表示するカメラを選択"))
         self.inspect_button.setText(_translate("inspection", "撮影して判定"))
+        self.inspect_existing_image_button.setText(_translate("inspection", "既存の画像を判定"))
         self.default_label.setText(_translate("inspection", "ここに判定結果が<br/>表示されます。"))
         self.OK_message_label.setText(_translate("inspection", "この製品は良品です"))
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
-
 
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from qrc import icon_rc

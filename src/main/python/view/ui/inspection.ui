@@ -176,6 +176,13 @@ min-height: 100px;
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="inspect_existing_image_button">
+            <property name="text">
+             <string>既存の画像を判定</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_7">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
