@@ -8,6 +8,7 @@ numpy
 pyqtdeploy
 opencv-contrib-python
 GitPython
+pyod
 
 ###### Requirements with Version Specifiers ######
 PyQt5 == 5.9.2
