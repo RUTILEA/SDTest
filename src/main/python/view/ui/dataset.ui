@@ -69,8 +69,8 @@
          <string>トレーニング用画像</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../icon.qrc">
-          <normaloff>:/icon/assets/fonts/fontawesome/dumbbell#666666.png</normaloff>:/icon/assets/fonts/fontawesome/dumbbell#666666.png</iconset>
+         <iconset resource="../../qrc/icon.qrc">
+          <normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell#666666.png</normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell#666666.png</iconset>
         </property>
         <property name="flags">
          <set>ItemIsEnabled</set>
@@ -80,8 +80,8 @@
           <string>良品</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
+          <iconset resource="../../qrc/icon.qrc">
+           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
          </property>
         </item>
        </item>
@@ -90,8 +90,8 @@
          <string>性能評価用画像</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../icon.qrc">
-          <normaloff>:/icon/assets/fonts/fontawesome/test_custom#666666.png</normaloff>:/icon/assets/fonts/fontawesome/test_custom#666666.png</iconset>
+         <iconset resource="../../qrc/icon.qrc">
+          <normaloff>:/icon/resources/base/fonts/fontawesome/test_custom#666666.png</normaloff>:/icon/resources/base/fonts/fontawesome/test_custom#666666.png</iconset>
         </property>
         <property name="flags">
          <set>ItemIsEnabled</set>
@@ -101,8 +101,8 @@
           <string>良品</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
+          <iconset resource="../../qrc/icon.qrc">
+           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
          </property>
         </item>
         <item>
@@ -110,8 +110,8 @@
           <string>不良品</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../icon.qrc">
-           <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</iconset>
+          <iconset resource="../../qrc/icon.qrc">
+           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</iconset>
          </property>
         </item>
        </item>
@@ -140,7 +140,7 @@
              <x>0</x>
              <y>0</y>
              <width>546</width>
-             <height>434</height>
+             <height>448</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -314,30 +314,8 @@
          <bold>true</bold>
         </font>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton#train_button
-{
-   margin: 0 0px;
-   padding: 0 20px;
-   border-radius: 20px;
-   background-color: #3e3e3e;
-   border: 1px solid #666666;
-   color: #f5f5f5;
-   height: 42px;
-}
-
-QPushButton:pressed#train_button
-{
-   background-color: #4298F9;
-   border: 1px solid #4298F9;
-}</string>
-       </property>
        <property name="text">
         <string>トレーニング</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../icon.qrc">
-         <normaloff>:/icon/assets/fonts/fontawesome/dumbbell#ffffff.png</normaloff>:/icon/assets/fonts/fontawesome/dumbbell#ffffff.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -355,11 +333,11 @@ QPushButton:pressed#train_button
   </layout>
   <action name="select_images_action">
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</iconset>
    </property>
    <property name="text">
-    <string>既存の画像</string>
+    <string>既存の画像 </string>
    </property>
    <property name="toolTip">
     <string>既存の画像</string>
@@ -367,8 +345,8 @@ QPushButton:pressed#train_button
   </action>
   <action name="camera_action">
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</iconset>
    </property>
    <property name="text">
     <string>カメラで撮影</string>
@@ -379,7 +357,7 @@ QPushButton:pressed#train_button
   </action>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -8,7 +8,7 @@ from view.past_result import PastResultWidget
 from model.project import Project
 from model.learning_model import LearningModel
 from model.fbs import AppInfo
-import pathlib
+from pathlib import Path
 from PyQt5.QtGui import QMovie
 
 
@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
             self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
             self.ui.optimization_action.setChecked(True)
 
-        loader_gif_path = pathlib.Path('../../../assets/images/loader.gif').resolve()
+        loader_gif_path = Path('src/main/resources/base/images/loader.gif').resolve()
         self.loader = QMovie(str(loader_gif_path))
         self.loader.start()
         self.loader_label = QLabel()
