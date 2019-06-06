@@ -22,7 +22,7 @@
    <item>
     <widget class="QStackedWidget" name="stacked_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="loading_page">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -127,8 +127,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../../../icon.qrc">
-               <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</iconset>
+              <iconset resource="../../qrc/icon.qrc">
+               <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -462,7 +462,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

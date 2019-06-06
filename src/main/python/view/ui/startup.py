@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/startup.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/startup.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -77,7 +77,7 @@ class Ui_StartupWidget(object):
         font.setStrikeOut(False)
         self.logo_icon_label.setFont(font)
         self.logo_icon_label.setText("")
-        self.logo_icon_label.setPixmap(QtGui.QPixmap(":/logo/assets/images/SDTest_logo.png"))
+        self.logo_icon_label.setPixmap(QtGui.QPixmap(":/logo/resources/base/images/SDTest_logo.png"))
         self.logo_icon_label.setScaledContents(True)
         self.logo_icon_label.setAlignment(QtCore.Qt.AlignCenter)
         self.logo_icon_label.setObjectName("logo_icon_label")
@@ -112,6 +112,7 @@ class Ui_StartupWidget(object):
 "font-size: 14px;\n"
 "")
         self.label.setTextFormat(QtCore.Qt.PlainText)
+        self.label.setPixmap(QtGui.QPixmap(":/icon2/fonts/fontawesome/octicons_4-3-0_light-bulb_32_4_3e3e3e_none.png"))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout_1.addWidget(self.label)
@@ -127,12 +128,9 @@ class Ui_StartupWidget(object):
         self.new_project_button.setSizePolicy(sizePolicy)
         self.new_project_button.setMinimumSize(QtCore.QSize(240, 0))
         self.new_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
-        self.new_project_button.setStyleSheet("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.new_project_button.setIcon(icon)
-        self.new_project_button.setIconSize(QtCore.QSize(16, 16))
-        self.new_project_button.setCheckable(False)
         self.new_project_button.setChecked(False)
         self.new_project_button.setAutoRepeat(False)
         self.new_project_button.setAutoExclusive(False)
@@ -140,16 +138,15 @@ class Ui_StartupWidget(object):
         self.new_project_button.setObjectName("new_project_button")
         self.horizontalLayout.addWidget(self.new_project_button)
         self.open_project_button = QtWidgets.QPushButton(StartupWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.open_project_button.sizePolicy().hasHeightForWidth())
         self.open_project_button.setSizePolicy(sizePolicy)
         self.open_project_button.setMinimumSize(QtCore.QSize(240, 0))
         self.open_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
-        self.open_project_button.setStyleSheet("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icon/assets/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.open_project_button.setIcon(icon1)
         self.open_project_button.setIconSize(QtCore.QSize(16, 16))
         self.open_project_button.setObjectName("open_project_button")
@@ -168,9 +165,9 @@ class Ui_StartupWidget(object):
         StartupWidget.setWindowTitle(_translate("StartupWidget", "Form"))
         self.logo_title_label.setText(_translate("StartupWidget", "Software-Defined Test"))
         self.label.setText(_translate("StartupWidget", "Version 0.5"))
-        self.new_project_button.setText(_translate("StartupWidget", "新規プロジェクト "))
+        self.new_project_button.setText(_translate("StartupWidget", "新規プロジェク ト"))
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
 
 
-import icon_rc
-import logo_rc
+from qrc import icon_rc
+from qrc import logo_rc
