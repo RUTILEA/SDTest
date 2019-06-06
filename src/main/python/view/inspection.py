@@ -137,7 +137,7 @@ class InspectionWidget(QWidget):
             timestamp = str(datetime.now().isoformat()).replace(':', '-')
             file_name = f'camera_0_{timestamp}.{ext}'
             copy2(image_path, Project.project_path() + '/tmp/' + file_name)
-            self.learning_model.predict([image_path])
+            self.learning_model.predict([Project.project_path() + '/tmp/' + file_name])
             self.ui.inspect_button.setDisabled(True)
             self.ui.inspect_existing_image_button.setDisabled(True)
 
