@@ -1,4 +1,5 @@
-﻿from pathlib import Path
+﻿from math import ceil
+from pathlib import Path
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QMovie
@@ -64,7 +65,7 @@ class TestWidget(QWidget):
             slider_min = self.ui.threshold_slider.minimum()
             slider_range = self.ui.threshold_slider.maximum() - slider_min
             threshold = self.learning_model.threshold
-            slider_value = slider_min + (threshold - results.min_distance) * slider_range / distance_range
+            slider_value = ceil(slider_min + (threshold - results.min_distance) * slider_range / distance_range)
         else:
             slider_value = self.ui.threshold_slider.maximum()
         self.ui.threshold_slider.setValue(slider_value)

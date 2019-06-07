@@ -36,11 +36,11 @@ class TestResults(object):
 
     @property
     def true_positive(self) -> int:
-        return len([ok for ok in self.distances_of_ok_images if ok >= LearningModel.default().threshold])
+        return len([ok for ok in self.distances_of_ok_images if ok > LearningModel.default().threshold])
 
     @property
     def true_negative(self) -> int:
-        return len([ng for ng in self.distances_of_ng_images if ng < LearningModel.default().threshold])
+        return len([ng for ng in self.distances_of_ng_images if ng <= LearningModel.default().threshold])
 
     @property
     def false_positive(self) -> int:

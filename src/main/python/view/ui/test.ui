@@ -117,7 +117,7 @@
            <item>
             <widget class="QPushButton" name="about_threshold_button">
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;閾値とは&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;AIが&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;と&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を判別する境界です。この値を変更すると、AIの性能が変化します。&lt;br/&gt;性能評価の&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;正解率&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;が高く&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;、&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;見逃し率&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;が低く&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;なるよう調整するのをおすすめします。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;閾値とは&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;AIが&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;と&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を判別する境界値です。まず、検出の際、AIは各画像の「&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;正常らしさ&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;」を計算します。そして、その「&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;正常らしさ&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;」が閾値以下の画像を&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;、閾値以上の画像を&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を見逃しにくくなる一方、&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;
@@ -272,7 +272,7 @@
                 <x>70</x>
                 <y>80</y>
                 <width>111</width>
-                <height>98</height>
+                <height>91</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="performance_rates_area">

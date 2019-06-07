@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/test.ui'
+# Form implementation generated from reading ui file '/Users/Yusaku/Development/RUTILEA/SDTest/src/main/python/view/ui/test.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Test(object):
     def setupUi(self, Test):
@@ -120,7 +119,7 @@ class Ui_Test(object):
         self.performance_chart_widget.setStyleSheet("")
         self.performance_chart_widget.setObjectName("performance_chart_widget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.performance_chart_background)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 80, 111, 98))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 80, 111, 91))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.performance_rates_area = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.performance_rates_area.setContentsMargins(0, 0, 0, 0)
@@ -199,7 +198,7 @@ class Ui_Test(object):
         _translate = QtCore.QCoreApplication.translate
         Test.setWindowTitle(_translate("Test", "Form"))
         self.threshold_title_label.setText(_translate("Test", "閾値"))
-        self.about_threshold_button.setToolTip(_translate("Test", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">閾値とは<br/></span><span style=\" font-size:14pt;\">AIが</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">と</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を判別する境界です。この値を変更すると、AIの性能が変化します。<br/>性能評価の</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">正解率</span><span style=\" font-size:14pt; font-weight:600;\">が高く</span><span style=\" font-size:14pt;\">、</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">見逃し率</span><span style=\" font-size:14pt; font-weight:600;\">が低く</span><span style=\" font-size:14pt;\">なるよう調整するのをおすすめします。</span></p></body></html>"))
+        self.about_threshold_button.setToolTip(_translate("Test", "<html><head/><body><p><span style=\" font-size:14pt;\">閾値とは</span></p><p><span style=\" font-size:14pt;\">AIが</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">と</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を判別する境界値です。まず、検出の際、AIは各画像の「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」を計算します。そして、その「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」が閾値以下の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">、閾値以上の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を見逃しにくくなる一方、</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。</span></p></body></html>"))
         self.performance_title_label.setText(_translate("Test", "性能評価"))
         self.correct_rate_title_label.setText(_translate("Test", "正解率"))
         self.correct_rate_label.setText(_translate("Test", "97%"))
@@ -207,6 +206,5 @@ class Ui_Test(object):
         self.false_positive_rate_label.setText(_translate("Test", "2%"))
         self.false_negative_rate_title_label.setText(_translate("Test", "見逃し率"))
         self.false_negative_rate_label.setText(_translate("Test", "1%"))
-
 
 from qrc import icon_rc
