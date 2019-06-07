@@ -272,7 +272,7 @@
                 <x>70</x>
                 <y>80</y>
                 <width>111</width>
-                <height>98</height>
+                <height>91</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="performance_rates_area">

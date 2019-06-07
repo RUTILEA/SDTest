@@ -119,7 +119,7 @@ class Ui_Test(object):
         self.performance_chart_widget.setStyleSheet("")
         self.performance_chart_widget.setObjectName("performance_chart_widget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.performance_chart_background)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 80, 111, 98))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 80, 111, 91))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.performance_rates_area = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.performance_rates_area.setContentsMargins(0, 0, 0, 0)
