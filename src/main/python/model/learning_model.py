@@ -36,19 +36,23 @@ class TestResults(object):
 
     @property
     def true_positive(self) -> int:
-        return len([ok for ok in self.distances_of_ok_images if ok > LearningModel.default().threshold])
-
-    @property
-    def true_negative(self) -> int:
+        """Number of NG images judged to be NG"""
         return len([ng for ng in self.distances_of_ng_images if ng <= LearningModel.default().threshold])
 
     @property
+    def true_negative(self) -> int:
+        """Number of OK images judged to be OK"""
+        return len([ok for ok in self.distances_of_ok_images if ok > LearningModel.default().threshold])
+
+    @property
     def false_positive(self) -> int:
-        return len(self.distances_of_ok_images) - self.true_positive
+        """Number of OK images judged to be NG"""
+        return len(self.distances_of_ok_images) - self.true_negative
 
     @property
     def false_negative(self) -> int:
-        return len(self.distances_of_ng_images) - self.true_negative
+        """Number of NG images judged to be OK"""
+        return len(self.distances_of_ng_images) - self.true_positive
 
     @property
     def correct_rate(self) -> float:
