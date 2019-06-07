@@ -53,7 +53,7 @@ def freeze(debug=False):
 @command
 def installer():
     generate_version()
-    # fbs.builtin_commands.installer()
+    fbs.builtin_commands.installer()
     code_signing()
 
 
