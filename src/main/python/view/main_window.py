@@ -1,6 +1,6 @@
 ﻿import sys, os, webbrowser
 from PyQt5.QtWidgets import QMainWindow, QActionGroup, QLabel, QFileDialog, QMessageBox
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal
 from view.ui.main_window import Ui_MainWindow
 from view.inspection import InspectionWidget
 from view.ai_optimization import AIOptimizationWidget
@@ -19,7 +19,11 @@ class MainWindow(QMainWindow):
     back_to_new_project = pyqtSignal()
 
     def __init__(self):
-        QMainWindow.__init__(self)
+        super().__init__()
+
+        # Disable maximizing window
+        self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint | Qt.CustomizeWindowHint)
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
