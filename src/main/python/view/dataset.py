@@ -1,5 +1,6 @@
 import os
 import shutil
+from distutils.dir_util import copy_tree
 from typing import Optional, Set
 from pathlib import Path
 from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QRect, QSize
@@ -49,8 +50,6 @@ class DatasetWidget(QWidget):
 
         self.capture_dialog: Optional[ImageCaptureDialog] = None
 
-        self.select_area_dialog = None
-
         self.preview_window = PreviewWindow()
 
         self.watcher = QFileSystemWatcher(self)
@@ -58,6 +57,9 @@ class DatasetWidget(QWidget):
                                str(Dataset.images_path(Dataset.Category.TEST_OK)),
                                str(Dataset.images_path(Dataset.Category.TEST_NG))])
         self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
+
+        self.select_area_dialog = SelectAreaDialog()
+        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
 
         LearningModel.default().training_finished.connect(self.on_finished_training)
 
@@ -162,11 +164,26 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
-        # LearningModel.default().start_training()
-        del self.select_area_dialog
-        self.select_area_dialog = SelectAreaDialog()
         self.select_area_dialog.show()
         self.__reload_recent_training_date()
+
+    def on_finished_selecting_area(self, data: tuple):
+        categories = [Dataset.Category.TRAINING_OK, Dataset.Category.TEST_OK, Dataset.Category.TEST_NG]
+        for category in categories:
+            dir_path = Dataset.images_path(category)
+            save_path = Dataset.trimed_path(category)
+            if os.path.exists(save_path):
+                shutil.rmtree(save_path)
+            os.mkdir(save_path)
+            if not data[2]:
+                copy_tree(str(dir_path), str(save_path))
+            else:
+                file_list = os.listdir(dir_path)
+                file_list = [img for img in file_list if
+                                  Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]
+                for file_name in file_list:
+                    Dataset.trim_image(os.path.join(dir_path, file_name), category, data)
+        LearningModel.default().start_training()
 
     def on_dataset_directory_changed(self, directory: str):
         selected_category = self.__selected_dataset_category()

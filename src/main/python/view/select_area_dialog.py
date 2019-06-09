@@ -74,7 +74,7 @@ class SelectAreaDialog(QDialog):
         self.select_area.setZValue(1)
         self.select_area.setPen(Qt.red)
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)
-        print(self.select_area.pos())
+        # print(self.select_area.pos())
         self.original_image_scene.addItem(self.select_area)
 
     # def test(self, position):   # for debug
@@ -82,18 +82,18 @@ class SelectAreaDialog(QDialog):
     #     print(self.select_area.pos())
 
     def on_clicked_ok_button(self):
-        print('zahyo and size')
         if not self.size_flag:
-            position = (0, 0)
+            self.finish_selecting_area.emit(((0, 0), (self.w, self.h), False))
+            self.close()
         else:
             rel_position = self.select_area.pos()
             position = (self.w//2-100+rel_position.x(), self.h//2-100+rel_position.y())
-        print(position)
-        if position[0] < 0 or position[0] > self.w - 201 or position[1] < 0 or position[1] > self.h - 201:
-            print('Error: Please set area contained in the image.')
-        else:
-            self.finish_selecting_area.emit((position, (self.width, self.height)))
-            print('emitted!')
+            if position[0] < 0 or position[0] > self.w - 201 or position[1] < 0 or position[1] > self.h - 201:
+                print('Error: Please set area contained in the image.')
+                self.ui.notation_label.setText('エラー: 切り取る領域は画像内に収まるようにしてください.')
+            else:
+                self.finish_selecting_area.emit((position, (self.width, self.height), True))
+                self.close()
 
     def on_clicked_cancel_button(self):
         self.close()
