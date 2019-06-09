@@ -37,11 +37,7 @@ class StartupWidget(QWidget):
         window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
 
 
-        from view.select_area_dialog import SelectAreaDialog
-
-        # self.main_window = MainWindow()
-        self.main_window = SelectAreaDialog()
-
+        self.main_window = MainWindow()
 
         self.main_window.setWindowTitle(window_title)
         self.main_window.show()

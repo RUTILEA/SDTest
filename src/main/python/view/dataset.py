@@ -7,6 +7,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.ui.dataset import Ui_Dataset
 from view.image_capture_dialog import ImageCaptureDialog
+from view.select_area_dialog import SelectAreaDialog
 from model.project import Project
 from model.learning_model import LearningModel
 from model.dataset import Dataset
@@ -47,6 +48,8 @@ class DatasetWidget(QWidget):
         self.__reload_recent_training_date()
 
         self.capture_dialog: Optional[ImageCaptureDialog] = None
+
+        self.select_area_dialog = None
 
         self.preview_window = PreviewWindow()
 
@@ -159,7 +162,10 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
-        LearningModel.default().start_training()
+        # LearningModel.default().start_training()
+        del self.select_area_dialog
+        self.select_area_dialog = SelectAreaDialog()
+        self.select_area_dialog.show()
         self.__reload_recent_training_date()
 
     def on_dataset_directory_changed(self, directory: str):
