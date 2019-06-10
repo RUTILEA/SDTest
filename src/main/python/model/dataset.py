@@ -45,10 +45,11 @@ class Dataset:
         return cls.images_path(category).joinpath(file_name)
 
     @classmethod
-    def trim_image(cls, path: Path, category: Category, data: tuple):
+    def trim_image(cls, path: Path, save_path: Path, data: tuple):
         img = cv2.imread(path)
         position = data[0]
         size = data[1]
         rect = img[int(position[1]):int(position[1])+size[1], int(position[0]):int(position[0])+size[0]]
         file_name = os.path.basename(path)
-        cv2.imwrite(str(cls.trimmed_path(category).joinpath(file_name)), rect)
+        cv2.imwrite(os.path.join(save_path, file_name), rect)
+

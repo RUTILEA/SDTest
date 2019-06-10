@@ -187,7 +187,8 @@ class DatasetWidget(QWidget):
                 file_list = [img for img in file_list if
                                   Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]
                 for file_name in file_list:
-                    Dataset.trim_image(os.path.join(dir_path, file_name), category, data)
+                    Dataset.trim_image(os.path.join(dir_path, file_name), save_path, data)
+        Project.save_latest_trimming_data(data)
         LearningModel.default().start_training()
 
     def on_dataset_directory_changed(self, directory: str):

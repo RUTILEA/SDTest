@@ -3,6 +3,7 @@ from PyQt5.QtGui import QPixmap, QCursor, QPainter, QTransform
 from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal
 from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
+from model.project import Project
 import os, cv2
 from pathlib import Path
 
@@ -58,7 +59,12 @@ class SelectAreaDialog(QDialog):
         self.resize(self.w+32, self.h+72)
 
     def show_select_area_at_default_position(self):
-        self.select_area = QGraphicsRectItem(QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height))
+        trimming_data = Project.latest_trimming_data()
+        if trimming_data['position']:
+            rect = QRectF(trimming_data['position'][0], trimming_data['position'][1], self.width, self.height)
+        else:
+            rect = QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height)
+        self.select_area = QGraphicsRectItem(rect)
         self.select_area.setZValue(1)
         self.select_area.setPen(Qt.red)
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)

@@ -12,7 +12,7 @@ class Project:
     __project_file_extension = ".sdt"
     __number_of_angles_key = "number_of_angles"
     __latest_threshold_key = "latest_threshold"
-    __latest_trimming_position_key = "latest_trimming_position"
+    __latest_trimming_data_key = "latest_trimming_data"
     __latest_training_date_key = "latest_training_date"
     __latest_dataset_image_path_key = "latest_dataset_image_path"
     __latest_inspection_image_path_key = "latest_inspection_image_path"
@@ -77,6 +77,20 @@ class Project:
         cls.__save_settings()
 
     @classmethod
+    def latest_trimming_data(cls) -> dict:
+        return cls.__settings_dict[cls.__latest_trimming_data_key]
+
+    @classmethod
+    def save_latest_trimming_data(cls, data: tuple):
+        position = data[0]
+        size = data[1]
+        flag = data[2]
+        cls.__settings_dict[cls.__latest_trimming_data_key] = {"position": position,
+                                                               "size": size,
+                                                               "trimmed_flag": flag}
+        cls.__save_settings()
+
+    @classmethod
     def project_name(cls) -> str:
         return cls.__settings_dict[cls.__project_name_key]
 
@@ -103,7 +117,10 @@ class Project:
             cls.__number_of_angles_key: 1,
             cls.__latest_training_date_key: None,
             cls.__latest_dataset_image_path_key: None,
-            cls.__latest_inspection_image_path_key: None
+            cls.__latest_inspection_image_path_key: None,
+            cls.__latest_trimming_data_key: {"position": None,
+                                             "size": None,
+                                             "trimmed_flag": False}
         }
         cls.__project_file_name = project_name
         cls.__save_settings()
