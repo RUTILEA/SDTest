@@ -12,6 +12,7 @@ from view.select_area_dialog import SelectAreaDialog
 from model.project import Project
 from model.learning_model import LearningModel
 from model.dataset import Dataset
+from model.supporting_model import TrimmingData
 
 
 class Thumbnail(QObject):
@@ -172,7 +173,7 @@ class DatasetWidget(QWidget):
         self.select_area_dialog.show()
         self.__reload_recent_training_date()
 
-    def on_finished_selecting_area(self, data: tuple):
+    def on_finished_selecting_area(self, data: TrimmingData):
         categories = [Dataset.Category.TRAINING_OK, Dataset.Category.TEST_OK, Dataset.Category.TEST_NG]
         for category in categories:
             dir_path = Dataset.images_path(category)
@@ -180,7 +181,7 @@ class DatasetWidget(QWidget):
             if os.path.exists(save_path):
                 shutil.rmtree(save_path)
             os.mkdir(save_path)
-            if not data[2]:
+            if not data.needs_trimming:
                 copy_tree(str(dir_path), str(save_path))
             else:
                 file_list = os.listdir(dir_path)

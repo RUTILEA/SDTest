@@ -129,9 +129,7 @@ class LearningModel(QObject):
     def start_predict(self, image_paths):
         image_path = image_paths[0]
         trimming_data = Project.latest_trimming_data()
-        Dataset.trim_image(image_path, os.path.dirname(image_path), (trimming_data['position'],
-                                                                     trimming_data['size'],
-                                                                     trimming_data['trimmed_flag']))
+        Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
         self.predicting_start.emit()
         predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
         predict_thread.start()

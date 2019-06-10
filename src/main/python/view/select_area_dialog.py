@@ -1,15 +1,17 @@
-﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, qApp
-from PyQt5.QtGui import QPixmap, QCursor, QPainter, QTransform
+﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem
+from PyQt5.QtGui import QPixmap, QColor
 from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal
 from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
 from model.project import Project
+from model.supporting_model import TrimmingData
 import os, cv2
 from pathlib import Path
 
+
 class SelectAreaDialog(QDialog):
 
-    finish_selecting_area = pyqtSignal(tuple)
+    finish_selecting_area = pyqtSignal(TrimmingData)
 
     def __init__(self):
         super().__init__()
@@ -60,19 +62,20 @@ class SelectAreaDialog(QDialog):
 
     def show_select_area_at_default_position(self):
         trimming_data = Project.latest_trimming_data()
-        if trimming_data['position']:
-            rect = QRectF(trimming_data['position'][0], trimming_data['position'][1], self.width, self.height)
+        if trimming_data.position:
+            rect = QRectF(trimming_data.position[0], trimming_data.position[1], self.width, self.height)
         else:
             rect = QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height)
         self.select_area = QGraphicsRectItem(rect)
         self.select_area.setZValue(1)
-        self.select_area.setPen(Qt.red)
+        self.select_area.setPen(QColor('#ffa00e'))
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)
         self.original_image_scene.addItem(self.select_area)
 
     def on_clicked_ok_button(self):
         if not self.size_flag:
-            self.finish_selecting_area.emit(((0, 0), (self.w, self.h), False))
+            trimming_data = TrimmingData(position=(0, 0), size=(self.w, self.h), needs_trimming=False)
+            self.finish_selecting_area.emit(trimming_data)
             self.close()
         else:
             rel_position = self.select_area.pos()
@@ -81,7 +84,8 @@ class SelectAreaDialog(QDialog):
                 print('Error: Please set area contained in the image.')
                 self.ui.notation_label.setText('エラー: 切り取る領域は画像内に収まるようにしてください.')
             else:
-                self.finish_selecting_area.emit((position, (self.width, self.height), True))
+                trimming_data = TrimmingData(position=position, size=(self.width, self.height), needs_trimming=True)
+                self.finish_selecting_area.emit(trimming_data)
                 self.close()
 
     def on_clicked_cancel_button(self):

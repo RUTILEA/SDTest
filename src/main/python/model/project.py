@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+from model.supporting_model import TrimmingData
 
 
 class Project:
@@ -77,17 +78,17 @@ class Project:
         cls.__save_settings()
 
     @classmethod
-    def latest_trimming_data(cls) -> dict:
-        return cls.__settings_dict[cls.__latest_trimming_data_key]
+    def latest_trimming_data(cls) -> TrimmingData:
+        trimming_data_dict = cls.__settings_dict[cls.__latest_trimming_data_key]
+        return TrimmingData(position=trimming_data_dict['position'],
+                            size=trimming_data_dict['size'],
+                            needs_trimming=trimming_data_dict['needs_trimming'])
 
     @classmethod
-    def save_latest_trimming_data(cls, data: tuple):
-        position = data[0]
-        size = data[1]
-        flag = data[2]
-        cls.__settings_dict[cls.__latest_trimming_data_key] = {"position": position,
-                                                               "size": size,
-                                                               "trimmed_flag": flag}
+    def save_latest_trimming_data(cls, data: TrimmingData):
+        cls.__settings_dict[cls.__latest_trimming_data_key] = {"position": data.position,
+                                                               "size": data.size,
+                                                               "needs_trimming": data.needs_trimming}
         cls.__save_settings()
 
     @classmethod
@@ -120,7 +121,7 @@ class Project:
             cls.__latest_inspection_image_path_key: None,
             cls.__latest_trimming_data_key: {"position": None,
                                              "size": None,
-                                             "trimmed_flag": False}
+                                             "needs_trimming": False}
         }
         cls.__project_file_name = project_name
         cls.__save_settings()
