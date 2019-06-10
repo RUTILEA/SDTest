@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dataset(object):
     def setupUi(self, Dataset):
         Dataset.setObjectName("Dataset")
-        Dataset.resize(840, 600)
+        Dataset.resize(840, 486)
         font = QtGui.QFont()
         font.setPointSize(9)
         Dataset.setFont(font)
@@ -68,7 +68,7 @@ class Ui_Dataset(object):
         self.images_scroll_area.setWidgetResizable(True)
         self.images_scroll_area.setObjectName("images_scroll_area")
         self.images_scroll_area_widget_contents = QtWidgets.QWidget()
-        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 448))
+        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 546, 334))
         self.images_scroll_area_widget_contents.setStyleSheet("border: none;\n"
 "")
         self.images_scroll_area_widget_contents.setObjectName("images_scroll_area_widget_contents")

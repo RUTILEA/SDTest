@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Test(object):
     def setupUi(self, Test):
         Test.setObjectName("Test")
-        Test.resize(840, 640)
+        Test.resize(840, 486)
         font = QtGui.QFont()
         font.setPointSize(9)
         Test.setFont(font)
@@ -112,15 +112,15 @@ class Ui_Test(object):
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.performance_chart_area.addItem(spacerItem4)
         self.performance_chart_background = QtWidgets.QWidget(self.result_page)
-        self.performance_chart_background.setMinimumSize(QtCore.QSize(250, 250))
+        self.performance_chart_background.setMinimumSize(QtCore.QSize(280, 280))
         self.performance_chart_background.setStyleSheet("background-color: transparent")
         self.performance_chart_background.setObjectName("performance_chart_background")
         self.performance_chart_widget = QtWidgets.QWidget(self.performance_chart_background)
-        self.performance_chart_widget.setGeometry(QtCore.QRect(0, 0, 250, 250))
+        self.performance_chart_widget.setGeometry(QtCore.QRect(0, 0, 280, 280))
         self.performance_chart_widget.setStyleSheet("")
         self.performance_chart_widget.setObjectName("performance_chart_widget")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.performance_chart_background)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 80, 111, 91))
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.performance_chart_widget)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(80, 90, 111, 98))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.performance_rates_area = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.performance_rates_area.setContentsMargins(0, 0, 0, 0)
@@ -182,7 +182,7 @@ class Ui_Test(object):
         self.false_negative_rate_area.addWidget(self.false_negative_rate_label)
         self.performance_rates_area.addLayout(self.false_negative_rate_area)
         self.performance_chart_area.addWidget(self.performance_chart_background)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.performance_chart_area.addItem(spacerItem9)
         self.performance_area.addLayout(self.performance_chart_area)
         spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -192,7 +192,7 @@ class Ui_Test(object):
         self.horizontalLayout.addWidget(self.stacked_widget)
 
         self.retranslateUi(Test)
-        self.stacked_widget.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Test)
 
     def retranslateUi(self, Test):
