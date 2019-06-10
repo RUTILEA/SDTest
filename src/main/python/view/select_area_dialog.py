@@ -31,20 +31,11 @@ class SelectAreaDialog(QDialog):
             self.show_select_area_at_default_position()
         else:
             self.ui.notation_label.setText('この画像サイズは十分小さいため, 画像全体でトレーニングを行います.'
-                                           '\nこのまま完了ボタンを押してください.')
-            # self.ui.notation_label.setMaximumsize()
+                                           '\nこのままトレーニング開始ボタンを押してください.')
             pass
-
 
         self.ui.ok_button.clicked.connect(self.on_clicked_ok_button)
         self.ui.cancel_button.clicked.connect(self.on_clicked_cancel_button)
-
-        # self.original_image_scene.on_mouse_released.connect(self.test)
-        # print(self.original_image_shape)
-        # print(self.original_image_scene.sceneRect())
-        # print(self.size())
-        # print(self.ui.original_image_view.maximumSize())
-        # print(self.ui.original_image_view.baseSize())
 
     def get_ng_sample_image_path(self):
         test_ng_path = str(Dataset.images_path(Dataset.Category.TEST_NG))
@@ -54,11 +45,9 @@ class SelectAreaDialog(QDialog):
             return
         original_image_path = os.path.join(test_ng_path, test_ng_images[0])
         original_image = cv2.imread(original_image_path)
-        # print(original_image.shape)
         h, w, c = original_image.shape
         self.h, self.w = h, w
-        original_image_shape = QSize(w+10, h+11)
-        # original_image_rect = QRectF(0, 0, w, h)
+        original_image_shape = QSize(w+2, h+10)
         original_image_item = QGraphicsPixmapItem(QPixmap(original_image_path))
         original_image_item.setZValue(0)
         self.original_image_scene = OriginalImageScene(self)
@@ -66,7 +55,6 @@ class SelectAreaDialog(QDialog):
         self.ui.original_image_view.setScene(self.original_image_scene)
         self.ui.original_image_view.setBaseSize(original_image_shape)
         self.ui.original_image_view.setMaximumSize(original_image_shape)
-        # self.ui.original_image_view.fitInView(original_image_rect, Qt.KeepAspectRatioByExpanding)
         self.resize(self.w+32, self.h+72)
 
     def show_select_area_at_default_position(self):
@@ -74,12 +62,7 @@ class SelectAreaDialog(QDialog):
         self.select_area.setZValue(1)
         self.select_area.setPen(Qt.red)
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)
-        # print(self.select_area.pos())
         self.original_image_scene.addItem(self.select_area)
-
-    # def test(self, position):   # for debug
-    #     print('released')
-    #     print(self.select_area.pos())
 
     def on_clicked_ok_button(self):
         if not self.size_flag:
@@ -104,23 +87,5 @@ class SelectAreaDialog(QDialog):
 
 class OriginalImageScene(QGraphicsScene):
 
-    # on_mouse_released = pyqtSignal(tuple)
-
     def __init__(self, *argv, **keywords):
         super(OriginalImageScene, self).__init__(*argv, **keywords)
-        self.parent_view = self.parent()
-
-    # def mouseReleaseEvent(self, event):
-    #     cursor = QCursor.pos()
-    #     dialog_geometry = self.parent_view.geometry()
-    #     view_geometry = self.parent_view.ui.original_image_view.geometry()
-    #     # print("pressed here: " + str(cursor.x()) + ", " + str(cursor.y()))
-    #     # print("dialog geo: " + str(dialog_geometry.x()) + ", " + str(dialog_geometry.y()))
-    #     # print("view geo: " + str(view_geometry.x()) + ", " + str(view_geometry.y()))
-    #
-    #     position = (cursor.x() - view_geometry.x() - dialog_geometry.x()-1,
-    #                 cursor.y() - view_geometry.y() - dialog_geometry.y()-1)
-    #     print(position)
-    #
-    #     self.on_mouse_released.emit(position)
-

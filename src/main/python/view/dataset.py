@@ -58,8 +58,7 @@ class DatasetWidget(QWidget):
                                str(Dataset.images_path(Dataset.Category.TEST_NG))])
         self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
 
-        self.select_area_dialog = SelectAreaDialog()
-        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
+        self.select_area_dialog = None
 
         LearningModel.default().training_finished.connect(self.on_finished_training)
 
@@ -164,6 +163,9 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
+        del self.select_area_dialog
+        self.select_area_dialog = SelectAreaDialog()
+        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
         self.select_area_dialog.show()
         self.__reload_recent_training_date()
 
@@ -171,7 +173,7 @@ class DatasetWidget(QWidget):
         categories = [Dataset.Category.TRAINING_OK, Dataset.Category.TEST_OK, Dataset.Category.TEST_NG]
         for category in categories:
             dir_path = Dataset.images_path(category)
-            save_path = Dataset.trimed_path(category)
+            save_path = Dataset.trimmed_path(category)
             if os.path.exists(save_path):
                 shutil.rmtree(save_path)
             os.mkdir(save_path)

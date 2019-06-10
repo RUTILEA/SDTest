@@ -28,6 +28,16 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;傷や汚れがつきやすい領域を指定してください。&lt;br/&gt;検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QGraphicsView" name="original_image_view">
@@ -88,7 +98,7 @@
        <item>
         <widget class="QPushButton" name="ok_button">
          <property name="text">
-          <string>完了</string>
+          <string>トレーニング開始</string>
          </property>
          <property name="default">
           <bool>true</bool>

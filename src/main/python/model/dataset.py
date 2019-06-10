@@ -28,7 +28,7 @@ class Dataset:
             assert False
 
     @classmethod
-    def trimed_path(cls, category: Category) -> Path:
+    def trimmed_path(cls, category: Category) -> Path:
         if category is cls.Category.TRAINING_OK:
             return Path(cls._root_path() + '/train/trim')
         elif category is cls.Category.TEST_OK:
@@ -51,4 +51,4 @@ class Dataset:
         size = data[1]
         rect = img[int(position[1]):int(position[1])+size[1], int(position[0]):int(position[0])+size[0]]
         file_name = os.path.basename(path)
-        cv2.imwrite(str(cls.trimed_path(category).joinpath(file_name)), rect)
+        cv2.imwrite(str(cls.trimmed_path(category).joinpath(file_name)), rect)

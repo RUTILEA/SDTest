@@ -25,6 +25,10 @@ class Ui_SelectAreaDialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.label = QtWidgets.QLabel(SelectAreaDialog)
+        self.label.setScaledContents(False)
+        self.label.setObjectName("label")
+        self.verticalLayout_2.addWidget(self.label)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.original_image_view = QtWidgets.QGraphicsView(SelectAreaDialog)
@@ -65,7 +69,8 @@ class Ui_SelectAreaDialog(object):
     def retranslateUi(self, SelectAreaDialog):
         _translate = QtCore.QCoreApplication.translate
         SelectAreaDialog.setWindowTitle(_translate("SelectAreaDialog", "領域を選択"))
+        self.label.setText(_translate("SelectAreaDialog", "<html><head/><body><p>傷や汚れがつきやすい領域を指定してください。<br/>検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。</p></body></html>"))
         self.cancel_button.setText(_translate("SelectAreaDialog", "キャンセル"))
-        self.ok_button.setText(_translate("SelectAreaDialog", "完了"))
+        self.ok_button.setText(_translate("SelectAreaDialog", "トレーニング開始"))
 
 
