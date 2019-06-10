@@ -12,7 +12,10 @@ class Project:
     __project_file_extension = ".sdt"
     __number_of_angles_key = "number_of_angles"
     __latest_threshold_key = "latest_threshold"
+    __latest_trimming_position_key = "latest_trimming_position"
     __latest_training_date_key = "latest_training_date"
+    __latest_dataset_image_path_key = "latest_dataset_image_path"
+    __latest_inspection_image_path_key = "latest_inspection_image_path"
 
     @classmethod
     def project_path(cls) -> str:
@@ -56,6 +59,24 @@ class Project:
         cls.__save_settings()
 
     @classmethod
+    def latest_dataset_image_path(cls) -> str:
+        return cls.__settings_dict[cls.__latest_dataset_image_path_key]
+
+    @classmethod
+    def save_latest_dataset_image_path(cls, image_path: str):
+        cls.__settings_dict[cls.__latest_dataset_image_path_key] = image_path
+        cls.__save_settings()
+
+    @classmethod
+    def latest_inspection_image_path(cls) -> str:
+        return cls.__settings_dict[cls.__latest_inspection_image_path_key]
+
+    @classmethod
+    def save_latest_inspection_image_path(cls, image_path: str):
+        cls.__settings_dict[cls.__latest_inspection_image_path_key] = image_path
+        cls.__save_settings()
+
+    @classmethod
     def project_name(cls) -> str:
         return cls.__settings_dict[cls.__project_name_key]
 
@@ -80,7 +101,9 @@ class Project:
             cls.__project_name_key: project_name,
             cls.__latest_threshold_key: 0,
             cls.__number_of_angles_key: 1,
-            cls.__latest_training_date_key: None
+            cls.__latest_training_date_key: None,
+            cls.__latest_dataset_image_path_key: None,
+            cls.__latest_inspection_image_path_key: None
         }
         cls.__project_file_name = project_name
         cls.__save_settings()

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/Development/RUTILEA/SDTest/src/main/python/view/ui/test.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/test.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Test(object):
     def setupUi(self, Test):
@@ -206,5 +207,6 @@ class Ui_Test(object):
         self.false_positive_rate_label.setText(_translate("Test", "2%"))
         self.false_negative_rate_title_label.setText(_translate("Test", "見逃し率"))
         self.false_negative_rate_label.setText(_translate("Test", "1%"))
+
 
 from qrc import icon_rc

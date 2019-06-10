@@ -136,7 +136,10 @@ class DatasetWidget(QWidget):
             return
 
         ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'
-        source_image_names = QFileDialog.getOpenFileNames(caption='データセットに取り込む', filter=ext_filter)[0]
+        source_image_names = QFileDialog.getOpenFileNames(caption='データセットに取り込む',
+                                                          filter=ext_filter,
+                                                          directory=Project.latest_dataset_image_path())[0]
+        Project.save_latest_dataset_image_path(os.path.dirname(source_image_names[0]))
         if source_image_names:
             for source_image_name in source_image_names:
                 try:

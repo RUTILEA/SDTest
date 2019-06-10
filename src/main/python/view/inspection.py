@@ -130,7 +130,12 @@ class InspectionWidget(QWidget):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
 
     def on_clicked_inspection_existing_image_button(self):
-        original_image_path, _ = QFileDialog.getOpenFileName(self, 'Open Directory', os.path.expanduser('~'))
+        ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'
+        original_image_path, _ = QFileDialog.getOpenFileName(self,
+                                                             caption='Open Directory',
+                                                             filter=ext_filter,
+                                                             directory=Project.latest_inspection_image_path())
+        Project.save_latest_inspection_image_path(os.path.dirname(original_image_path))
         if original_image_path:
             _, ext = os.path.splitext(original_image_path)
             # TODO: manage image name format (e.x. use Dataset.generate_image_path())
