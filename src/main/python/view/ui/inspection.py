@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'inspection.ui'
+# Form implementation generated from reading ui file '/Users/shibatakyousuke/Development/RUTILEA/SDTest/src/main/python/view/ui/inspection.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -26,7 +26,7 @@ class Ui_inspection(object):
         self.horizontalLayout_7.addItem(spacerItem1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.camera_preview = QCameraViewfinder(inspection)
+        self.camera_preview = QCameraViewFinderWithGuide(inspection)
         self.camera_preview.setMinimumSize(QtCore.QSize(152, 102))
         self.camera_preview.setStyleSheet("background-color: #f5f5f5;\n"
 "border: 1px solid #aaaaaa;\n"
@@ -51,6 +51,7 @@ class Ui_inspection(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.select_camera_button.sizePolicy().hasHeightForWidth())
         self.select_camera_button.setSizePolicy(sizePolicy)
+        self.select_camera_button.setShortcut("")
         self.select_camera_button.setObjectName("select_camera_button")
         self.horizontalLayout_3.addWidget(self.select_camera_button)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -281,5 +282,5 @@ class Ui_inspection(object):
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
 
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
+from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from qrc import icon_rc
