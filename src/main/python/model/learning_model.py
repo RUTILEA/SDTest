@@ -3,6 +3,7 @@ from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
 import numpy as np
+import threading
 
 
 class TestResults(object):
@@ -94,17 +95,12 @@ class LearningModel(QObject):
 
     def __init__(self):
         super().__init__()
-        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor')
+
+        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='isolationforest')
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
-
-        self.__predicting_thread = PredictingThread(self.__model)
-        self.__predicting_thread.finished.connect(self.predicting_finished)
-        self.__training_thread = TrainingThread(self.__model)
-        self.__training_thread.finished.connect(self.on_training_finished)
-        self.__test_thread = TestThread(self.__model, self)
-        self.__test_thread.finished.connect(self.on_test_finished)
+        self.__training_thread = None
 
     @property
     def threshold(self) -> float:
@@ -117,27 +113,27 @@ class LearningModel(QObject):
 
     def start_training(self):
         self.training_start.emit()
+        self.__training_thread = threading.Thread(target=self.train)
         self.__training_thread.start()
 
-    def on_training_finished(self):
+    def train(self):
+        self.__model.fit_in_dir(str(Dataset.images_path(Dataset.Category.TRAINING_OK)))
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
-    def cancel_training(self):
-        self.__training_thread.exit()
-
     def load_weights(self):
         self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
 
-    def predict(self, image_paths):
+    def start_predict(self, image_paths):
         self.predicting_start.emit()
-        self.__predicting_thread.set_image_paths(image_paths)
-        self.__predicting_thread.start()
+        predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
+        predict_thread.start()
 
-    def on_predicting_finished(self, result):
-        self.predicting_finished.emit(result)
+    def predict(self, image_paths):
+        scores = self.__model.predict_paths(image_paths)
+        self.predicting_finished.emit({'scores': list(scores), 'image_paths': image_paths})
 
     def test_if_needed(self):
         if not self.__should_test:
@@ -145,14 +141,22 @@ class LearningModel(QObject):
             return
 
         # TODO: check if test images exist
+        test_thread = threading.Thread(target=self.test)
+        test_thread.start()
 
-        self.__test_thread.start()
-
-    def on_test_finished(self):
-        if self.test_results.distances_of_ng_images.size != 0:
-            self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
-            self.__should_test = False
-        self.test_finished.emit()
+    def test(self):
+        try:
+            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_OK)))
+            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_NG)))
+            self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
+            if self.test_results.distances_of_ng_images.size != 0:
+                self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
+                self.__should_test = False
+            self.test_finished.emit()
+        except IndexError:  # TODO: handle as UndoneTrainingError
+            print('TODO: tell the user to train')
+        except OSError:
+            print('TODO: repair directory for test images')
 
     @classmethod
     def __weight_file_path(cls, cam_index: int) -> str:
@@ -173,42 +177,3 @@ class PredictingThread(QThread):
     def run(self):
         scores = self.__model.predict_paths(self.__image_paths)
         self.finished.emit({'scores': list(scores), 'image_paths': self.__image_paths})
-
-
-class TrainingThread(QThread):
-    def __init__(self, model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-
-    def set_image_path(self, image_path):
-        self.__image_paths = image_path
-
-    def run(self):
-        try:
-            self.__model.fit_in_dir(str(Dataset.images_path(Dataset.Category.TRAINING_OK)))
-        except OSError:
-            print('TODO: repair directory for training images')
-
-
-class TestThread(QThread):
-    finished = pyqtSignal()
-
-    def __init__(self, model, learning_model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-        self.__learning_model = learning_model
-
-    def run(self):
-        try:
-            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_OK)))
-            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_NG)))
-            self.__learning_model.test_results.reload(distances_of_ok_images=pred_of_ok_images,
-                                                      distances_of_ng_images=pred_of_ng_images)
-            self.finished.emit()
-        except IndexError:  # TODO: handle as UndoneTrainingError
-            print('TODO: tell the user to train')
-            self.finished.emit()
-        except OSError:
-            print('TODO: repair directory for test images')
