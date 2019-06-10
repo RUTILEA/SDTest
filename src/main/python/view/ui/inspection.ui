@@ -59,7 +59,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QCameraViewfinder" name="camera_preview" native="true">
+        <widget class="QCameraViewFinderWithGuide" name="camera_preview" native="true">
          <property name="minimumSize">
           <size>
            <width>152</width>
@@ -115,6 +115,9 @@ min-height: 100px;
             </property>
             <property name="text">
              <string>表示するカメラを選択</string>
+            </property>
+            <property name="shortcut">
+             <string/>
             </property>
            </widget>
           </item>
@@ -598,9 +601,9 @@ border:none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QCameraViewfinder</class>
+   <class>QCameraViewFinderWithGuide</class>
    <extends>QWidget</extends>
-   <header>PyQt5.QtMultimediaWidgets.h</header>
+   <header>view.q_camera_view_finder_with_guide.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
