@@ -95,7 +95,7 @@ class InspectionWidget(QWidget):
     def on_image_saved(self, image_path):
         # FIXME: refactor the structure of camera model class not to call this function from camera_model.capture
         if os.path.basename(os.path.dirname(image_path)) == 'tmp':
-            self.learning_model.predict([image_path])
+            self.learning_model.start_predict([image_path])
 
     def on_finished_predicting(self, result):
         image_path = result['image_paths'][0]
@@ -138,7 +138,7 @@ class InspectionWidget(QWidget):
             file_name = f'camera_0_{timestamp}.{ext}'
             copied_image_path = Project.project_path() + '/tmp/' + file_name
             copy2(original_image_path, copied_image_path)
-            self.learning_model.predict([copied_image_path])
+            self.learning_model.start_predict([copied_image_path])
             self.ui.inspect_button.setDisabled(True)
             self.ui.inspect_existing_image_button.setDisabled(True)
 
