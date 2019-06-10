@@ -69,7 +69,7 @@ class Ui_SelectAreaDialog(object):
     def retranslateUi(self, SelectAreaDialog):
         _translate = QtCore.QCoreApplication.translate
         SelectAreaDialog.setWindowTitle(_translate("SelectAreaDialog", "領域を選択"))
-        self.label.setText(_translate("SelectAreaDialog", "<html><head/><body><p>傷や汚れがつきやすい領域を指定してください。<br/>検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。</p></body></html>"))
+        self.label.setText(_translate("SelectAreaDialog", "<html><head/><body><p><span style=\" font-family:\'.Hiragino Kaku Gothic Interface\';\">傷や汚れ等、欠陥が発生しやすい領域</span>を指定してください。<br/>検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。</p></body></html>"))
         self.cancel_button.setText(_translate("SelectAreaDialog", "キャンセル"))
         self.ok_button.setText(_translate("SelectAreaDialog", "トレーニング開始"))
 
