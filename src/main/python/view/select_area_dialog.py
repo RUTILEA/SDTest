@@ -50,7 +50,7 @@ class SelectAreaDialog(QDialog):
         original_image_shape = QSize(w+2, h+10)
         original_image_item = QGraphicsPixmapItem(QPixmap(original_image_path))
         original_image_item.setZValue(0)
-        self.original_image_scene = OriginalImageScene(self)
+        self.original_image_scene = QGraphicsScene()
         self.original_image_scene.addItem(original_image_item)
         self.ui.original_image_view.setScene(self.original_image_scene)
         self.ui.original_image_view.setBaseSize(original_image_shape)
@@ -83,9 +83,3 @@ class SelectAreaDialog(QDialog):
 
     def closeEvent(self, QCloseEvent):
         self.close()
-
-
-class OriginalImageScene(QGraphicsScene):
-
-    def __init__(self, *argv, **keywords):
-        super(OriginalImageScene, self).__init__(*argv, **keywords)
