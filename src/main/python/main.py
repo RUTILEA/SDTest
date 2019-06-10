@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import QStyleFactory
 from view.startup import StartupWidget
 from model.fbs import AppInfo
-from fbs_runtime.application_context import ApplicationContext, cached_property, is_frozen
+from fbs_runtime.application_context import cached_property, is_frozen
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from fbs_runtime.excepthook.sentry import SentryExceptionHandler
 
 import sys

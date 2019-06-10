@@ -1,4 +1,4 @@
-from fbs_runtime.application_context import ApplicationContext
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from os.path import exists, abspath, dirname
 from pathlib import Path
 
