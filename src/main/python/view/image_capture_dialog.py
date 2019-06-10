@@ -1,9 +1,9 @@
 ﻿from PyQt5.QtWidgets import QDialog
 from view.ui.capture_images import Ui_CaptureImages
 from view.camera_list import CameraList
+from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from model.camera_model import CameraModel
 from PyQt5.QtMultimedia import QCamera
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from typing import Dict
 
 
@@ -20,7 +20,7 @@ class ImageCaptureDialog(QDialog):
         self.image_save_location = image_save_location
         self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
 
-        self.view_finder = QCameraViewfinder()
+        self.view_finder = QCameraViewFinderWithGuide()
         self.ui.grid.addWidget(self.view_finder, 0, 0)
         self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
 
@@ -52,4 +52,3 @@ class ImageCaptureDialog(QDialog):
 
     def on_closed_camera_list(self):
         self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
-
