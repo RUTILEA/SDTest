@@ -12,6 +12,7 @@ class Project:
     __project_file_extension = ".sdt"
     __number_of_angles_key = "number_of_angles"
     __latest_threshold_key = "latest_threshold"
+    __latest_trimming_position_key = "latest_trimming_position"
     __latest_training_date_key = "latest_training_date"
     __latest_dataset_image_path_key = "latest_dataset_image_path"
     __latest_inspection_image_path_key = "latest_inspection_image_path"
