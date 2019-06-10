@@ -67,11 +67,11 @@ Download the latest [release][link-github-release] and run the installer.
 - Activate the virtual environment as your OS:
     - On Mac/Linux: `source venv/bin/activate`
     - On Windows: `call venv\scripts\activate.bat`
-- `pip install -r requirements/base.txt` installs the required libraries (most notably, fbs and PyQt5). If this produces errors, try `pip install wheel` first and try again.
-- `pip install -r requirements/(YOUR-OS).txt` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
+- `pip install -r requirements/base.txt -U` installs the required libraries (most notably, fbs and PyQt5). If this produces errors, try `pip install wheel` first and try again.
+- `pip install -r requirements/(YOUR-OS).txt -U` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
 
 ### Run the app
-- `src\build.py run` executes the app and you can debug it on console
+- `python src\build.py run` executes the app and you can debug it on console
 
 ### Create an UI file (.ui)
 
@@ -88,15 +88,15 @@ Download the latest [release][link-github-release] and run the installer.
    stored together there.
 
 ### Deployment
-- `src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder 
+- `python src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder 
   `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
-- `src\build.py installer` generates the app's installer into `targets/`. On Windows, this would be an executable 
+- `python src\build.py installer` generates the app's installer into `targets/`. On Windows, this would be an executable 
   called `SDTestSetup.exe`. Before you can use the installer command on Windows, please install [NSIS][link-nsis] and 
   add its installation directory to your `PATH` environment variable. 
 
 #### Debugging of the standalone executable
-- `src\build.py clean`
-- `src\build.py freeze --debug`
+- `python src\build.py clean`
+- `python src\build.py freeze --debug`
 - `./target/SDTest/SDTest.exe` executes the app and you can debug it on console like `src\build.py run`
 
 #### Code-Sign the executables
