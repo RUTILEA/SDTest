@@ -30,7 +30,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;傷や汚れがつきやすい領域を指定してください。&lt;br/&gt;検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'.Hiragino Kaku Gothic Interface';&quot;&gt;傷や汚れ等、欠陥が発生しやすい領域&lt;/span&gt;を指定してください。&lt;br/&gt;検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="scaledContents">
         <bool>false</bool>
