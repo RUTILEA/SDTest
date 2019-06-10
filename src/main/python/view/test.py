@@ -1,4 +1,5 @@
-﻿from math import ceil
+﻿from fbs_runtime.application_context.PyQt5 import ApplicationContext
+from math import ceil
 from pathlib import Path
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QSize
@@ -21,8 +22,9 @@ class TestWidget(QWidget):
         self.ui = Ui_Test()
         self.ui.setupUi(self)
 
-        loader_gif_path = Path('src/main/resources/base/images/loader.gif').resolve()
-        self.loader = QMovie(str(loader_gif_path))
+        appctxt = ApplicationContext()
+        loader_gif_path = appctxt.get_resource('images/loader.gif')
+        self.loader = QMovie(loader_gif_path)
         self.loader.setScaledSize(QSize(30, 8))
         self.ui.loading_gif_label.setMovie(self.loader)
         self.loader.start()

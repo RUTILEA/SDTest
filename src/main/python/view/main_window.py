@@ -1,4 +1,5 @@
 ﻿import sys, os, webbrowser
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QMainWindow, QActionGroup, QLabel, QFileDialog, QMessageBox
 from PyQt5.QtCore import Qt, pyqtSignal
 from view.ui.main_window import Ui_MainWindow
@@ -74,8 +75,9 @@ class MainWindow(QMainWindow):
             self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
             self.ui.optimization_action.setChecked(True)
 
-        loader_gif_path = Path('src/main/resources/base/images/loader.gif').resolve()
-        self.loader = QMovie(str(loader_gif_path))
+        appctxt = ApplicationContext()
+        loader_gif_path = appctxt.get_resource('images/loader.gif')
+        self.loader = QMovie(loader_gif_path)
         self.loader.start()
         self.loader_label = QLabel()
         self.loader_label.setMovie(self.loader)
