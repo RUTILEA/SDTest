@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+from model.supporting_model import TrimmingData
 
 
 class Project:
@@ -12,7 +13,7 @@ class Project:
     __project_file_extension = ".sdt"
     __number_of_angles_key = "number_of_angles"
     __latest_threshold_key = "latest_threshold"
-    __latest_trimming_position_key = "latest_trimming_position"
+    __latest_trimming_data_key = "latest_trimming_data"
     __latest_training_date_key = "latest_training_date"
     __latest_dataset_image_path_key = "latest_dataset_image_path"
     __latest_inspection_image_path_key = "latest_inspection_image_path"
@@ -77,6 +78,20 @@ class Project:
         cls.__save_settings()
 
     @classmethod
+    def latest_trimming_data(cls) -> TrimmingData:
+        trimming_data_dict = cls.__settings_dict[cls.__latest_trimming_data_key]
+        return TrimmingData(position=trimming_data_dict['position'],
+                            size=trimming_data_dict['size'],
+                            needs_trimming=trimming_data_dict['needs_trimming'])
+
+    @classmethod
+    def save_latest_trimming_data(cls, data: TrimmingData):
+        cls.__settings_dict[cls.__latest_trimming_data_key] = {"position": data.position,
+                                                               "size": data.size,
+                                                               "needs_trimming": data.needs_trimming}
+        cls.__save_settings()
+
+    @classmethod
     def project_name(cls) -> str:
         return cls.__settings_dict[cls.__project_name_key]
 
@@ -103,7 +118,10 @@ class Project:
             cls.__number_of_angles_key: 1,
             cls.__latest_training_date_key: None,
             cls.__latest_dataset_image_path_key: None,
-            cls.__latest_inspection_image_path_key: None
+            cls.__latest_inspection_image_path_key: None,
+            cls.__latest_trimming_data_key: {"position": None,
+                                             "size": None,
+                                             "needs_trimming": False}
         }
         cls.__project_file_name = project_name
         cls.__save_settings()

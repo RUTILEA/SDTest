@@ -3,7 +3,7 @@ from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
 import numpy as np
-import threading
+import threading, os
 
 
 class TestResults(object):
@@ -127,6 +127,9 @@ class LearningModel(QObject):
         self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
 
     def start_predict(self, image_paths):
+        image_path = image_paths[0]
+        trimming_data = Project.latest_trimming_data()
+        Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
         self.predicting_start.emit()
         predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
         predict_thread.start()
