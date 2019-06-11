@@ -1,7 +1,7 @@
 ﻿import sys, os, webbrowser
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QMainWindow, QActionGroup, QLabel, QFileDialog, QMessageBox
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal, QSize
 from view.ui.main_window import Ui_MainWindow
 from view.inspection import InspectionWidget
 from view.ai_optimization import AIOptimizationWidget
@@ -33,6 +33,13 @@ class MainWindow(QMainWindow):
         self.past_result_widget_id = None
 
         self.msgBox = None
+
+        self.inspection_mainwindow_size = QSize(780, 512)
+        self.optimization_mainwindow_size = QSize(864, 640)
+        self.past_result_mainwindow_size = QSize(780, 512)
+        self.inspection_widget_size = QSize(740, 385)
+        self.optimization_widget_size = QSize(842, 532)
+        self.past_result_widget_size = QSize(740, 385)
 
         self.setup_tool_bar()
         self.setup_menu_bar()
@@ -68,11 +75,13 @@ class MainWindow(QMainWindow):
         self.ui.action_group.setExclusive(True)
 
         try:
-            self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
+            # self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
+            self.on_clicked_inspection_button()
             self.ui.inspection_action.setChecked(True)
             LearningModel.default().load_weights()
         except FileNotFoundError:
-            self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
+            # self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
+            self.on_clicked_optimization_button()
             self.ui.optimization_action.setChecked(True)
 
         appctxt = ApplicationContext()
@@ -92,12 +101,18 @@ class MainWindow(QMainWindow):
     def on_clicked_inspection_button(self):
         self.ui.main_stacked_widget.widget(self.inspection_widget_id).set_camera_to_camera_preview()
         self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
+        self.setFixedSize(self.inspection_mainwindow_size)
+        self.ui.main_stacked_widget.setFixedSize(self.inspection_widget_size)
 
     def on_clicked_optimization_button(self):
         self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
+        self.setFixedSize(self.optimization_mainwindow_size)
+        self.ui.main_stacked_widget.setFixedSize(self.optimization_widget_size)
 
     def on_clicked_past_result_button(self):
         self.ui.main_stacked_widget.setCurrentIndex(self.past_result_widget_id)
+        self.setFixedSize(self.past_result_mainwindow_size)
+        self.ui.main_stacked_widget.setFixedSize(self.past_result_widget_size)
 
     def on_triggered_action_open(self):
         save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),

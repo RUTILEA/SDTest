@@ -13,22 +13,20 @@ class Ui_inspection(object):
     def setupUi(self, inspection):
         inspection.setObjectName("inspection")
         inspection.resize(842, 532)
-        inspection.setMinimumSize(QtCore.QSize(842, 532))
         font = QtGui.QFont()
         font.setPointSize(9)
         inspection.setFont(font)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(inspection)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_6.addItem(spacerItem)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.camera_preview = QCameraViewFinderWithGuide(inspection)
-        self.camera_preview.setMinimumSize(QtCore.QSize(152, 102))
         self.camera_preview.setStyleSheet("background-color: #f5f5f5;\n"
 "border: 1px solid #aaaaaa;\n"
 "border-radius: 8px;\n"
@@ -261,10 +259,10 @@ class Ui_inspection(object):
         self.horizontalLayout_2.addWidget(self.NG_counter_label)
         self.verticalLayout_2.addWidget(self.counter)
         self.horizontalLayout_7.addLayout(self.verticalLayout_2)
-        spacerItem10 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem10)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
-        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_6.addItem(spacerItem11)
 
         self.retranslateUi(inspection)
