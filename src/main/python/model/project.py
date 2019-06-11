@@ -96,8 +96,8 @@ class Project:
 
     @classmethod
     def load_settings_file(cls, project_file_path: str):
-        f = open(project_file_path, 'r')
-        cls.__settings_dict = json.load(f)
+        with open(project_file_path, 'r') as f:
+            cls.__settings_dict = json.load(f)
         project_path = Path(project_file_path).parent
         cls.save_project_path(str(project_path))
 
