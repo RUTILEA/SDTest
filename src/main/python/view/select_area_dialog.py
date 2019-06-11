@@ -1,5 +1,5 @@
 ﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem
-from PyQt5.QtGui import QPixmap, QColor
+from PyQt5.QtGui import QPixmap, QColor, QPen
 from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal
 from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
@@ -68,7 +68,10 @@ class SelectAreaDialog(QDialog):
             rect = QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height)
         self.select_area = QGraphicsRectItem(rect)
         self.select_area.setZValue(1)
-        self.select_area.setPen(QColor('#ffa00e'))
+        pen = QPen(QColor('#ffa00e'))
+        pen.setWidth(4)
+        pen.setJoinStyle(Qt.RoundJoin)
+        self.select_area.setPen(pen)
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)
         self.original_image_scene.addItem(self.select_area)
 
