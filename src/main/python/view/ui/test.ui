@@ -258,170 +258,170 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>280</width>
-                <height>280</height>
+                <width>111</width>
+                <height>101</height>
                </rect>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
               </property>
-              <widget class="QWidget" name="verticalLayoutWidget">
-               <property name="geometry">
-                <rect>
-                 <x>80</x>
-                 <y>90</y>
-                 <width>111</width>
-                 <height>98</height>
-                </rect>
-               </property>
-               <layout class="QVBoxLayout" name="performance_rates_area">
-                <item>
-                 <layout class="QHBoxLayout" name="correct_rate_area">
-                  <item>
-                   <widget class="QLabel" name="correct_rate_title_label">
-                    <property name="styleSheet">
-                     <string notr="true">color: #3e3e3e</string>
-                    </property>
-                    <property name="text">
-                     <string>正解率</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="correct_rate_area_spacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="correct_rate_label">
-                    <property name="font">
-                     <font>
-                      <pointsize>15</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: #3FDA68</string>
-                    </property>
-                    <property name="text">
-                     <string>97%</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <spacer name="performance_rates_area_spacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="false_positive_rate_area">
-                  <item>
-                   <widget class="QLabel" name="false_positive_rate_title_label">
-                    <property name="styleSheet">
-                     <string notr="true">color: #3e3e3e</string>
-                    </property>
-                    <property name="text">
-                     <string>誤検知率</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="false_positive_rate_area_spacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="false_positive_rate_label">
-                    <property name="font">
-                     <font>
-                      <pointsize>15</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: #FFA00E</string>
-                    </property>
-                    <property name="text">
-                     <string>2%</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="false_negative_rate_area">
-                  <item>
-                   <widget class="QLabel" name="false_negative_rate_title_label">
-                    <property name="styleSheet">
-                     <string notr="true">color: #3e3e3e</string>
-                    </property>
-                    <property name="text">
-                     <string>見逃し率</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="false_negative_rate_area_spacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="false_negative_rate_label">
-                    <property name="font">
-                     <font>
-                      <pointsize>15</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: #E66643</string>
-                    </property>
-                    <property name="text">
-                     <string>1%</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
+             </widget>
+             <widget class="QWidget" name="verticalLayoutWidget">
+              <property name="geometry">
+               <rect>
+                <x>80</x>
+                <y>90</y>
+                <width>111</width>
+                <height>98</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="performance_rates_area">
+               <item>
+                <layout class="QHBoxLayout" name="correct_rate_area">
+                 <item>
+                  <widget class="QLabel" name="correct_rate_title_label">
+                   <property name="styleSheet">
+                    <string notr="true">color: #3e3e3e</string>
+                   </property>
+                   <property name="text">
+                    <string>正解率</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="correct_rate_area_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="correct_rate_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #3FDA68</string>
+                   </property>
+                   <property name="text">
+                    <string>97%</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="performance_rates_area_spacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="false_positive_rate_area">
+                 <item>
+                  <widget class="QLabel" name="false_positive_rate_title_label">
+                   <property name="styleSheet">
+                    <string notr="true">color: #3e3e3e</string>
+                   </property>
+                   <property name="text">
+                    <string>誤検知率</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="false_positive_rate_area_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="false_positive_rate_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #FFA00E</string>
+                   </property>
+                   <property name="text">
+                    <string>2%</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="false_negative_rate_area">
+                 <item>
+                  <widget class="QLabel" name="false_negative_rate_title_label">
+                   <property name="styleSheet">
+                    <string notr="true">color: #3e3e3e</string>
+                   </property>
+                   <property name="text">
+                    <string>見逃し率</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="false_negative_rate_area_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="false_negative_rate_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #E66643</string>
+                   </property>
+                   <property name="text">
+                    <string>1%</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </widget>
            </item>
