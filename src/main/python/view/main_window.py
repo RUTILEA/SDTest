@@ -35,10 +35,10 @@ class MainWindow(QMainWindow):
         self.msgBox = None
 
         self.inspection_mainwindow_size = QSize(780, 482)
-        self.optimization_mainwindow_size = QSize(864, 632)#888
+        self.optimization_mainwindow_size = QSize(864, 632)
         self.past_result_mainwindow_size = QSize(780, 512)
         self.inspection_widget_size = QSize(740, 385)
-        self.optimization_widget_size = QSize(840, 504)#864
+        self.optimization_widget_size = QSize(840, 504)
         self.past_result_widget_size = QSize(740, 385)
 
         self.setup_tool_bar()
