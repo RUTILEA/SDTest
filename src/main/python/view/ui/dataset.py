@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dataset.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/dataset.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dataset(object):
     def setupUi(self, Dataset):
@@ -26,7 +27,7 @@ class Ui_Dataset(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.image_list_widget.sizePolicy().hasHeightForWidth())
         self.image_list_widget.setSizePolicy(sizePolicy)
-        self.image_list_widget.setMaximumSize(QtCore.QSize(220, 16777215))
+        self.image_list_widget.setMaximumSize(QtCore.QSize(212, 16777215))
         self.image_list_widget.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.image_list_widget.setProperty("showDropIndicator", False)
         self.image_list_widget.setRootIsDecorated(False)
@@ -67,7 +68,7 @@ class Ui_Dataset(object):
         self.images_scroll_area.setWidgetResizable(True)
         self.images_scroll_area.setObjectName("images_scroll_area")
         self.images_scroll_area_widget_contents = QtWidgets.QWidget()
-        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 586, 394))
+        self.images_scroll_area_widget_contents.setGeometry(QtCore.QRect(0, 0, 554, 334))
         self.images_scroll_area_widget_contents.setStyleSheet("border: none;\n"
 "")
         self.images_scroll_area_widget_contents.setObjectName("images_scroll_area_widget_contents")
@@ -86,6 +87,10 @@ class Ui_Dataset(object):
         self.delete_images_button.setSizePolicy(sizePolicy)
         self.delete_images_button.setMinimumSize(QtCore.QSize(75, 30))
         self.delete_images_button.setMaximumSize(QtCore.QSize(75, 30))
+        font = QtGui.QFont()
+        font.setKerning(True)
+        font.setStyleStrategy(QtGui.QFont.PreferDefault)
+        self.delete_images_button.setFont(font)
         self.delete_images_button.setStyleSheet("")
         self.delete_images_button.setObjectName("delete_images_button")
         self.actions_area.addWidget(self.delete_images_button)
@@ -104,6 +109,10 @@ class Ui_Dataset(object):
         self.camera_and_images_button.setSizePolicy(sizePolicy)
         self.camera_and_images_button.setMinimumSize(QtCore.QSize(75, 30))
         self.camera_and_images_button.setMaximumSize(QtCore.QSize(75, 30))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.camera_and_images_button.setFont(font)
+        self.camera_and_images_button.setStyleSheet("padding: 0 10px;")
         self.camera_and_images_button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.camera_and_images_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
         self.camera_and_images_button.setAutoRaise(False)
@@ -122,6 +131,17 @@ class Ui_Dataset(object):
         self.latest_training_date_label.setObjectName("latest_training_date_label")
         self.training_area.addWidget(self.latest_training_date_label)
         self.train_button = QtWidgets.QPushButton(Dataset)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.train_button.sizePolicy().hasHeightForWidth())
+        self.train_button.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.train_button.setFont(font)
+        self.train_button.setIconSize(QtCore.QSize(24, 24))
+        self.train_button.setFlat(False)
         self.train_button.setObjectName("train_button")
         self.training_area.addWidget(self.train_button)
         self.verticalLayout_2.addLayout(self.training_area)
@@ -159,5 +179,6 @@ class Ui_Dataset(object):
         self.select_images_action.setToolTip(_translate("Dataset", "既存の画像"))
         self.camera_action.setText(_translate("Dataset", "カメラで撮影"))
         self.camera_action.setToolTip(_translate("Dataset", "カメラで撮影"))
+
 
 from qrc import icon_rc

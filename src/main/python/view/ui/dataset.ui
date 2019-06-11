@@ -34,7 +34,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>220</width>
+         <width>212</width>
          <height>16777215</height>
         </size>
        </property>
@@ -139,8 +139,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>586</width>
-             <height>394</height>
+             <width>554</width>
+             <height>334</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -175,6 +175,12 @@
               <width>75</width>
               <height>30</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <stylestrategy>PreferDefault</stylestrategy>
+              <kerning>true</kerning>
+             </font>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
@@ -237,6 +243,14 @@
               <height>30</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">padding: 0 10px;</string>
+            </property>
             <property name="text">
              <string>追加</string>
             </property>
@@ -288,8 +302,29 @@
      </item>
      <item>
       <widget class="QPushButton" name="train_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>トレーニング</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
