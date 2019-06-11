@@ -75,12 +75,10 @@ class MainWindow(QMainWindow):
         self.ui.action_group.setExclusive(True)
 
         try:
-            # self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
             self.on_clicked_inspection_button()
             self.ui.inspection_action.setChecked(True)
             LearningModel.default().load_weights()
         except FileNotFoundError:
-            # self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
             self.on_clicked_optimization_button()
             self.ui.optimization_action.setChecked(True)
 
