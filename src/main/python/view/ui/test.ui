@@ -284,9 +284,9 @@
              <widget class="QWidget" name="verticalLayoutWidget">
               <property name="geometry">
                <rect>
-                <x>80</x>
+                <x>70</x>
                 <y>90</y>
-                <width>111</width>
+                <width>141</width>
                 <height>98</height>
                </rect>
               </property>
@@ -295,6 +295,11 @@
                 <layout class="QHBoxLayout" name="correct_rate_area">
                  <item>
                   <widget class="QLabel" name="correct_rate_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -320,7 +325,7 @@
                   <widget class="QLabel" name="correct_rate_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -352,6 +357,11 @@
                 <layout class="QHBoxLayout" name="false_positive_rate_area">
                  <item>
                   <widget class="QLabel" name="false_positive_rate_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -377,7 +387,7 @@
                   <widget class="QLabel" name="false_positive_rate_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -396,6 +406,11 @@
                 <layout class="QHBoxLayout" name="false_negative_rate_area">
                  <item>
                   <widget class="QLabel" name="false_negative_rate_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -421,7 +436,7 @@
                   <widget class="QLabel" name="false_negative_rate_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
