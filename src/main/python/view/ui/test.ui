@@ -62,7 +62,7 @@
           <widget class="QWidget" name="distance_chart_widget" native="true">
            <property name="minimumSize">
             <size>
-             <width>0</width>
+             <width>400</width>
              <height>300</height>
             </size>
            </property>
@@ -209,7 +209,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>60</width>
+           <width>30</width>
            <height>20</height>
           </size>
          </property>
@@ -450,7 +450,7 @@
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>20</width>
                <height>20</height>
               </size>
              </property>
