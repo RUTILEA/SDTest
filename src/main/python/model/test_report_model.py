@@ -26,5 +26,4 @@ class TestReportModel:
             'specificity': round(self.test_results.specificity * 100, 1)
         }
         html = self.template.render(data)
-        print(data)
         return html

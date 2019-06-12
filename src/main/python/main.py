@@ -37,21 +37,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         """ start QtApplication """
 
         # TODO:カメラ選択画面から使うカメラを選択できるようにする
-        # self.window = StartupWidget()
-
-        # for debug
-        from view.test import TestWidget
-        from model.learning_model import LearningModel
-        from model.project import Project
-        Project.load_settings_file('/Users/satoakitaka/SampleProject/SampleProject.sdt')
-        import numpy as np
-        LearningModel.default().test_results.reload(distances_of_ok_images=np.array([0.1, 1, -1.2, 1.2, 1.3]),
-                                                    distances_of_ng_images=np.array([-1, -1.2, 1.1, 0.8, -0.2, -1.0]))
-        LearningModel.default().threshold = -0.8
-        self.window = TestWidget()
-        self.window.reload_test_results()
-
-
+        self.window = StartupWidget()
         self.window.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
         self.window.show()
 
