@@ -40,9 +40,6 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="text">
           <string>カメラを変更</string>
          </property>
@@ -62,9 +59,6 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
          </property>
          <property name="text">
           <string>撮影</string>
