@@ -12,11 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_past_result(object):
     def setupUi(self, past_result):
         past_result.setObjectName("past_result")
-        past_result.resize(842, 588)
-        past_result.setMinimumSize(QtCore.QSize(842, 588))
+        past_result.resize(842, 532)
+        past_result.setMinimumSize(QtCore.QSize(842, 532))
         past_result.setStyleSheet("")
         self.horizontalLayoutWidget = QtWidgets.QWidget(past_result)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 30, 781, 531))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 30, 781, 471))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)

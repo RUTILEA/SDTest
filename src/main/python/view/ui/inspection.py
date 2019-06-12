@@ -1,33 +1,32 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/shibatakyousuke/Development/RUTILEA/SDTest/src/main/python/view/ui/inspection.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_inspection(object):
     def setupUi(self, inspection):
         inspection.setObjectName("inspection")
-        inspection.resize(842, 588)
-        inspection.setMinimumSize(QtCore.QSize(842, 588))
+        inspection.resize(842, 532)
         font = QtGui.QFont()
         font.setPointSize(9)
         inspection.setFont(font)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(inspection)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_6.addItem(spacerItem)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.camera_preview = QCameraViewFinderWithGuide(inspection)
-        self.camera_preview.setMinimumSize(QtCore.QSize(152, 102))
         self.camera_preview.setStyleSheet("background-color: #f5f5f5;\n"
 "border: 1px solid #aaaaaa;\n"
 "border-radius: 8px;\n"
@@ -260,10 +259,10 @@ class Ui_inspection(object):
         self.horizontalLayout_2.addWidget(self.NG_counter_label)
         self.verticalLayout_2.addWidget(self.counter)
         self.horizontalLayout_7.addLayout(self.verticalLayout_2)
-        spacerItem10 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem10)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
-        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_6.addItem(spacerItem11)
 
         self.retranslateUi(inspection)
@@ -281,6 +280,7 @@ class Ui_inspection(object):
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
+
 
 from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from qrc import icon_rc

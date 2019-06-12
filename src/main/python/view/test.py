@@ -37,11 +37,11 @@ class TestWidget(QWidget):
         self.distance_canvas.setParent(self.ui.distance_chart_widget)
         sns.set_palette(['#3FDA68', '#E66643'])
 
-        performance_figure = Figure(figsize=(3.1, 3.1))
+        performance_figure = Figure(figsize=(3.5, 3.5))
         self.performance_axes: Axes = performance_figure.add_subplot(111)
         performance_figure.patch.set_alpha(0)
         self.performance_axes.set_position(pos=[-0.1, 0.1, 1, 1])  # FIXME: adjust position automatically
-        self.performance_center_circle = pyplot.Circle(xy=(0, 0), radius=0.72, fc='#F5F5F5', linewidth=1.25)
+        self.performance_center_circle = pyplot.Circle(xy=(0, 0), radius=0.75, fc='#F5F5F5', linewidth=1.25)
         self.performance_canvas = FigureCanvas(performance_figure)
         self.performance_canvas.setParent(self.ui.performance_chart_widget)
 
