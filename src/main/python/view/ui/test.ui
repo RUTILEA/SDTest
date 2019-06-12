@@ -289,9 +289,9 @@
               </property>
               <layout class="QVBoxLayout" name="performance_rates_area">
                <item>
-                <layout class="QHBoxLayout" name="correct_rate_area">
+                <layout class="QHBoxLayout" name="accuracy_area">
                  <item>
-                  <widget class="QLabel" name="correct_rate_title_label">
+                  <widget class="QLabel" name="accuracy_title_label">
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -306,7 +306,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="correct_rate_area_spacer">
+                  <spacer name="accuracy_area_spacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -319,7 +319,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="correct_rate_label">
+                  <widget class="QLabel" name="accuracy_label">
                    <property name="font">
                     <font>
                      <pointsize>10</pointsize>
@@ -482,6 +482,45 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>235</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="details_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>詳細</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
