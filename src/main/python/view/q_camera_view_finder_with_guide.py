@@ -10,7 +10,7 @@ class QCameraViewFinderWithGuide(QCameraViewfinder):
 
     def paintEvent(self, event):
         super().paintEvent(event)
-        if self.needs_guide:
+        if self.needs_guide and super().mediaObject():
             painter = QPainter(self)
             painter.setPen(QColor('#3e3e3e'))
             line_length = 60
