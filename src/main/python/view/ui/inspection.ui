@@ -376,7 +376,7 @@ border: none;</string>
            <item>
             <widget class="QLabel" name="ok_score">
              <property name="styleSheet">
-              <string notr="true">color: #aaaaaa;
+              <string notr="true">color: #777777;
 background-color: #00000000;
 border: none;</string>
              </property>

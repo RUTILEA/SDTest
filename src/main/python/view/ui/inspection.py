@@ -159,7 +159,7 @@ class Ui_inspection(object):
         self.OK_message_label.setObjectName("OK_message_label")
         self.verticalLayout_4.addWidget(self.OK_message_label)
         self.ok_score = QtWidgets.QLabel(self.OK)
-        self.ok_score.setStyleSheet("color: #aaaaaa;\n"
+        self.ok_score.setStyleSheet("color: #777777;\n"
 "background-color: #00000000;\n"
 "border: none;")
         self.ok_score.setText("")
@@ -213,8 +213,7 @@ class Ui_inspection(object):
         self.ng_score = QtWidgets.QLabel(self.NG)
         self.ng_score.setStyleSheet("color: #777777;\n"
 "background-color: #00000000;\n"
-"border: none;\n"
-"font-family: \"ＭＳ 明朝\",serif;;")
+"border: none;")
         self.ng_score.setAlignment(QtCore.Qt.AlignCenter)
         self.ng_score.setObjectName("ng_score")
         self.verticalLayout_5.addWidget(self.ng_score)
@@ -286,7 +285,7 @@ class Ui_inspection(object):
         self.verticalLayout_6.addItem(spacerItem16)
 
         self.retranslateUi(inspection)
-        self.result.setCurrentIndex(2)
+        self.result.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(inspection)
 
     def retranslateUi(self, inspection):
