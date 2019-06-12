@@ -116,7 +116,7 @@ class SelectAreaLabel(QLabel):
 
         # TODO: Check the appearance on win or not
         # self.setFrameShape(QFrame.WinPanel)
-        
+
         self.setStyleSheet("border: 4px solid #ffa00e;"
                            "background-color: #ffa00e;"
                            "color: #f5f5f5")
