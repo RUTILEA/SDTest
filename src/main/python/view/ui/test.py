@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/test.ui'
+# Form implementation generated from reading ui file '/Users/Yusaku/Development/RUTILEA/SDTest/src/main/python/view/ui/test.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Test(object):
     def setupUi(self, Test):
@@ -125,27 +124,27 @@ class Ui_Test(object):
         self.performance_rates_area = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.performance_rates_area.setContentsMargins(0, 0, 0, 0)
         self.performance_rates_area.setObjectName("performance_rates_area")
-        self.correct_rate_area = QtWidgets.QHBoxLayout()
-        self.correct_rate_area.setObjectName("correct_rate_area")
-        self.correct_rate_title_label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.accuracy_area = QtWidgets.QHBoxLayout()
+        self.accuracy_area.setObjectName("accuracy_area")
+        self.accuracy_title_label = QtWidgets.QLabel(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(8)
-        self.correct_rate_title_label.setFont(font)
-        self.correct_rate_title_label.setStyleSheet("color: #3e3e3e")
-        self.correct_rate_title_label.setObjectName("correct_rate_title_label")
-        self.correct_rate_area.addWidget(self.correct_rate_title_label)
+        self.accuracy_title_label.setFont(font)
+        self.accuracy_title_label.setStyleSheet("color: #3e3e3e")
+        self.accuracy_title_label.setObjectName("accuracy_title_label")
+        self.accuracy_area.addWidget(self.accuracy_title_label)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.correct_rate_area.addItem(spacerItem5)
-        self.correct_rate_label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.accuracy_area.addItem(spacerItem5)
+        self.accuracy_label = QtWidgets.QLabel(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.correct_rate_label.setFont(font)
-        self.correct_rate_label.setStyleSheet("color: #3FDA68")
-        self.correct_rate_label.setObjectName("correct_rate_label")
-        self.correct_rate_area.addWidget(self.correct_rate_label)
-        self.performance_rates_area.addLayout(self.correct_rate_area)
+        self.accuracy_label.setFont(font)
+        self.accuracy_label.setStyleSheet("color: #3FDA68")
+        self.accuracy_label.setObjectName("accuracy_label")
+        self.accuracy_area.addWidget(self.accuracy_label)
+        self.performance_rates_area.addLayout(self.accuracy_area)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.performance_rates_area.addItem(spacerItem6)
         self.false_positive_rate_area = QtWidgets.QHBoxLayout()
@@ -224,13 +223,12 @@ class Ui_Test(object):
         self.threshold_title_label.setText(_translate("Test", "閾値"))
         self.about_threshold_button.setToolTip(_translate("Test", "<html><head/><body><p><span style=\" font-size:14pt;\">閾値とは</span></p><p><span style=\" font-size:14pt;\">AIが</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">と</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を判別する境界値です。まず、検出の際、AIは各画像の「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」を計算します。そして、その「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」が閾値以下の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">、閾値以上の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を見逃しにくくなる一方、</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。</span></p></body></html>"))
         self.performance_title_label.setText(_translate("Test", "性能評価"))
-        self.correct_rate_title_label.setText(_translate("Test", "正解率"))
-        self.correct_rate_label.setText(_translate("Test", "97%"))
+        self.accuracy_title_label.setText(_translate("Test", "正解率"))
+        self.accuracy_label.setText(_translate("Test", "97%"))
         self.false_positive_rate_title_label.setText(_translate("Test", "誤検知率"))
         self.false_positive_rate_label.setText(_translate("Test", "2%"))
         self.false_negative_rate_title_label.setText(_translate("Test", "見逃し率"))
         self.false_negative_rate_label.setText(_translate("Test", "1%"))
         self.details_button.setText(_translate("Test", "詳細"))
-
 
 from qrc import icon_rc

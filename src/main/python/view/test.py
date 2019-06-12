@@ -82,17 +82,17 @@ class TestWidget(QWidget):
     def __reload_performance(self):
         results = self.learning_model.test_results
         self.performance_axes.clear()
-        correct_percentage = results.correct_rate * 100
+        accuracy_percentage = results.accuracy * 100
         false_positive_percentage = results.false_positive_rate * 100
         false_negative_percentage = results.false_negative_rate * 100
-        self.performance_axes.pie(x=[correct_percentage, false_positive_percentage, false_negative_percentage],
+        self.performance_axes.pie(x=[accuracy_percentage, false_positive_percentage, false_negative_percentage],
                                   colors=['#3FDA68', '#FFA00E', '#E66643'],
                                   startangle=90,
                                   counterclock=False)
         self.performance_axes.add_artist(self.performance_center_circle)
         self.performance_canvas.draw()
 
-        self.ui.correct_rate_label.setText(f'{round(correct_percentage, 1)}%')
+        self.ui.accuracy_label.setText(f'{round(accuracy_percentage, 1)}%')
         self.ui.false_positive_rate_label.setText(f'{round(false_positive_percentage, 1)}%')
         self.ui.false_negative_rate_label.setText(f'{round(false_negative_percentage, 1)}%')
 

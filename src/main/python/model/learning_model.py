@@ -56,7 +56,7 @@ class TestResults(object):
         return len(self.distances_of_ng_images) - self.true_positive
 
     @property
-    def correct_rate(self) -> float:
+    def accuracy(self) -> float:
         if self.__number_of_distances == 0:
             return 0
         return float(self.true_positive + self.true_negative) / self.__number_of_distances
