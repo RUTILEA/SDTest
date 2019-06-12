@@ -17,7 +17,7 @@ class TestReportModel:
             'title': self.project.project_name(),
             'results': {
                 'TP': self.test_results.true_positive,
-                'FP': self.test_results.false_negative,
+                'FP': self.test_results.false_positive,
                 'FN': self.test_results.false_negative,
                 'TN': self.test_results.true_negative
             },
