@@ -15,6 +15,7 @@ class CameraList(QDialog):
 
     def __init__(self):
         super().__init__()
+        self.setModal(True)
         self.ui = Ui_CameraList()
         self.ui.setupUi(self)
         self.camera_model = CameraModel.default()
