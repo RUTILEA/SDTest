@@ -74,6 +74,26 @@ class TestResults(object):
         return float(self.false_negative) / self.__number_of_distances
 
     @property
+    def recall(self) -> float:
+        if self.distances_of_ng_images.size == 0:
+            return 0
+        return float(self.true_positive) / float(self.distances_of_ng_images.size)
+
+    @property
+    def precision(self) -> float:
+        TP = self.true_positive
+        FP = self.false_positive
+        if TP + FP == 0:
+            return 0
+        return float(self.true_positive) / float(TP+FP)
+
+    @property
+    def specificity(self) -> float:
+        if self.distances_of_ok_images.size == 0:
+            return 0
+        return float(self.true_negative) / float(self.distances_of_ok_images.size)
+
+    @property
     def __number_of_distances(self) -> int:
         return len(self.distances_of_ok_images) + len(self.distances_of_ng_images)
 

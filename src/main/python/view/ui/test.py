@@ -196,12 +196,26 @@ class Ui_Test(object):
         self.performance_area.addLayout(self.performance_chart_area)
         spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.performance_area.addItem(spacerItem10)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        spacerItem11 = QtWidgets.QSpacerItem(235, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem11)
+        self.details_button = QtWidgets.QPushButton(self.result_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.details_button.sizePolicy().hasHeightForWidth())
+        self.details_button.setSizePolicy(sizePolicy)
+        self.details_button.setMinimumSize(QtCore.QSize(0, 0))
+        self.details_button.setObjectName("details_button")
+        self.horizontalLayout_10.addWidget(self.details_button)
+        self.performance_area.addLayout(self.horizontalLayout_10)
         self.horizontalLayout_2.addLayout(self.performance_area)
         self.stacked_widget.addWidget(self.result_page)
         self.horizontalLayout.addWidget(self.stacked_widget)
 
         self.retranslateUi(Test)
-        self.stacked_widget.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Test)
 
     def retranslateUi(self, Test):
@@ -216,6 +230,7 @@ class Ui_Test(object):
         self.false_positive_rate_label.setText(_translate("Test", "2%"))
         self.false_negative_rate_title_label.setText(_translate("Test", "見逃し率"))
         self.false_negative_rate_label.setText(_translate("Test", "1%"))
+        self.details_button.setText(_translate("Test", "詳細"))
 
 
 from qrc import icon_rc

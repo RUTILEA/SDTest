@@ -1,9 +1,10 @@
 ﻿from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from math import ceil
 from pathlib import Path
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QSizePolicy
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QMovie
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 from matplotlib import pyplot
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -12,11 +13,13 @@ from matplotlib.lines import Line2D
 import seaborn as sns
 from view.ui.test import Ui_Test
 from model.learning_model import LearningModel
+from model.test_report_model import TestReportModel
 
 
 class TestWidget(QWidget):
     def __init__(self):
         self.learning_model = LearningModel.default()  # initの引数で渡したい…
+        self.test_report_model = TestReportModel()
 
         super().__init__()
         self.ui = Ui_Test()
@@ -31,6 +34,7 @@ class TestWidget(QWidget):
 
         self.ui.about_threshold_button.clicked.connect(self.on_clicked_about_threshold_button)
         self.ui.threshold_slider.valueChanged.connect(self.on_threshold_changed)
+        self.ui.details_button.clicked.connect(self.on_clicked_details_button)
 
         self.distance_figure: Figure = pyplot.figure(figsize=(4, 3))
         self.distance_canvas = FigureCanvas(self.distance_figure)
@@ -112,3 +116,17 @@ class TestWidget(QWidget):
         self.ui.threshold_label.setText(str(thresh_round))
         self.threshold_line.set_xdata(self.learning_model.threshold)
         self.threshold_line.axes.figure.canvas.draw()
+
+    def on_clicked_details_button(self):
+        self.widget = QWidget()
+        html = self.test_report_model.generate_test_details()
+        self.view = QWebEngineView(self.widget)
+        self.view.setHtml(html)
+        self.widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.view.resize(880, 500)
+        self.widget.show()
+
+
+
+
+
