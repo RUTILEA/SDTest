@@ -40,8 +40,8 @@ class Project:
         return cls.__settings_dict[cls.__latest_threshold_key]
 
     @classmethod
-    def save_latest_threshold(cls, input_data: float):
-        cls.__settings_dict[cls.__latest_threshold_key] = input_data
+    def save_latest_threshold(cls, input_data):  # MARK: type of input_data may be np.float32 or np.float64
+        cls.__settings_dict[cls.__latest_threshold_key] = float(input_data)
         cls.__save_settings()
 
     @classmethod
