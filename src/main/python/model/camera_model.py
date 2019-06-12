@@ -29,8 +29,7 @@ class CameraModel(QObject):
         self.selected_cam_names = []
         try:
             default_camera_name = QCameraInfo.defaultCamera().description()
-            print(default_camera_name)
-            if default_camera_name is not None:
+            if default_camera_name is not '':
                 self.selected_cam_names.append(default_camera_name)
         # TODO: Find correct error by using the computer which has no default camera
         except Exception:
