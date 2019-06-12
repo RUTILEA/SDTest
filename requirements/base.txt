@@ -8,6 +8,7 @@ pyqtdeploy
 opencv-contrib-python
 GitPython
 pyod
+jinja2
 
 ###### Requirements with Version Specifiers ######
 fbs[sentry] == 0.8.3
