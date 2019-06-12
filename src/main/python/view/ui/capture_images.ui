@@ -41,10 +41,13 @@
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding: 3px 20px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>カメラを変更</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -61,10 +64,13 @@
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding: 3px 20px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>撮影</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
