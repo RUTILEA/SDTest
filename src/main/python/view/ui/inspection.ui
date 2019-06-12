@@ -56,71 +56,106 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QCameraViewFinderWithGuide" name="camera_preview" native="true">
-         <property name="styleSheet">
-          <string notr="true">background-color: #f5f5f5;
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCameraViewFinderWithGuide" name="camera_preview" native="true">
+            <property name="styleSheet">
+             <string notr="true">background-color: #f5f5f5;
 border: 1px solid #aaaaaa;
 border-radius: 8px;
 margin: 0px;
 min-width: 150px;
 min-height: 100px;
 </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="horizontalWidget" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="select_camera_button">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>表示するカメラを選択</string>
-            </property>
-            <property name="shortcut">
-             <string/>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_5">
+           <widget class="QWidget" name="horizontalWidget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="select_camera_button">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>表示するカメラを選択</string>
+               </property>
+               <property name="shortcut">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_8">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
            </spacer>
@@ -133,13 +168,13 @@ min-height: 100px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>80</height>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>80</height>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -390,19 +425,74 @@ margin: 0;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="ng_image">
-             <property name="styleSheet">
-              <string notr="true">color: #e66643;
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="ng_image">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>140</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>140</width>
+                 <height>140</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #e66643;
 border: none;
 background-color: #00000000;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
-             <property name="text">
-              <string/>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+            </spacer>
            </item>
            <item>
             <widget class="QLabel" name="NG_message_label">
@@ -414,8 +504,7 @@ background-color: #00000000;</string>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">margin: 4px 0;
-color: #e66643;
+              <string notr="true">color: #e66643;
 border: none;
 background-color: transparent;</string>
              </property>
@@ -430,7 +519,7 @@ background-color: transparent;</string>
            <item>
             <widget class="QLabel" name="ng_score">
              <property name="styleSheet">
-              <string notr="true">color: #aaaaaa;
+              <string notr="true">color: #777777;
 background-color: #00000000;
 border: none;</string>
              </property>
