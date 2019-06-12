@@ -19,7 +19,6 @@ from model.test_report_model import TestReportModel
 class TestWidget(QWidget):
     def __init__(self):
         self.learning_model = LearningModel.default()  # initの引数で渡したい…
-        self.test_report_model = TestReportModel()
 
         super().__init__()
         self.ui = Ui_Test()
@@ -48,6 +47,8 @@ class TestWidget(QWidget):
         self.performance_center_circle = pyplot.Circle(xy=(0, 0), radius=0.75, fc='#F5F5F5', linewidth=1.25)
         self.performance_canvas = FigureCanvas(performance_figure)
         self.performance_canvas.setParent(self.ui.performance_chart_widget)
+
+        self.test_report_widget = TestReportWidget()
 
     def show_loading(self):
         self.ui.stacked_widget.setCurrentIndex(0)
@@ -118,11 +119,22 @@ class TestWidget(QWidget):
         self.threshold_line.axes.figure.canvas.draw()
 
     def on_clicked_details_button(self):
-        self.widget = QWidget()
+        self.test_report_widget.reload_html()
+        self.test_report_widget.show()
+        self.test_report_widget.activateWindow()
+        self.test_report_widget.raise_()
+
+
+class TestReportWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.test_report_model = TestReportModel()
+
+        self.web_view = QWebEngineView(self)
+        html_size = QSize(890, 390)
+        self.web_view.setFixedSize(html_size)
+        self.setFixedSize(html_size)
+
+    def reload_html(self):
         html = self.test_report_model.generate_test_details()
-        self.view = QWebEngineView(self.widget)
-        self.view.setHtml(html)
-        size = QSize(890, 395)
-        self.view.setFixedSize(size)
-        self.widget.setFixedSize(size)
-        self.widget.show()
+        self.web_view.setHtml(html)
