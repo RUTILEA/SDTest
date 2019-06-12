@@ -118,6 +118,8 @@ class TestWidget(QWidget):
         self.threshold_line.set_xdata(self.learning_model.threshold)
         self.threshold_line.axes.figure.canvas.draw()
 
+        self.test_report_widget.reload_html()
+
     def on_clicked_details_button(self):
         self.test_report_widget.reload_html()
         self.test_report_widget.show()
