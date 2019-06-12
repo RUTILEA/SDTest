@@ -175,11 +175,12 @@ class LearningModel(QObject):
             if self.test_results.distances_of_ng_images.size != 0:
                 self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
                 self.__should_test = False
-            self.test_finished.emit()
         except IndexError:  # TODO: handle as UndoneTrainingError
             print('TODO: tell the user to train')
         except OSError:
             print('TODO: repair directory for test images')
+        finally:
+            self.test_finished.emit()
 
     @classmethod
     def __weight_file_path(cls, cam_index: int) -> str:
