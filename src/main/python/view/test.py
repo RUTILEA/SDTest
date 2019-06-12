@@ -122,11 +122,7 @@ class TestWidget(QWidget):
         html = self.test_report_model.generate_test_details()
         self.view = QWebEngineView(self.widget)
         self.view.setHtml(html)
-        self.widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        self.view.resize(880, 500)
+        size = QSize(890, 395)
+        self.view.setFixedSize(size)
+        self.widget.setFixedSize(size)
         self.widget.show()
-
-
-
-
-
