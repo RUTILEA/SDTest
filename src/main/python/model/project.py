@@ -1,5 +1,4 @@
-import json
-import os
+import json, os, shutil
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -97,8 +96,8 @@ class Project:
 
     @classmethod
     def load_settings_file(cls, project_file_path: str):
-        f = open(project_file_path, 'r')
-        cls.__settings_dict = json.load(f)
+        with open(project_file_path, 'r') as f:
+            cls.__settings_dict = json.load(f)
         project_path = Path(project_file_path).parent
         cls.save_project_path(str(project_path))
 
@@ -106,8 +105,12 @@ class Project:
     def __save_settings(cls):
         # json書き込み中にsetting_dictが書き換えられた場合に関するエラー回避
         settings_dict = cls.__settings_dict.copy()
-        fw = open(os.path.join(cls.project_path(), cls.project_name() + cls.__project_file_extension), 'w')
-        json.dump(settings_dict, fw, indent=4)
+        # json書き込み中にクラッシュしても元ファイルが壊れないように一旦別ファイルとして書き出す
+        tmp_path = Path(cls.project_path()) / 'tmp' / (cls.project_name() + cls.__project_file_extension)
+        with open(tmp_path, 'w') as fw:
+            json.dump(settings_dict, fw, indent=4)
+        shutil.copy(src=str(tmp_path), dst=cls.project_path())
+        os.remove(tmp_path)
 
     @classmethod
     def generate_project_file(cls, project_path: str, project_name: str):
