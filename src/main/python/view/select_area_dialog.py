@@ -113,7 +113,10 @@ class SelectAreaLabel(QLabel):
     def set_label(self):
         self.setText('検査領域')
         self.setAutoFillBackground(True)
+
+        # TODO: Check the appearance on win or not
         # self.setFrameShape(QFrame.WinPanel)
+        
         self.setStyleSheet("border: 4px solid #ffa00e;"
                            "background-color: #ffa00e;"
                            "color: #f5f5f5")
