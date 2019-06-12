@@ -1,7 +1,6 @@
 ﻿from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from math import ceil
-from pathlib import Path
-from PyQt5.QtWidgets import QWidget, QSizePolicy
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QMovie
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -14,6 +13,7 @@ import seaborn as sns
 from view.ui.test import Ui_Test
 from model.learning_model import LearningModel
 from model.test_report_model import TestReportModel
+from model.project import Project
 
 
 class TestWidget(QWidget):
@@ -128,6 +128,7 @@ class TestWidget(QWidget):
 class TestReportWidget(QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle(f'性能評価 詳細 - {Project.project_name()}')
         self.test_report_model = TestReportModel()
 
         self.web_view = QWebEngineView(self)
