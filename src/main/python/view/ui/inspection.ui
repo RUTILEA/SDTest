@@ -7,14 +7,8 @@
     <x>0</x>
     <y>0</y>
     <width>842</width>
-    <height>588</height>
+    <height>532</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>842</width>
-    <height>588</height>
-   </size>
   </property>
   <property name="font">
    <font>
@@ -30,10 +24,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -46,7 +43,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
+        <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -60,12 +57,6 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QCameraViewFinderWithGuide" name="camera_preview" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>152</width>
-           <height>102</height>
-          </size>
-         </property>
          <property name="styleSheet">
           <string notr="true">background-color: #f5f5f5;
 border: 1px solid #aaaaaa;
@@ -572,7 +563,7 @@ border:none;
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
+        <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -589,10 +580,13 @@ border:none;
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -609,7 +603,8 @@ border:none;
  </customwidgets>
  <resources>
   <include location="../../qrc/icon.qrc"/>
-  <include location="../../../resources/base/qrc/icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
+  <include location="../../../../../../../../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>
