@@ -81,7 +81,7 @@ class SelectAreaDialog(QDialog):
         self.select_area_label.set_label()
         self.select_area_label_proxy.setWidget(self.select_area_label)
 
-        self.select_area_label_proxy.setPos(self.select_area.boundingRect().left(), self.select_area.boundingRect().bottom()-self.select_area_label.height())
+        self.select_area_label_proxy.setPos(self.select_area.boundingRect().left()+2, self.select_area.boundingRect().bottom()-self.select_area_label.height()-2)
 
     def on_clicked_ok_button(self):
         if not self.size_flag:
@@ -113,8 +113,8 @@ class SelectAreaLabel(QLabel):
     def set_label(self):
         self.setText('検品領域')
         self.setAutoFillBackground(True)
-        self.setFrameShape(QFrame.WinPanel)
-        self.setStyleSheet("QFrame {border: 4px solid #ffa00e;"
+        # self.setFrameShape(QFrame.WinPanel)
+        self.setStyleSheet("border: 4px solid #ffa00e;"
                            "background-color: #ffa00e;"
-                           "color: #f5f5f5}")
+                           "color: #f5f5f5")
         self.setPalette(self.label_palette)
