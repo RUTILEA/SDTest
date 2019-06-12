@@ -111,7 +111,7 @@ class SelectAreaLabel(QLabel):
         self.label_palette = QPalette()
 
     def set_label(self):
-        self.setText('検品領域')
+        self.setText('検査領域')
         self.setAutoFillBackground(True)
         # self.setFrameShape(QFrame.WinPanel)
         self.setStyleSheet("border: 4px solid #ffa00e;"
