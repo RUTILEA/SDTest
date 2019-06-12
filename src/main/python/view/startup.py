@@ -28,14 +28,19 @@ class StartupWidget(QWidget):
         self.close()
 
     def on_clicked_open_project_button(self):
-        save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
-                                                         AppInfo().app_name() + ' プロジェクト(*.sdt);;すべてのファイル(*.*)')[0]
-        if not save_location_path:
+        project_file_path = QFileDialog.getOpenFileName(self,
+                                                        'プロジェクトを開く',
+                                                        os.path.expanduser('~'),
+                                                        AppInfo().app_name() + ' プロジェクト(*.sdt);;すべてのファイル(*.*)')[0]
+        if not project_file_path:
             return
-        Project.load_settings_file(save_location_path)
-        project_name = os.path.basename(os.path.splitext(save_location_path)[0])
-        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
 
+        self.move_to_main_window(project_file_path)
+
+    def move_to_main_window(self, project_file_path):
+        Project.load_settings_file(project_file_path)
+        project_name = os.path.basename(os.path.splitext(project_file_path)[0])
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
 
         self.main_window = MainWindow()
 
