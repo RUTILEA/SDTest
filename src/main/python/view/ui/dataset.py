@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dataset(object):
     def setupUi(self, Dataset):
         Dataset.setObjectName("Dataset")
-        Dataset.resize(840, 486)
+        Dataset.resize(840, 550)
         font = QtGui.QFont()
         font.setPointSize(9)
         Dataset.setFont(font)

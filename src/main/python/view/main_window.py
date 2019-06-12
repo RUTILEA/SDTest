@@ -34,12 +34,13 @@ class MainWindow(QMainWindow):
 
         self.msgBox = None
 
-        self.inspection_mainwindow_size = QSize(780, 482)
-        self.optimization_mainwindow_size = QSize(864, 632)
-        self.past_result_mainwindow_size = QSize(780, 512)
-        self.inspection_widget_size = QSize(740, 385)
-        self.optimization_widget_size = QSize(840, 504)
-        self.past_result_widget_size = QSize(740, 385)
+        self.inspection_mainwindow_size = QSize(780, 550)
+        self.optimization_mainwindow_size = QSize(864, 730)
+        self.past_result_mainwindow_size = QSize(780, 600)
+
+        self.inspection_widget_size = QSize(740, 420)
+        self.optimization_widget_size = QSize(840, 600)
+        self.past_result_widget_size = QSize(740, 400)
 
         self.setup_tool_bar()
         self.setup_menu_bar()
@@ -95,6 +96,8 @@ class MainWindow(QMainWindow):
 
         self.statusBar().addPermanentWidget(self.training_message)
         self.statusBar().addPermanentWidget(self.loader_label)
+
+        self.statusBar().setSizeGripEnabled(False)
 
     def on_clicked_inspection_button(self):
         self.ui.main_stacked_widget.widget(self.inspection_widget_id).set_camera_to_camera_preview()
