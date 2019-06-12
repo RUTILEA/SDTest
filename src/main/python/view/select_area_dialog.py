@@ -1,5 +1,5 @@
-﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem
-from PyQt5.QtGui import QPixmap, QColor
+﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsProxyWidget, QLabel, QFrame
+from PyQt5.QtGui import QPixmap, QColor, QPen, QPalette
 from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal
 from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
@@ -24,6 +24,8 @@ class SelectAreaDialog(QDialog):
         self.select_area = None
         self.original_image_scene = None
         self.size_flag = True
+        self.select_area_label = None
+        self.select_area_label_proxy = None
 
         self.get_ng_sample_image_path()
 
@@ -68,9 +70,18 @@ class SelectAreaDialog(QDialog):
             rect = QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height)
         self.select_area = QGraphicsRectItem(rect)
         self.select_area.setZValue(1)
-        self.select_area.setPen(QColor('#ffa00e'))
+        pen = QPen(QColor('#ffa00e'))
+        pen.setWidth(4)
+        pen.setJoinStyle(Qt.RoundJoin)
+        self.select_area.setPen(pen)
         self.select_area.setFlag(QGraphicsItem.ItemIsMovable, True)
         self.original_image_scene.addItem(self.select_area)
+        self.select_area_label_proxy = QGraphicsProxyWidget(self.select_area)
+        self.select_area_label = SelectAreaLabel()
+        self.select_area_label.set_label()
+        self.select_area_label_proxy.setWidget(self.select_area_label)
+
+        self.select_area_label_proxy.setPos(self.select_area.boundingRect().left()+2, self.select_area.boundingRect().bottom()-self.select_area_label.height()-2)
 
     def on_clicked_ok_button(self):
         if not self.size_flag:
@@ -93,3 +104,20 @@ class SelectAreaDialog(QDialog):
 
     def closeEvent(self, QCloseEvent):
         self.close()
+
+class SelectAreaLabel(QLabel):
+    def __init__(self):
+        super().__init__()
+        self.label_palette = QPalette()
+
+    def set_label(self):
+        self.setText('検査領域')
+        self.setAutoFillBackground(True)
+
+        # TODO: Check the appearance on win or not
+        # self.setFrameShape(QFrame.WinPanel)
+        
+        self.setStyleSheet("border: 4px solid #ffa00e;"
+                           "background-color: #ffa00e;"
+                           "color: #f5f5f5")
+        self.setPalette(self.label_palette)
