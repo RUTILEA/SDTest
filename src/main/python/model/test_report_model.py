@@ -9,12 +9,11 @@ class TestReportModel:
         appctxt = ApplicationContext()
         env = Environment(loader=FileSystemLoader(appctxt.get_resource('html/')))
         self.template = env.get_template('test_report_template.html')
-        self.project = Project()
         self.test_results = LearningModel.default().test_results
 
     def generate_test_details(self):
         data = {
-            'title': self.project.project_name(),
+            'title': Project.project_name(),
             'results': {
                 'TP': self.test_results.true_positive,
                 'FP': self.test_results.false_positive,
