@@ -117,7 +117,7 @@ class LearningModel(QObject):
         self.__training_thread.start()
 
     def train(self):
-        self.__model.fit_in_dir(str(Dataset.images_path(Dataset.Category.TRAINING_OK)))
+        self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
@@ -136,7 +136,7 @@ class LearningModel(QObject):
 
     def predict(self, image_paths):
         scores = self.__model.predict_paths(image_paths)
-        self.predicting_finished.emit({'scores': list(scores), 'image_paths': image_paths})
+        self.predicting_finished.emit({'scores': scores, 'image_paths': image_paths})
 
     def test_if_needed(self):
         if not self.__should_test:
@@ -149,8 +149,8 @@ class LearningModel(QObject):
 
     def test(self):
         try:
-            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_OK)))
-            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_NG)))
+            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_OK)))
+            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_NG)))
             self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
             if self.test_results.distances_of_ng_images.size != 0:
                 self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
