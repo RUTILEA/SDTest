@@ -39,6 +39,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         """ start QtApplication """
 
         # TODO:カメラ選択画面から使うカメラを選択できるようにする
+        print(sys.argv)
         self.window = StartupWidget()
         self.window.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
         self.window.show()
