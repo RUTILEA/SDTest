@@ -1,5 +1,6 @@
 !include MUI2.nsh
 !include FileFunc.nsh
+!include FileAssociation.nsh
 
 ;--------------------------------
 ;Perform Machine-level install, if possible
@@ -87,6 +88,7 @@ Section
   ${GetSize} "$InstDir" "/S=0K" $0 $1 $2
   IntFmt $0 "0x%08X" $0
   WriteRegDWORD SHCTX "${UNINST_KEY}" "EstimatedSize" "$0"
+  ${registerExtension} "$InstDir\${app_name}.exe" ".sdt" "${app_name} Project File"
 
 SectionEnd
 
@@ -99,6 +101,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${app_name}.lnk"
   DeleteRegKey /ifempty SHCTX "Software\${app_name}"
   DeleteRegKey SHCTX "${UNINST_KEY}"
+  ${unregisterExtension} ".sdt" "${app_name} Project File"
 
 SectionEnd
 
