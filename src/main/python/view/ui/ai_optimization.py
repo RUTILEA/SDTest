@@ -12,8 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AIOptimization(object):
     def setupUi(self, AIOptimization):
         AIOptimization.setObjectName("AIOptimization")
-        AIOptimization.resize(842, 588)
-        AIOptimization.setMinimumSize(QtCore.QSize(842, 588))
+        AIOptimization.resize(842, 532)
+        AIOptimization.setMinimumSize(QtCore.QSize(842, 532))
         font = QtGui.QFont()
         font.setPointSize(9)
         AIOptimization.setFont(font)

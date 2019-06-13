@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>795</width>
-    <height>534</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,9 +28,6 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QStackedWidget" name="main_stacked_widget">
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
       <widget class="QWidget" name="page"/>
       <widget class="QWidget" name="page_2"/>
      </widget>
@@ -97,8 +94,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/eye#3e3e3e.png</normaloff>:/icon/resources/base/fonts/fontawesome/eye#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>検品</string>
@@ -109,8 +106,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/brain#3e3e3e.png</normaloff>:/icon/resources/base/fonts/fontawesome/brain#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>学習</string>
@@ -124,8 +121,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/history#3e3e3e.png</normaloff>:/icon/resources/base/fonts/fontawesome/history#3e3e3e.png</iconset>
    </property>
    <property name="text">
     <string>レポート</string>
@@ -171,7 +168,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

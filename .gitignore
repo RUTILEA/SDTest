@@ -122,6 +122,10 @@ dmypy.json
 # fbs
 target/
 venv/
+src/freeze/base/version
+
+# certificates
+*.pfx
 
 # OS dependent
 .DS_Store

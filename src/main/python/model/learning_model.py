@@ -3,6 +3,7 @@ from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
 import numpy as np
+import threading, os
 
 
 class TestResults(object):
@@ -36,22 +37,26 @@ class TestResults(object):
 
     @property
     def true_positive(self) -> int:
-        return len([ok for ok in self.distances_of_ok_images if ok >= LearningModel.default().threshold])
+        """Number of NG images judged to be NG"""
+        return len([ng for ng in self.distances_of_ng_images if ng <= LearningModel.default().threshold])
 
     @property
     def true_negative(self) -> int:
-        return len([ng for ng in self.distances_of_ng_images if ng < LearningModel.default().threshold])
+        """Number of OK images judged to be OK"""
+        return len([ok for ok in self.distances_of_ok_images if ok > LearningModel.default().threshold])
 
     @property
     def false_positive(self) -> int:
-        return len(self.distances_of_ok_images) - self.true_positive
+        """Number of OK images judged to be NG"""
+        return len(self.distances_of_ok_images) - self.true_negative
 
     @property
     def false_negative(self) -> int:
-        return len(self.distances_of_ng_images) - self.true_negative
+        """Number of NG images judged to be OK"""
+        return len(self.distances_of_ng_images) - self.true_positive
 
     @property
-    def correct_rate(self) -> float:
+    def accuracy(self) -> float:
         if self.__number_of_distances == 0:
             return 0
         return float(self.true_positive + self.true_negative) / self.__number_of_distances
@@ -67,6 +72,26 @@ class TestResults(object):
         if self.__number_of_distances == 0:
             return 0
         return float(self.false_negative) / self.__number_of_distances
+
+    @property
+    def recall(self) -> float:
+        if self.distances_of_ng_images.size == 0:
+            return 0
+        return float(self.true_positive) / float(self.distances_of_ng_images.size)
+
+    @property
+    def precision(self) -> float:
+        TP = self.true_positive
+        FP = self.false_positive
+        if TP + FP == 0:
+            return 0
+        return float(self.true_positive) / float(TP+FP)
+
+    @property
+    def specificity(self) -> float:
+        if self.distances_of_ok_images.size == 0:
+            return 0
+        return float(self.true_negative) / float(self.distances_of_ok_images.size)
 
     @property
     def __number_of_distances(self) -> int:
@@ -90,17 +115,12 @@ class LearningModel(QObject):
 
     def __init__(self):
         super().__init__()
+
         self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor')
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
-
-        self.__predicting_thread = PredictingThread(self.__model)
-        self.__predicting_thread.finished.connect(self.predicting_finished)
-        self.__training_thread = TrainingThread(self.__model)
-        self.__training_thread.finished.connect(self.on_training_finished)
-        self.__test_thread = TestThread(self.__model, self)
-        self.__test_thread.finished.connect(self.on_test_finished)
+        self.__training_thread = None
 
     @property
     def threshold(self) -> float:
@@ -113,27 +133,30 @@ class LearningModel(QObject):
 
     def start_training(self):
         self.training_start.emit()
+        self.__training_thread = threading.Thread(target=self.train)
         self.__training_thread.start()
 
-    def on_training_finished(self):
+    def train(self):
+        self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
         self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
-    def cancel_training(self):
-        self.__training_thread.exit()
-
     def load_weights(self):
         self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
 
-    def predict(self, image_paths):
+    def start_predict(self, image_paths):
+        image_path = image_paths[0]
+        trimming_data = Project.latest_trimming_data()
+        Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
         self.predicting_start.emit()
-        self.__predicting_thread.set_image_paths(image_paths)
-        self.__predicting_thread.start()
+        predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
+        predict_thread.start()
 
-    def on_predicting_finished(self, result):
-        self.predicting_finished.emit(result)
+    def predict(self, image_paths):
+        scores = self.__model.predict_paths(image_paths)
+        self.predicting_finished.emit({'scores': scores, 'image_paths': image_paths})
 
     def test_if_needed(self):
         if not self.__should_test:
@@ -141,14 +164,23 @@ class LearningModel(QObject):
             return
 
         # TODO: check if test images exist
+        test_thread = threading.Thread(target=self.test)
+        test_thread.start()
 
-        self.__test_thread.start()
-
-    def on_test_finished(self):
-        if self.test_results.distances_of_ng_images.size != 0:
-            self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
-            self.__should_test = False
-        self.test_finished.emit()
+    def test(self):
+        try:
+            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_OK)))
+            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_NG)))
+            self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
+            if self.test_results.distances_of_ng_images.size != 0:
+                self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
+                self.__should_test = False
+        except IndexError:  # TODO: handle as UndoneTrainingError
+            print('TODO: tell the user to train')
+        except OSError:
+            print('TODO: repair directory for test images')
+        finally:
+            self.test_finished.emit()
 
     @classmethod
     def __weight_file_path(cls, cam_index: int) -> str:
@@ -169,42 +201,3 @@ class PredictingThread(QThread):
     def run(self):
         scores = self.__model.predict_paths(self.__image_paths)
         self.finished.emit({'scores': list(scores), 'image_paths': self.__image_paths})
-
-
-class TrainingThread(QThread):
-    def __init__(self, model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-
-    def set_image_path(self, image_path):
-        self.__image_paths = image_path
-
-    def run(self):
-        try:
-            self.__model.fit_in_dir(str(Dataset.images_path(Dataset.Category.TRAINING_OK)))
-        except OSError:
-            print('TODO: repair directory for training images')
-
-
-class TestThread(QThread):
-    finished = pyqtSignal()
-
-    def __init__(self, model, learning_model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-        self.__learning_model = learning_model
-
-    def run(self):
-        try:
-            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_OK)))
-            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_NG)))
-            self.__learning_model.test_results.reload(distances_of_ok_images=pred_of_ok_images,
-                                                      distances_of_ng_images=pred_of_ng_images)
-            self.finished.emit()
-        except IndexError:  # TODO: handle as UndoneTrainingError
-            print('TODO: tell the user to train')
-            self.finished.emit()
-        except OSError:
-            print('TODO: repair directory for test images')

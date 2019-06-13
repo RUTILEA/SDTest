@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>842</width>
-    <height>588</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>842</width>
-    <height>588</height>
+    <height>532</height>
    </size>
   </property>
   <property name="font">
@@ -60,13 +60,13 @@
   <customwidget>
    <class>DatasetWidget</class>
    <extends>QWidget</extends>
-   <header>src/view/dataset.h</header>
+   <header>view/dataset.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TestWidget</class>
    <extends>QWidget</extends>
-   <header>src/view/test.h</header>
+   <header>view/test.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
