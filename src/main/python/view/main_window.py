@@ -1,6 +1,6 @@
 ﻿import sys, os, webbrowser
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QMainWindow, QActionGroup, QLabel, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
 from PyQt5.QtCore import Qt, pyqtSignal, QSize
 from view.ui.main_window import Ui_MainWindow
 from view.inspection import InspectionWidget
@@ -92,10 +92,12 @@ class MainWindow(QMainWindow):
         self.loader_label.hide()
         self.training_message = QLabel()
 
-        self.statusBar().addWidget(self.training_message)
+        spacer = QWidget()
+        spacer.setFixedWidth(2)
 
         self.statusBar().addPermanentWidget(self.training_message)
         self.statusBar().addPermanentWidget(self.loader_label)
+        self.statusBar().addPermanentWidget(spacer)
 
         self.statusBar().setSizeGripEnabled(False)
 
