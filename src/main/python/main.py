@@ -37,11 +37,15 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
 
     def run(self):                             # 2. Implement run()
         """ start QtApplication """
-
-        # TODO:カメラ選択画面から使うカメラを選択できるようにする
-        self.window = StartupWidget()
-        self.window.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
-        self.window.show()
+        startup_window = StartupWidget()
+        startup_window.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
+        if len(sys.argv) > 1 and type(sys.argv[1]) is str:
+            project_file_path = sys.argv[1]
+            _, ext = os.path.splitext(project_file_path)
+            if ext == '.sdt':
+                startup_window.move_to_main_window(project_file_path)
+        else:
+            startup_window.show()
 
         # スタイルをwindows共用に(for develop)
         # self.app.setStyle(QStyleFactory.create('Fusion'))
