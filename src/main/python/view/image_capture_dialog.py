@@ -4,6 +4,7 @@ from view.camera_list import CameraList
 from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from model.camera_model import CameraModel
 from PyQt5.QtMultimedia import QCamera
+from PyQt5.QtCore import QSize
 from typing import Dict
 
 
@@ -21,6 +22,7 @@ class ImageCaptureDialog(QDialog):
         self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
 
         self.view_finder = QCameraViewFinderWithGuide()
+        self.view_finder.setFixedSize(QSize(640, 360))
         self.ui.grid.addWidget(self.view_finder, 0, 0)
         self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
 
@@ -29,6 +31,10 @@ class ImageCaptureDialog(QDialog):
         self.select_camera_widget.closed.connect(self.on_closed_camera_list)
 
         self.ui.select_camera_button.clicked.connect(self.on_clicked_select_camera_button)
+
+        # size to fit
+        self.adjustSize()
+        self.setFixedSize(self.size())
 
     def on_clicked_capture_button(self):
         self.camera_model.capture(directory=self.image_save_location)
