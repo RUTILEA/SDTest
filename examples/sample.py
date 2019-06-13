@@ -5,6 +5,7 @@ import seaborn as sns
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
 from novelty_detector import NoveltyDetector
+import numpy as np
 
 
 def execute_cmdline():
@@ -17,7 +18,7 @@ def execute_cmdline():
     
     parser.add_argument('-n','--nn',
                         nargs='?',
-                        default='ResNet',
+                        default='tuned-vgg16',  #'ResNet',
                         help='''Select neural network model among Xception, ResNet(Default),
                         InceptionV3, InceptionResNetV2, MobileNet, MobileNetV2, DenseNet, NASNet''',
                         type=str)
@@ -55,9 +56,9 @@ def execute_cmdline():
                             
     args = parser.parse_args()
 
-    train_path = os.path.join(args.path, 'train', 'OK')
-    testok_path = os.path.join(args.path, 'test', 'OK')
-    testng_path = os.path.join(args.path, 'test', 'NG')
+    train_path = os.path.join(args.path, 'train', 'trim')
+    testok_path = os.path.join(args.path, 'test', 'OKtrim')
+    testng_path = os.path.join(args.path, 'test', 'NGtrim')
 
     if not os.path.exists(train_path):
         print(train_path, 'does not exist')
@@ -119,7 +120,8 @@ def execute_cmdline():
     plt.figure()
     sns.distplot(testok_dists, kde=True, rug=True, label='TEST OK')
     sns.distplot(testng_dists, kde=True, rug=True, label='TEST NG')
-    plt.title('Novelty detection on {}th layer on {} and {}'.format(
+    # plt.title('Novelty detection on {}th layer on {} and {}'.format(
+    plt.title('{}th layer on {} and {}'.format(
         args.layer, args.nn, args.detector)
     )
     plt.xlabel('Signed distance to hyper plane')

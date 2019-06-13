@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/shibatakyousuke/Development/RUTILEA/SDTest/src/main/python/view/ui/capture_images.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/capture_images.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_CaptureImages(object):
     def setupUi(self, CaptureImages):
@@ -61,4 +62,5 @@ class Ui_CaptureImages(object):
         CaptureImages.setWindowTitle(_translate("CaptureImages", "カメラで撮影"))
         self.select_camera_button.setText(_translate("CaptureImages", "カメラを変更"))
         self.capture_button.setText(_translate("CaptureImages", "撮影"))
+
 

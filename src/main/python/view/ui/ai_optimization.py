@@ -44,5 +44,5 @@ class Ui_AIOptimization(object):
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.test_tab), _translate("AIOptimization", "性能評価"))
 
 
-from src.view.dataset import DatasetWidget
-from src.view.test import TestWidget
+from view.dataset import DatasetWidget
+from view.test import TestWidget

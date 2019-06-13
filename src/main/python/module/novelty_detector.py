@@ -22,8 +22,8 @@ class NoveltyDetector:
         self.nth_layer = nth_layer
         self.nn_name = nn_name
         # self.input_shape = (420,280,3)
-        self.input_shape = (224,224,3)
-        # self.input_shape = None
+        # self.input_shape = (224,224,3)
+        self.input_shape = None
         self.nu = None
         self.gamma = None
         self.kernel = None
@@ -94,13 +94,11 @@ class NoveltyDetector:
             from keras.applications.nasnet import NASNetLarge
             pretrained_func = NASNetLarge
             print('Neural Network: {}'.format(self.nn_name))
-        else:# self.nn_name == 'ResNet':
-            from keras.applications.resnet50 import ResNet50
-            pretrained_func = ResNet50
-            print('Neural Network: {}'.format(self.nn_name))
+        else:# self.nn_name == 'vgg':
+            file_name = 'examples/'+self.nn_name
 
         # self.pretrained_nn = pretrained_func(include_top=False, weights='imagenet', input_tensor=None, input_shape=self.input_shape, pooling=False)
-        file_name = 'tuned_train599'
+        # file_name = 'examples/tuned-vgg16'
         from keras.models import model_from_json
         import json
         from keras.layers import Dense, Input
