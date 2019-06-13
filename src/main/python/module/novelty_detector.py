@@ -3,8 +3,9 @@ import os
 import numpy as np
 
 from sklearn import svm
+from sklearn.decomposition import PCA
 from keras.models import Model
-from keras.layers import GlobalAveragePooling2D
+from keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D, Flatten
 import numpy as np
 import imageio
 import skimage.transform
@@ -12,7 +13,7 @@ import joblib
 import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor'):
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor', pool=None, pca=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
@@ -21,6 +22,8 @@ class NoveltyDetector:
         """
         self.nth_layer = nth_layer
         self.nn_name = nn_name
+        self.pool = pool
+        self.pca = pca
         self.input_shape = None
         self.nu = None
         self.gamma = None
@@ -30,18 +33,22 @@ class NoveltyDetector:
 
         detector_name_lower = detector_name.lower()
         if detector_name_lower == 'robustcovariance':
+            self.detector_name = 'rc'
             from sklearn.covariance import EllipticEnvelope
             self.clf = EllipticEnvelope()
             print('Novelty Detector: Robust covariance')
         elif detector_name_lower in ['localoutlierfactor', 'lof']:
+            self.detector_name = 'lof'
             from sklearn.neighbors import LocalOutlierFactor
             self.clf = LocalOutlierFactor(novelty=True)
             print('Novelty Detector: Local Outlier Factor')
         elif detector_name_lower in ['abod', 'fastabod', 'anglebasedoutlierdetection']:
+            self.detector_name = 'abod'
             from pyod.models.abod import ABOD
             self.clf = ABOD()
             print('Novelty Detector: Angle Based Outlier Detection')
         elif detector_name_lower in ['iforest', 'isolationforest']:
+            self.detector_name ='abod'
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
@@ -108,15 +115,29 @@ class NoveltyDetector:
 
     def _get_nth_layer(self, nth_layer, nn_model):
         model = Model(inputs=nn_model.input, outputs=nn_model.layers[nth_layer].output)
-        if len(model.output_shape) > 2:
+        if len(model.output_shape) <= 2:
+            return model
+
+        if self.pool is None:
+            x = model.output
+            x = Flatten()(x)
+            return Model(inputs=model.input, outputs=x)
+        elif self.pool == 'average':
             x = model.output
             x = GlobalAveragePooling2D()(x)
-            model = Model(inputs=model.input, outputs=x)
+            return Model(inputs=model.input, outputs=x)
+        elif self.pool == 'max':
+            x = model.output
+            x = GlobalMaxPooling2D()(x)
+            return Model(inputs=model.input, outputs=x)
         return model
 
     def fit(self, imgs):
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
+        if self.pca:
+            pca = PCA(n_components=self.pca)
+            feature = pca.fit_transform(feature)
         self.clf.fit(feature)
 
     def fit_paths(self, paths):
@@ -138,7 +159,12 @@ class NoveltyDetector:
         """
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
+        if self.pca:
+            pca = PCA(n_components=self.pca)
+            feature = pca.fit_transform(feature)
         predicted_scores = self.clf.decision_function(feature)
+        if self.detector_name == 'abod':
+            predicted_scores *= -1
         return predicted_scores
 
     def predict_paths(self, paths):
