@@ -21,4 +21,4 @@ class AIOptimizationWidget(QWidget):
             LearningModel.default().test_if_needed()
 
     def _on_finished_test(self):
-        self.ui.test_tab.reload_test_results()
+        self.ui.test_tab.reload_test_results(show_training=True)

@@ -53,12 +53,14 @@ class TestWidget(QWidget):
     def show_loading(self):
         self.ui.stacked_widget.setCurrentIndex(0)
 
-    def reload_test_results(self):
+    def reload_test_results(self, show_training=False):
         self.ui.stacked_widget.setCurrentIndex(1)  # TODO: Refactor
         results = self.learning_model.test_results
 
         # reload distance chart
         self.distance_figure.clear()
+        if show_training:
+            sns.distplot(results.distances_of_train_images, kde=True, rug=True, label='TRAIN OK')
         sns.distplot(results.distances_of_ok_images, kde=True, rug=True, label='TEST OK')  # FIXME: label
         sns.distplot(results.distances_of_ng_images, kde=True, rug=True, label='TEST NG')
         pyplot.legend()
