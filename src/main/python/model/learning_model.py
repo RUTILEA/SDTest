@@ -8,6 +8,7 @@ import threading, os
 
 class TestResults(object):
     def __init__(self):
+        self.__distances_of_train_images = np.empty(shape=0)
         self.__distances_of_ok_images = np.empty(shape=0)
         self.__distances_of_ng_images = np.empty(shape=0)
         self.min_distance = 0
@@ -21,10 +22,16 @@ class TestResults(object):
     def distances_of_ng_images(self) -> np.ndarray:
         return self.__distances_of_ng_images
 
-    def reload(self, distances_of_ok_images: np.ndarray, distances_of_ng_images: np.ndarray):
+    @property
+    def distances_of_train_images(self) -> np.ndarray:
+        return self.__distances_of_train_images
+
+    def reload(self, distances_of_ok_images: np.ndarray, distances_of_ng_images: np.ndarray, distances_of_train_images: np.ndarray=None):
         assert(len(distances_of_ok_images.shape) == 1 and len(distances_of_ng_images.shape) == 1)
         self.__distances_of_ok_images = distances_of_ok_images
         self.__distances_of_ng_images = distances_of_ng_images
+        if distances_of_train_images is not None:
+            self.__distances_of_train_images = distances_of_train_images
 
         # update min/max distances
         all_distances = np.hstack([self.distances_of_ok_images, self.distances_of_ng_images])
@@ -104,7 +111,7 @@ class LearningModel(QObject):
     training_start = pyqtSignal()
     predicting_finished = pyqtSignal(dict)
     predicting_start = pyqtSignal()
-    test_finished = pyqtSignal()
+    test_finished = pyqtSignal(bool)
 
     @classmethod
     def default(cls):
@@ -158,20 +165,24 @@ class LearningModel(QObject):
         scores = self.__model.predict_paths(image_paths)
         self.predicting_finished.emit({'scores': scores, 'image_paths': image_paths})
 
-    def test_if_needed(self):
+    def test_if_needed(self, predict_training=False):
         if not self.__should_test:
-            self.test_finished.emit()
+            self.test_finished.emitf(predict_training)
             return
 
         # TODO: check if test images exist
-        test_thread = threading.Thread(target=self.test)
+        test_thread = threading.Thread(target=self.test, args=(predict_training,))
         test_thread.start()
 
-    def test(self):
+    def test(self, predict_training=False):
         try:
             _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_OK)))
             _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_NG)))
-            self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
+            if predict_training:
+                _, pred_of_train_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
+                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images, distance_of_train_images=pred_of_train_images)
+            else:
+                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
             if self.test_results.distances_of_ng_images.size != 0:
                 self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
                 self.__should_test = False
@@ -180,7 +191,7 @@ class LearningModel(QObject):
         except OSError:
             print('TODO: repair directory for test images')
         finally:
-            self.test_finished.emit()
+            self.test_finished.emit(predict_training)
 
     @classmethod
     def __weight_file_path(cls, cam_index: int) -> str:
