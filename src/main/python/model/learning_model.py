@@ -167,7 +167,7 @@ class LearningModel(QObject):
 
     def test_if_needed(self, predict_training=False):
         if not self.__should_test:
-            self.test_finished.emitf(predict_training)
+            self.test_finished.emit(predict_training)
             return
 
         # TODO: check if test images exist
