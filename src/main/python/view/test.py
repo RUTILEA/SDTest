@@ -60,9 +60,6 @@ class TestWidget(QWidget):
         # reload distance chart
         self.distance_figure.clear()
         if show_training:
-            print('show training')
-            print(results.distances_of_train_images)
-            print(results.distances_of_ok_images)
             sns.distplot(results.distances_of_train_images, kde=True, rug=True, label='TRAIN OK', color='#AAAAAA')
         sns.distplot(results.distances_of_ok_images, kde=True, rug=True, label='TEST OK', color='#3FDA68')  # FIXME: label
         sns.distplot(results.distances_of_ng_images, kde=True, rug=True, label='TEST NG', color='#E66643')
