@@ -18,7 +18,7 @@ class AIOptimizationWidget(QWidget):
     def _on_changed_current_tab(self):
         if self.ui.tab_widget.currentIndex() == 1:  # FIXME: refactor condition
             self.ui.test_tab.show_loading()
-            LearningModel.default().test_if_needed()
+            LearningModel.default().test_if_needed(predict_training=True)
 
     def _on_finished_test(self):
         self.ui.test_tab.reload_test_results(show_training=True)

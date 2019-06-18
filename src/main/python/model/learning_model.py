@@ -180,7 +180,7 @@ class LearningModel(QObject):
             _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_NG)))
             if predict_training:
                 _, pred_of_train_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
-                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images, distance_of_train_images=pred_of_train_images)
+                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images, distances_of_train_images=pred_of_train_images)
             else:
                 self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
             if self.test_results.distances_of_ng_images.size != 0:

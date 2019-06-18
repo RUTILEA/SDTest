@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QMovie
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from matplotlib import pyplot
+from matplotlib import pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
@@ -35,16 +35,16 @@ class TestWidget(QWidget):
         self.ui.threshold_slider.valueChanged.connect(self.on_threshold_changed)
         self.ui.details_button.clicked.connect(self.on_clicked_details_button)
 
-        self.distance_figure: Figure = pyplot.figure(figsize=(4, 3))
+        self.distance_figure: Figure = plt.figure(figsize=(4, 3))
         self.distance_canvas = FigureCanvas(self.distance_figure)
         self.distance_canvas.setParent(self.ui.distance_chart_widget)
-        sns.set_palette(['#3FDA68', '#E66643'])
+        # sns.set_palette(['#3FDA68', '#E66643'])
 
         performance_figure = Figure(figsize=(3.5, 3.5))
         self.performance_axes: Axes = performance_figure.add_subplot(111)
         performance_figure.patch.set_alpha(0)
         self.performance_axes.set_position(pos=[-0.1, 0.1, 1, 1])  # FIXME: adjust position automatically
-        self.performance_center_circle = pyplot.Circle(xy=(0, 0), radius=0.75, fc='#F5F5F5', linewidth=1.25)
+        self.performance_center_circle = plt.Circle(xy=(0, 0), radius=0.75, fc='#F5F5F5', linewidth=1.25)
         self.performance_canvas = FigureCanvas(performance_figure)
         self.performance_canvas.setParent(self.ui.performance_chart_widget)
 
@@ -58,13 +58,13 @@ class TestWidget(QWidget):
         results = self.learning_model.test_results
 
         # reload distance chart
-        self.distance_figure.clear()
+        sns.set()
         if show_training:
-            sns.distplot(results.distances_of_train_images, kde=True, rug=True, label='TRAIN OK', color='#AAAAAA')
-        sns.distplot(results.distances_of_ok_images, kde=True, rug=True, label='TEST OK', color='#3FDA68')  # FIXME: label
-        sns.distplot(results.distances_of_ng_images, kde=True, rug=True, label='TEST NG', color='#E66643')
-        pyplot.legend()
-        self.threshold_line: Line2D = pyplot.axvline(x=self.learning_model.threshold,
+            sns.distplot(results.distances_of_train_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TRAIN OK')
+        sns.distplot(results.distances_of_ng_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST NG')
+        sns.distplot(results.distances_of_ok_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST OK')  # FIXME: label
+        plt.legend()
+        self.threshold_line: Line2D = plt.axvline(x=self.learning_model.threshold,
                                                      color='#FFA00E',
                                                      linestyle='dashed')
 
