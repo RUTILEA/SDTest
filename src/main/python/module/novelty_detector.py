@@ -158,7 +158,7 @@ class NoveltyDetector:
         self.fit_paths(paths)
 
     def predict(self, imgs):
-        """ Return the list of signed distance of each images from SVM super-plane.
+        """ Return the list of score. Higher the score, the more likely normal.
         Keyword arguments:
         paths -- list of image paths like [./dir/img1.jpg, ./dir/img2.jpg, ...]
         """
@@ -168,8 +168,12 @@ class NoveltyDetector:
             pca = PCA(n_components=self.pca)
             feature = pca.fit_transform(feature)
         predicted_scores = self.clf.decision_function(feature)
-        if self.detector_name == 'abod':
+
+        if self.clf.__module__.startswith('pyod.models'):
+            # Tricky, the higher pyod's predict score, the more likely anormaly.
+            print(predicted_scores)
             predicted_scores *= -1
+            print(predicted_scores)
         return predicted_scores
 
     def predict_paths(self, paths):
