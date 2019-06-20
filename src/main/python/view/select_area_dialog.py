@@ -1,6 +1,6 @@
 ﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsProxyWidget, QLabel, QFrame
 from PyQt5.QtGui import QPixmap, QColor, QPen, QPalette
-from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal
+from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal, QPoint
 from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
 from model.project import Project
@@ -26,6 +26,7 @@ class SelectAreaDialog(QDialog):
         self.size_flag = True
         self.select_area_label = None
         self.select_area_label_proxy = None
+        self.start_position = None
 
         self.get_ng_sample_image_path()
 
@@ -65,8 +66,10 @@ class SelectAreaDialog(QDialog):
     def show_select_area_at_default_position(self):
         trimming_data = Project.latest_trimming_data()
         if trimming_data.position:
+            self.start_position = QPoint(trimming_data.position[0], trimming_data.position[1])
             rect = QRectF(trimming_data.position[0], trimming_data.position[1], self.width, self.height)
         else:
+            self.start_position = QPoint((self.w-self.width)//2, (self.h-self.height)//2)
             rect = QRectF((self.w-self.width)//2, (self.h-self.height)//2, self.width, self.height)
         self.select_area = QGraphicsRectItem(rect)
         self.select_area.setZValue(1)
@@ -80,7 +83,6 @@ class SelectAreaDialog(QDialog):
         self.select_area_label = SelectAreaLabel()
         self.select_area_label.set_label()
         self.select_area_label_proxy.setWidget(self.select_area_label)
-
         self.select_area_label_proxy.setPos(self.select_area.boundingRect().left()+2, self.select_area.boundingRect().bottom()-self.select_area_label.height()-2)
 
     def on_clicked_ok_button(self):
@@ -90,8 +92,8 @@ class SelectAreaDialog(QDialog):
             self.close()
         else:
             rel_position = self.select_area.pos()
-            position = (self.w//2-100+rel_position.x(), self.h//2-100+rel_position.y())
-            if position[0] < 0 or position[0] > self.w - 201 or position[1] < 0 or position[1] > self.h - 201:
+            position = (self.start_position.x()+rel_position.x(), self.start_position.y()+rel_position.y())
+            if position[0] < 0 or position[0] > self.w - self.width - 1 or position[1] < 0 or position[1] > self.h - self.height - 1:
                 print('Error: Please set area contained in the image.')
                 self.ui.notation_label.setText('エラー: 切り取る領域は画像内に収まるようにしてください.')
             else:

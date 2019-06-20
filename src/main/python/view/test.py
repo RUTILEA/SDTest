@@ -58,11 +58,12 @@ class TestWidget(QWidget):
         results = self.learning_model.test_results
 
         # reload distance chart
+        plt.clf()
         sns.set()
         if show_training:
-            sns.distplot(results.distances_of_train_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TRAIN OK')
-        sns.distplot(results.distances_of_ng_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST NG')
-        sns.distplot(results.distances_of_ok_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST OK')  # FIXME: label
+            sns.distplot(results.distances_of_train_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TRAIN OK', color='b')
+        sns.distplot(results.distances_of_ok_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST OK', color='g')  # FIXME: label
+        sns.distplot(results.distances_of_ng_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST NG', color='r')
         plt.legend()
         self.threshold_line: Line2D = plt.axvline(x=self.learning_model.threshold,
                                                      color='#FFA00E',
