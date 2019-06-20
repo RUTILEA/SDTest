@@ -1,6 +1,7 @@
 import argparse
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
@@ -29,7 +30,7 @@ def execute_cmdline():
                         type=int)
     
     parser.add_argument('-d', '--detector',
-                        default='LocalOutlierFactor',
+                        default='knn',
                         help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default), ABOD',
                         type=str)
     
@@ -52,6 +53,12 @@ def execute_cmdline():
                         help='Threshold to split scores of predicted items. Default to the max score of NG images',
                         type=float)
 
+    parser.add_argument('-pl', '--pool',
+                        default=None,
+                        type=str)
+    parser.add_argument('-pca', '--pca',
+                        type=int,
+                        default=None)
                             
     args = parser.parse_args()
 
@@ -69,18 +76,28 @@ def execute_cmdline():
         print(testng_path, 'does not exist')
         sys.exit(1)
     
-    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector)
+    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca=args.pca)
     model.fit_in_dir(train_path)
 
     # If you are not interested in extracted feature vector, just use "paths, dists = model.predict_in_dir(dir_path)"
+
     testok_paths = model._get_paths_in_dir(testok_path)
     testng_paths = model._get_paths_in_dir(testng_path)
     testok_imgs = model._read_imgs(testok_paths)
     testng_imgs = model._read_imgs(testng_paths)
     testok_features = model.extracting_model.predict(testok_imgs)
     testng_features = model.extracting_model.predict(testng_imgs)
+    print(testng_features.shape)
+
+    from sklearn.decomposition import PCA
+    pca = PCA(n_components=args.pca)
+    if args.pca:
+        testok_features, testng_features = map(pca.fit_transform, [testok_features, testng_features])
     testok_dists = model.clf.decision_function(testok_features)
     testng_dists = model.clf.decision_function(testng_features)
+    if args.detector == 'abod':
+        testok_dists *= -1
+        testng_dists *= -1
 
     # Count how many normal items are classified correctly
     thr = args.threshold

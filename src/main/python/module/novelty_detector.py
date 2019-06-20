@@ -13,7 +13,7 @@ import joblib
 import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor', pool=None, pca=None):
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='mean_kNN', pool=None, pca=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
@@ -48,10 +48,15 @@ class NoveltyDetector:
             self.clf = ABOD()
             print('Novelty Detector: Angle Based Outlier Detection')
         elif detector_name_lower in ['iforest', 'isolationforest']:
-            self.detector_name ='abod'
+            self.detector_name = 'abod'
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
+        elif detector_name_lower in ['knn', 'median_knn']:
+            self.detector_name = 'median_kNN'
+            from pyod.models.knn import KNN
+            self.clf = KNN(method='median', contamination=0.1)
+            print('Novelty Detector: Median K Nearest Neighbors')
 
     def _load_NN_model(self, input_shape=(229, 229, 3)):
         """
