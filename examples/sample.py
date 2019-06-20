@@ -1,6 +1,7 @@
 import argparse
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
@@ -29,7 +30,7 @@ def execute_cmdline():
                         type=int)
     
     parser.add_argument('-d', '--detector',
-                        default='LocalOutlierFactor',
+                        default='knn',
                         help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default), ABOD',
                         type=str)
     
@@ -52,15 +53,21 @@ def execute_cmdline():
                         help='Threshold to split scores of predicted items. Default to the max score of NG images',
                         type=float)
 
+    parser.add_argument('-pl', '--pool',
+                        default=None,
+                        type=str)
+    parser.add_argument('-pca', '--pca',
+                        type=int,
+                        default=None)
                             
     args = parser.parse_args()
 
-    train_path = os.path.join(args.path, 'train', 'OK')
+    trainok_path = os.path.join(args.path, 'train', 'OK')
     testok_path = os.path.join(args.path, 'test', 'OK')
     testng_path = os.path.join(args.path, 'test', 'NG')
 
-    if not os.path.exists(train_path):
-        print(train_path, 'does not exist')
+    if not os.path.exists(trainok_path):
+        print(trainok_path, 'does not exist')
         sys.exit(1)
     if not os.path.exists(testok_path):
         print(testok_path, 'does not exist')
@@ -69,18 +76,33 @@ def execute_cmdline():
         print(testng_path, 'does not exist')
         sys.exit(1)
     
-    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector)
-    model.fit_in_dir(train_path)
+    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca=args.pca)
+    model.fit_in_dir(trainok_path)
 
     # If you are not interested in extracted feature vector, just use "paths, dists = model.predict_in_dir(dir_path)"
+
+    trainok_paths = model._get_paths_in_dir(trainok_path)
     testok_paths = model._get_paths_in_dir(testok_path)
     testng_paths = model._get_paths_in_dir(testng_path)
+    trainok_imgs = model._read_imgs(trainok_paths)
     testok_imgs = model._read_imgs(testok_paths)
     testng_imgs = model._read_imgs(testng_paths)
+    trainok_features = model.extracting_model.predict(trainok_imgs)
     testok_features = model.extracting_model.predict(testok_imgs)
     testng_features = model.extracting_model.predict(testng_imgs)
+    print(testng_features.shape)
+
+    from sklearn.decomposition import PCA
+    pca = PCA(n_components=args.pca)
+    if args.pca:
+        trainok_features, testok_features, testng_features = map(pca.fit_transform, [trainok_features, testok_features, testng_features])
+    trainok_dists = model.clf.decision_function(trainok_features)
     testok_dists = model.clf.decision_function(testok_features)
     testng_dists = model.clf.decision_function(testng_features)
+    if args.detector == 'abod' or 'knn':
+        trainok_dists += -1
+        testok_dists *= -1
+        testng_dists *= -1
 
     # Count how many normal items are classified correctly
     thr = args.threshold
@@ -117,8 +139,9 @@ def execute_cmdline():
         
 
     plt.figure()
-    sns.distplot(testok_dists, kde=True, rug=True, label='TEST OK')
-    sns.distplot(testng_dists, kde=True, rug=True, label='TEST NG')
+    sns.distplot(trainok_dists, kde=False, rug=False, label='TRAIN OK')
+    sns.distplot(testok_dists, kde=False, rug=False, label='TEST OK')
+    sns.distplot(testng_dists, kde=False, rug=False, label='TEST NG')
     plt.title('Novelty detection on {}th layer on {} and {}'.format(
         args.layer, args.nn, args.detector)
     )
