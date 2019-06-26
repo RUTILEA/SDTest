@@ -66,7 +66,7 @@ def execute_cmdline():
                             
     args = parser.parse_args()
 
-    train_path = os.path.join(args.path, 'train', 'trim')
+    trainok_path = os.path.join(args.path, 'train', 'trim')
     testok_path = os.path.join(args.path, 'test', 'OKtrim')
     testng_path = os.path.join(args.path, 'test', 'NGtrim')
 
@@ -108,8 +108,8 @@ def execute_cmdline():
         testok_dists *= -1
         testng_dists *= -1
 
-    train_paths = model._get_paths_in_dir(train_path)
-    train_imgs = model._read_imgs(train_paths)
+    trainok_paths = model._get_paths_in_dir(trainok_path)
+    train_imgs = model._read_imgs(trainok_paths)
     train_features = model.extracting_model.predict(train_imgs)
     train_dists = model.clf.decision_function(train_features)
 
