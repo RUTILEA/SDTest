@@ -89,6 +89,7 @@ def execute_cmdline():
     print('TEST OK:', len(testok_paths))
     print('TEST NG:', len(testng_paths))
     print('Length of features:', model.extracting_model.output_shape)
+    print()
 
     # Count how many normal items are classified correctly
     thr = args.threshold
@@ -96,10 +97,15 @@ def execute_cmdline():
         thr = testng_dists.max()
 
     print('Threshold was', thr)
-    print(len(np.where(testok_dists < thr)[0]), ' normal items were predicted as anomaly')
-    print(len(np.where(testok_dists > thr)[0]), ' normal items were predicted as normal')
-    print(len(np.where(testng_dists < thr)[0]), ' anormaly items were predicted as anormaly')
-    print(len(np.where(testng_dists > thr)[0]), ' anormaly items were predicted as normal')    
+    false_positives_idx = np.where(testok_dists <= thr)[0]
+    true_negatives_idx = np.where(testok_dists > thr)[0]
+    true_positives_idx = np.where(testng_dists <= thr)[0]
+    false_negatives_idx = np.where(testng_dists > thr)[0]
+    print(len(false_positives_idx), ' normal items were predicted as anomaly')
+    print(len(true_negatives_idx), ' normal items were predicted as normal')
+    print(len(true_positives_idx), ' anormaly items were predicted as anormaly')
+    print(len(false_negatives_idx), ' anormaly items were predicted as normal')
+    print()
 
     # Verbose
     if args.verbose:
@@ -110,6 +116,23 @@ def execute_cmdline():
         print('Signed distance of TEST NG images')
         for path, dist in sorted(zip(testng_paths, testng_dists), key=lambda x: x[1]):
             print('{}: {:.4f}'.format(path, dist))
+        print()
+        
+        if len(false_positives_idx) > 0:
+            print('Normal image but predicted as anormaly')
+            for idx in false_positives_idx:
+                print(testok_paths[idx])
+        else:
+            print('All normal images were predicted as normal')
+        print()
+
+        if len(false_negatives_idx) > 0:
+            print('Anormaly image but predicted as normal')
+            for idx in false_negatives_idx:
+                print(testng_paths[idx])
+        else:
+            print('All anormaly image were predicted as anormaly')
+        print()
 
     # t-SNE visualization
     if args.visualization:
