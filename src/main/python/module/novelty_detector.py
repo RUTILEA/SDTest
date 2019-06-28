@@ -25,9 +25,6 @@ class NoveltyDetector:
         self.pool = pool
         self.pca_n_components = pca_n_components
         self.input_shape = None
-        self.nu = None
-        self.gamma = None
-        self.kernel = None
         self.pretrained_nn = None
         self.extracting_model = None
 
