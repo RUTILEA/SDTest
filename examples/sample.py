@@ -1,9 +1,12 @@
 import argparse
 import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import sys
+from sklearn.decomposition import PCA
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
 from novelty_detector import NoveltyDetector
 
@@ -31,7 +34,7 @@ def execute_cmdline():
     
     parser.add_argument('-d', '--detector',
                         default='knn',
-                        help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor(Default), ABOD',
+                        help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor, ABOD, kNN',
                         type=str)
     
     parser.add_argument('-f', '--file_name',
@@ -76,33 +79,17 @@ def execute_cmdline():
         print(testng_path, 'does not exist')
         sys.exit(1)
     
-    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca=args.pca)
+    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model.fit_in_dir(trainok_path)
-
-    # If you are not interested in extracted feature vector, just use "paths, dists = model.predict_in_dir(dir_path)"
-
-    trainok_paths = model._get_paths_in_dir(trainok_path)
-    testok_paths = model._get_paths_in_dir(testok_path)
-    testng_paths = model._get_paths_in_dir(testng_path)
-    trainok_imgs = model._read_imgs(trainok_paths)
-    testok_imgs = model._read_imgs(testok_paths)
-    testng_imgs = model._read_imgs(testng_paths)
-    trainok_features = model.extracting_model.predict(trainok_imgs)
-    testok_features = model.extracting_model.predict(testok_imgs)
-    testng_features = model.extracting_model.predict(testng_imgs)
-    print(testng_features.shape)
-
-    from sklearn.decomposition import PCA
-    pca = PCA(n_components=args.pca)
-    if args.pca:
-        trainok_features, testok_features, testng_features = map(pca.fit_transform, [trainok_features, testok_features, testng_features])
-    trainok_dists = model.clf.decision_function(trainok_features)
-    testok_dists = model.clf.decision_function(testok_features)
-    testng_dists = model.clf.decision_function(testng_features)
-    if args.detector == 'abod' or 'knn':
-        trainok_dists += -1
-        testok_dists *= -1
-        testng_dists *= -1
+    trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
+    testok_paths, testok_dists = model.predict_in_dir(testok_path)
+    testng_paths, testng_dists = model.predict_in_dir(testng_path)
+    print('The number of images')
+    print('TRAIN OK:', len(trainok_paths))
+    print('TEST OK:', len(testok_paths))
+    print('TEST NG:', len(testng_paths))
+    print('Length of features:', model.extracting_model.output_shape)
+    print()
 
     # Count how many normal items are classified correctly
     thr = args.threshold
@@ -110,10 +97,15 @@ def execute_cmdline():
         thr = testng_dists.max()
 
     print('Threshold was', thr)
-    print(len(np.where(testok_dists < thr)[0]), ' normal items were predicted as anomaly')
-    print(len(np.where(testok_dists > thr)[0]), ' normal items were predicted as normal')
-    print(len(np.where(testng_dists < thr)[0]), ' anormaly items were predicted as anormaly')
-    print(len(np.where(testng_dists > thr)[0]), ' anormaly items were predicted as normal')    
+    false_positives_idx = np.where(testok_dists <= thr)[0]
+    true_negatives_idx = np.where(testok_dists > thr)[0]
+    true_positives_idx = np.where(testng_dists <= thr)[0]
+    false_negatives_idx = np.where(testng_dists > thr)[0]
+    print(len(false_positives_idx), ' normal items were predicted as anomaly')
+    print(len(true_negatives_idx), ' normal items were predicted as normal')
+    print(len(true_positives_idx), ' anormaly items were predicted as anormaly')
+    print(len(false_negatives_idx), ' anormaly items were predicted as normal')
+    print()
 
     # Verbose
     if args.verbose:
@@ -124,19 +116,44 @@ def execute_cmdline():
         print('Signed distance of TEST NG images')
         for path, dist in sorted(zip(testng_paths, testng_dists), key=lambda x: x[1]):
             print('{}: {:.4f}'.format(path, dist))
+        print()
+        
+        if len(false_positives_idx) > 0:
+            print('Normal image but predicted as anormaly')
+            for idx in false_positives_idx:
+                print(testok_paths[idx])
+        else:
+            print('All normal images were predicted as normal')
+        print()
+
+        if len(false_negatives_idx) > 0:
+            print('Anormaly image but predicted as normal')
+            for idx in false_negatives_idx:
+                print(testng_paths[idx])
+        else:
+            print('All anormaly image were predicted as anormaly')
+        print()
 
     # t-SNE visualization
     if args.visualization:
         from sklearn.manifold import TSNE
+        trainok_imgs = model._read_imgs(trainok_paths)
+        testok_imgs = model._read_imgs(testok_paths)
+        testng_imgs = model._read_imgs(testng_paths)
+        trainok_features = model.extracting_model.predict(trainok_imgs)
+        testok_features = model.extracting_model.predict(testok_imgs)
+        testng_features = model.extracting_model.predict(testng_imgs)
+
         tsne = TSNE(n_components=2)
-        ok2 = tsne.fit_transform(testok_features)
-        ng2 = tsne.fit_transform(testng_features)
+        train_ok2 = tsne.fit_transform(trainok_features)
+        test_ok2 = tsne.fit_transform(testok_features)
+        test_ng2 = tsne.fit_transform(testng_features)
         plt.figure()
-        sns.scatterplot(x=ok2[:, 0], y=ok2[:, 1], label='TEST OK')
-        sns.scatterplot(x=ng2[:, 0], y=ng2[:, 1], label='TEST NG')
+        sns.scatterplot(x=train_ok2[:, 0], y=train_ok2[:, 1], label='TRAIN OK')
+        sns.scatterplot(x=test_ok2[:, 0], y=test_ok2[:, 1], label='TEST OK')
+        sns.scatterplot(x=test_ng2[:, 0], y=test_ng2[:, 1], label='TEST NG')
         plt.title('Features reduced by t-SNE')
         plt.show()
-        
 
     plt.figure()
     sns.distplot(trainok_dists, kde=False, rug=False, label='TRAIN OK')

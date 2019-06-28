@@ -13,7 +13,7 @@ import joblib
 import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='mean_kNN', pool=None, pca=None):
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='mean_kNN', pool=None, pca_n_components=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
@@ -23,7 +23,7 @@ class NoveltyDetector:
         self.nth_layer = nth_layer
         self.nn_name = nn_name
         self.pool = pool
-        self.pca = pca
+        self.pca_n_components = pca_n_components
         self.input_shape = None
         self.nu = None
         self.gamma = None
@@ -48,7 +48,7 @@ class NoveltyDetector:
             self.clf = ABOD()
             print('Novelty Detector: Angle Based Outlier Detection')
         elif detector_name_lower in ['iforest', 'isolationforest']:
-            self.detector_name = 'abod'
+            self.detector_name = 'iforest'
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
@@ -140,8 +140,8 @@ class NoveltyDetector:
     def fit(self, imgs):
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
-        if self.pca:
-            pca = PCA(n_components=self.pca)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
             feature = pca.fit_transform(feature)
         self.clf.fit(feature)
 
@@ -164,16 +164,14 @@ class NoveltyDetector:
         """
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
-        if self.pca:
-            pca = PCA(n_components=self.pca)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
             feature = pca.fit_transform(feature)
         predicted_scores = self.clf.decision_function(feature)
 
         if self.clf.__module__.startswith('pyod.models'):
-            # Tricky, the higher pyod's predict score, the more likely anormaly.
-            print(predicted_scores)
+            # Tricky, the higher pyod's predicts score, the more likely anormaly. We want higher the score,  more likely normal.
             predicted_scores *= -1
-            print(predicted_scores)
         return predicted_scores
 
     def predict_paths(self, paths):
