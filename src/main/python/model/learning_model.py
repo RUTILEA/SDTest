@@ -123,7 +123,7 @@ class LearningModel(QObject):
     def __init__(self):
         super().__init__()
 
-        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='ABOD')
+        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='kNN')
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
