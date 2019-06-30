@@ -18,7 +18,7 @@ class NoveltyDetector:
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
         'InceptionResNetV2', 'MobileNet', 'MobileNetV2', 'DenseNet', 'NASNet'
-        detector_name: 'RobustCovariance', 'IsolationForest'(Default), 'LocalOutlierFactor'
+        detector_name: 'RobustCovariance', 'IsolationForest, 'LocalOutlierFactor, ABOD, kNN(Default)'
         """
         self.nth_layer = nth_layer
         self.nn_name = nn_name
