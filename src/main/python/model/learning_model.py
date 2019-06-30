@@ -146,13 +146,13 @@ class LearningModel(QObject):
     def train(self):
         self.__model = NoveltyDetector()  # FIXME: cannot update weights without reinitialization...
         self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
-        self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.save(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
     def load_weights(self):
-        self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.load(LearningModel.__weight_file_path(cam_index=0))
 
     def start_predict(self, image_paths):
         image_path = image_paths[0]
