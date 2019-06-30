@@ -62,12 +62,20 @@ def execute_cmdline():
     parser.add_argument('-pca', '--pca',
                         type=int,
                         default=None)
+
+    parser.add_argument('-tr', '--trim',
+                        action='store_true',
+                        help='find directory, OKtrim, NGtrim')
                             
     args = parser.parse_args()
-
-    trainok_path = os.path.join(args.path, 'train', 'OK')
-    testok_path = os.path.join(args.path, 'test', 'OK')
-    testng_path = os.path.join(args.path, 'test', 'NG')
+    if args.trim:
+        trainok_path = os.path.join(args.path, 'train', 'trim')
+        testok_path = os.path.join(args.path, 'test', 'OKtrim')
+        testng_path = os.path.join(args.path, 'test', 'NGtrim')
+    else:
+        trainok_path = os.path.join(args.path, 'train', 'OK')
+        testok_path = os.path.join(args.path, 'test', 'OK')
+        testng_path = os.path.join(args.path, 'test', 'NG')
 
     if not os.path.exists(trainok_path):
         print(trainok_path, 'does not exist')
@@ -79,9 +87,16 @@ def execute_cmdline():
         print(testng_path, 'does not exist')
         sys.exit(1)
     
+    model_temp = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
+    model_temp.fit_in_dir(trainok_path)
+    model_temp.save('sample.joblib')
+    _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
     model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
-    model.fit_in_dir(trainok_path)
+    model.load('sample.joblib')
+    os.remove('sample.joblib')
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
+    assert (model_temp.clf.get_params() == model.clf.get_params())
+    assert (trainok_dists_temp == trainok_dists).all()
     testok_paths, testok_dists = model.predict_in_dir(testok_path)
     testng_paths, testng_dists = model.predict_in_dir(testng_path)
     print('The number of images')
