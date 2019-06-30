@@ -149,7 +149,8 @@ class NoveltyDetector:
         Keyword arguments:
         paths -- list of image paths like [./dir/img1.jpg, ./dir/img2.jpg, ...]
         """
-        self._load_NN_model(imgs[0].shape)
+        if self.extracting_model is None:
+            self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
         if self.pca_n_components:
             pca = PCA(n_components=self.pca_n_components)
