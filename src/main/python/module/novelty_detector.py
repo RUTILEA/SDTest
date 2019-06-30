@@ -12,7 +12,8 @@ import joblib
 import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='KNN', pool=None, pca_n_components=None):
+
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='kNN', pool=None, pca_n_components=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
@@ -24,9 +25,6 @@ class NoveltyDetector:
         self.pool = pool
         self.pca_n_components = pca_n_components
         self.input_shape = None
-        self.nu = None
-        self.gamma = None
-        self.kernel = None
         self.pretrained_nn = None
         self.extracting_model = None
 
