@@ -2,3 +2,4 @@
 pypiwin32
 
 ###### Requirements with Version Specifiers ######
+.\requirements\uvc-0.13-cp36-cp36m-win_amd64.whl
