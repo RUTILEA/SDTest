@@ -230,7 +230,7 @@ def execute_cmdline():
 
     with open('examples/hist/statistics.csv', 'a') as f:
         writer = csv.writer(f)
-        # writer.writerow(['work', 'how near dists are?', 'T', 'trT', 'teT', 'F', 'med_T', 'med_trT', 'med_teT', 'med_F', 'U_test_p', 'median_test_p'])
+        # writer.writerow(['work', 'fitting', 'T', 'trT', 'teT', 'F', 'med_T', 'med_trT', 'med_teT', 'med_F', 'U_test_p', 'median_test_p'])
         writer.writerow([os.path.basename(os.path.dirname(args.path)), None, T, trT, teT, F, med_T, med_trT, med_teT, med_F, u_p, med_p])
 
 
