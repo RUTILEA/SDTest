@@ -160,9 +160,11 @@ def execute_cmdline():
         testng_features = model.extracting_model.predict(testng_imgs)
 
         tsne = TSNE(n_components=2)
-        train_ok2 = tsne.fit_transform(trainok_features)
-        test_ok2 = tsne.fit_transform(testok_features)
-        test_ng2 = tsne.fit_transform(testng_features)
+        concat = np.concatenate([train_ok_features, testok_features, testng_features])
+        transformed = tsne.fit_transform(concat)
+        train_ok2 = transformed[:len(trainok_features)]
+        test_ok2 = transformed[len(trainok_features):len(testok_features)]
+        test_ng2 = transformed[len(testok_features):]
         plt.figure()
         sns.scatterplot(x=train_ok2[:, 0], y=train_ok2[:, 1], label='TRAIN OK')
         sns.scatterplot(x=test_ok2[:, 0], y=test_ok2[:, 1], label='TEST OK')
