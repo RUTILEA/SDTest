@@ -12,7 +12,7 @@ class CameraModel(QObject):
     __default_instance = None
     """This class provides QCamObjects"""
     image_saved = pyqtSignal(str)
-    get_video_image_by_timer = pyqtSignal()
+    get_video_image_by_timer = pyqtSignal(QImage)
 
     @classmethod
     def default(cls):
@@ -90,12 +90,12 @@ class CameraModel(QObject):
             # print(self.selected_cam_names[0])
             image = self.images[str(self.selected_cam_names[0])]
             cv2.imshow("img", image)
-            self.get_video_image_by_timer.emit(image)
-            # cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            # height, width, bpc = image.shape
-            # bpl = bpc * width
-            # q_image = QImage(image.data, width, height, bpl, QImage.Format_RGB888)
-            # self.get_video_image_by_timer.emit(q_image)
+            # self.get_video_image_by_timer.emit(image)
+            cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            height, width, bpc = image.shape
+            bpl = bpc * width
+            q_image = QImage(image.data, width, height, bpl, QImage.Format_RGB888)
+            self.get_video_image_by_timer.emit(q_image)
 
     def capture(self, directory: str):
         # TODO: manage image name format (e.x. use Dataset.generate_image_path())
