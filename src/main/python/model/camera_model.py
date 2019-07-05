@@ -6,7 +6,7 @@ from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSize
 from PyQt5.QtGui import QImage
 import queue
 import cv2
-
+from matplotlib import pyplot as plt
 
 class CameraModel(QObject):
     __default_instance = None
@@ -40,6 +40,7 @@ class CameraModel(QObject):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
         self.timer.start(1)
+        # cv2.ocl.setUseOpenCL(False)
         try:
             default_camera_name = self.get_available_camera_names()[0]
             if default_camera_name is not '':
@@ -62,6 +63,7 @@ class CameraModel(QObject):
                 print(device['name'])
                 uvc_thread = threading.Thread(target=self.grab_uvc, args=(device['name'], cam))
                 uvc_thread.start()
+                cv2.ocl.setUseOpenCL(False)
                 self.__old_device_list.append(device['name'])
 
     def grab_uvc(self, device_name, uvc_capture):
@@ -89,9 +91,14 @@ class CameraModel(QObject):
         else:
             # print(self.selected_cam_names[0])
             image = self.images[str(self.selected_cam_names[0])]
-            cv2.imshow("img", image)
             # self.get_video_image_by_timer.emit(image)
-            cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            cv2.imshow("img", image)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            # print(type(image))
+            # print(image.shape)
+            # plt.imshow(image)
+            # plt.show()
+            import time
             height, width, bpc = image.shape
             bpl = bpc * width
             q_image = QImage(image.data, width, height, bpl, QImage.Format_RGB888)
