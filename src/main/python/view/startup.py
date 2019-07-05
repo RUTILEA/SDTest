@@ -8,7 +8,6 @@ from PyQt5.QtCore import QObject, QUrl
 from view.new_project import NewProjectEngine
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
-
 class StartupEngine(QQmlApplicationEngine):
     def __init__(self):
         QQmlApplicationEngine.__init__(self)

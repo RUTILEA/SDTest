@@ -122,4 +122,3 @@ class NewProjectEngine(QQmlApplicationEngine):
     # def on_back_to_startup_signal(self):
     #     self.back_to_startup.emit()
     #     self.main_window = MainWindow()
-

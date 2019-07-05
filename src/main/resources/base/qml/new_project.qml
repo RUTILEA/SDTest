@@ -27,7 +27,7 @@ ApplicationWindow {
 
         TextField {
             id: projectnamefield
-            objectName: projectnamefield
+            objectName: 'projectnamefield'
             width: root.width - space_01 * 2
             height: ref.height
             anchors.left: projectname.left
@@ -47,7 +47,7 @@ ApplicationWindow {
 
         TextField {
             id: pathfield
-            objectName: pathfield
+            objectName: 'pathfield'
             width: root.width - space_01 * 2 - ref.width - space_02
             height: ref.height
             anchors.top: save_to.bottom
@@ -57,7 +57,7 @@ ApplicationWindow {
 
         GeneralButton {
             id: ref
-            objectName: ref
+            objectName: 'ref'
             anchors.verticalCenter: pathfield.verticalCenter
             anchors.right: projectnamefield.right
             mytext: '参照'
@@ -66,7 +66,7 @@ ApplicationWindow {
 
     GeneralButton {
         id: cancel
-        objectName: cancel
+        objectName: 'cancel'
         x: nextbutton.x - cancel.width - space_02
         y: 225
         mytext: 'キャンセル'
@@ -74,7 +74,7 @@ ApplicationWindow {
 
     GeneralButton {
         id: nextbutton
-        objectName: nextbutton
+        objectName: 'nextbutton'
         anchors.verticalCenter: cancel.verticalCenter
         x: root.width - nextbutton.width - space_01
         // 'projectnamefield'に入力があれば下をtrueに変更する必要あり
