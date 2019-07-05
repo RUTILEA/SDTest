@@ -1,4 +1,3 @@
-from PyQt5 import Qt, QtCore
 from PyQt5.QtWidgets import QStyleFactory
 from view.startup import StartupEngine
 from model.fbs import AppInfo
