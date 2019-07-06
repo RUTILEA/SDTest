@@ -25,18 +25,18 @@ from fbs_runtime.application_context.PyQt5 import ApplicationContext
 '''
 
 
-class NewProjectEngine(QQmlApplicationEngine):
+class NewProjectWindow:
 
     # # Signal for cancel button
     # back_to_startup = pyqtSignal()
     # new_project_canceled = pyqtSignal()
     # close_old_project = pyqtSignal()
 
-    def __init__(self):
-        QQmlApplicationEngine.__init__(self)
-        appctxt = ApplicationContext()
-        self.load(appctxt.get_resource('qml/new_project.qml'))
-        # QWidget.__init__(self)
+    def __init__(self, app_engine):
+        self.appctxt = ApplicationContext()
+        self.engine = app_engine
+        self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
+
         # self.ui = Ui_NewProjectDialog()
         # self.ui.setupUi(self)
         # self.ui.project_name_line.textEdited.connect(self.sync_project_name_edit)
