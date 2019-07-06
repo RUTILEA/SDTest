@@ -6,7 +6,10 @@ from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSize
 from PyQt5.QtGui import QImage
 import queue
 import cv2
+import time
 from matplotlib import pyplot as plt
+from PIL import Image
+import numpy as np
 
 class CameraModel(QObject):
     __default_instance = None
@@ -40,7 +43,7 @@ class CameraModel(QObject):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
         self.timer.start(1)
-        # cv2.ocl.setUseOpenCL(False)
+        cv2.ocl.setUseOpenCL(False)
         try:
             default_camera_name = self.get_available_camera_names()[0]
             if default_camera_name is not '':
@@ -63,7 +66,6 @@ class CameraModel(QObject):
                 print(device['name'])
                 uvc_thread = threading.Thread(target=self.grab_uvc, args=(device['name'], cam))
                 uvc_thread.start()
-                cv2.ocl.setUseOpenCL(False)
                 self.__old_device_list.append(device['name'])
 
     def grab_uvc(self, device_name, uvc_capture):
@@ -92,13 +94,15 @@ class CameraModel(QObject):
             # print(self.selected_cam_names[0])
             image = self.images[str(self.selected_cam_names[0])]
             # self.get_video_image_by_timer.emit(image)
-            cv2.imshow("img", image)
+            cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
+            cv2.imshow("player", image)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            # time.sleep(0.001)
             # print(type(image))
             # print(image.shape)
+            # plt.figure()
             # plt.imshow(image)
             # plt.show()
-            import time
             height, width, bpc = image.shape
             bpl = bpc * width
             q_image = QImage(image.data, width, height, bpl, QImage.Format_RGB888)
@@ -133,5 +137,3 @@ class CameraModel(QObject):
         self.__fetch_cam()
         # for selectable_camera_view in selectable_camera_view_list:
         #     selectable_camera_view.set_q_cam(self.cams[selectable_camera_view.get_cam_name()])
-
-

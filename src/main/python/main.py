@@ -45,7 +45,11 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
             if ext == '.sdt':
                 startup_window.move_to_main_window(project_file_path)
         else:
-            startup_window.show()
+            # startup_window.show()
+            startup_window.move_to_main_window("/Users/satoakitaka/sample_dhc/sample_dhc.sdt")
+            # from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
+            # q_camera = QCameraViewFinderWithGuide()
+            # q_camera.show()
 
         # スタイルをwindows共用に(for develop)
         # self.app.setStyle(QStyleFactory.create('Fusion'))
