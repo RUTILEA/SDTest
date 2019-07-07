@@ -8,8 +8,9 @@ from view.new_project import NewProjectWindow
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 class StartupWindow:
-    def __init__(self, app_engine):
-        self.appctxt = ApplicationContext()
+    def __init__(self, app_engine, appctxt):
+        # self.appctxt = ApplicationContext()
+        self.appctxt = appctxt
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/startup.qml'))
         self.rootObject = self.engine.rootObjects()[0]
@@ -27,11 +28,11 @@ class StartupWindow:
         # self.new_project_window.come_from_main_window_flag = False
         # self.new_project_window = NewProjectEngine()
         # self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
-        NewProjectWindow(self.engine)
+        NewProjectWindow(self.engine, self.appctxt)
 
     def on_clicked_open_project_button(self):
         # self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
-        NewProjectWindow(self.engine)
+        NewProjectWindow(self.engine, self.appctxt)
 
     # def on_click(self, str):
     #     print(str)

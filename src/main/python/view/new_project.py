@@ -32,9 +32,9 @@ class NewProjectWindow:
     # new_project_canceled = pyqtSignal()
     # close_old_project = pyqtSignal()
 
-    def __init__(self, app_engine):
-        self.appctxt = ApplicationContext()
+    def __init__(self, app_engine, appctxt):
         self.engine = app_engine
+        self.appctxt = appctxt
         self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
 
         # self.ui = Ui_NewProjectDialog()
