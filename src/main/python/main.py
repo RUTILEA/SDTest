@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QStyleFactory
-from view.startup import StartupEngine
+from view.startup import StartupWindow
 from model.fbs import AppInfo
 from fbs_runtime.application_context import cached_property, is_frozen
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from fbs_runtime.excepthook.sentry import SentryExceptionHandler
+from PyQt5.QtQml import QQmlApplicationEngine
 
 import os
 import sys
@@ -36,14 +37,16 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
 
     def run(self):                             # 2. Implement run()
         """ start QQmlApplicationEngine """
+        app_engine = QQmlApplicationEngine()
         if len(sys.argv) > 1 and type(sys.argv[1]) is str:
             project_file_path = sys.argv[1]
             _, ext = os.path.splitext(project_file_path)
             if ext == '.sdt':
                 # startup_window.move_to_main_window(project_file_path)
-                engine = StartupEngine()
+                StartupWindow(app_engine, appctxt)
+
         else:
-            engine = StartupEngine()
+            StartupWindow(app_engine, appctxt)
 
         # スタイルをwindows共用に(for develop)
         # self.app.setStyle(QStyleFactory.create('Fusion'))
