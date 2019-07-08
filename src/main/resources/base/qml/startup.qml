@@ -17,7 +17,7 @@ ApplicationWindow {
         y: 100
         width: 200
         height: 47
-        source: "../../../resources/base/images/SDTest_logo.png"
+        source: "../images/SDTest_logo.png"
     }
 
     Text {
@@ -26,7 +26,6 @@ ApplicationWindow {
         text: qsTr("Software-Defined Test")
         color: '#3E3E3E'
         font.pointSize: 15
-
     }
 
     Text {
@@ -52,7 +51,7 @@ ApplicationWindow {
 
                 Image {
                     id: plus_icon
-                    source: "../../../resources/base/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"
+                    source: "../fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"
                     width: newprojectbutton.height * 0.5
                     height: newprojectbutton.height * 0.5
                 }
@@ -75,7 +74,7 @@ ApplicationWindow {
 
                 Image {
                     id: open_icon
-                    source: "../../../resources/base/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"
+                    source: "../fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"
                     width: openbutton.height * 0.5
                     height: openbutton.height * 0.5
                 }

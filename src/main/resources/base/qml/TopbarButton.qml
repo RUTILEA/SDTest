@@ -16,9 +16,7 @@ Rectangle{
     property string imgsource_selected: ''
     function setCurrentNumber (n){
         topbar.currentTab = n;
-        // console.log('currentTab = '+ topbar.currentTab);
     }
-
 
     MouseArea {
         id: _mouse
@@ -27,6 +25,7 @@ Rectangle{
         onClicked: {
             baserec.clicked();
             setCurrentNumber(mynumber);
+        }
     }
 
     Image {
@@ -45,8 +44,6 @@ Rectangle{
         font.pointSize: 10
         color: '#3E3E3E'
     }
-
-
 
     states: [
         State {
@@ -103,9 +100,5 @@ Rectangle{
                 color: '#4298F9'
             }
         }
-
-
     ]
-
-    }
 }

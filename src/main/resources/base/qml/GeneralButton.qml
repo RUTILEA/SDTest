@@ -14,8 +14,6 @@ Rectangle {
     property string mytext: 'テキスト'
     property bool validbuttton: true
 
-
-
     MouseArea {
         id: _mouse
         hoverEnabled: true

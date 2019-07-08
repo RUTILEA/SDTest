@@ -21,15 +21,15 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '検品'
                 mynumber: 0
-                imgsource: '../../../resources/base/fonts/fontawesome/eye_3e3e3e.png'
-                imgsource_selected: '../../../resources/base/fonts/fontawesome/blueeye.png'
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
 
             TopbarButton {
                 tabname: '学習'
                 mynumber: 1
-                imgsource: '../../../resources/base/fonts/fontawesome/eye_3e3e3e.png'
-                imgsource_selected: '../../../resources/base/fonts/fontawesome/blueeye.png'
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
 
         }
