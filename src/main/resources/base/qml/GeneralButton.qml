@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 
 Rectangle {
     id: baserect
+    signal clicked()
     visible: true
     width: 90
     height: 35
@@ -13,12 +14,13 @@ Rectangle {
     property string mytext: 'テキスト'
     property bool validbuttton: true
 
+
+
     MouseArea {
-        signal clicked()
         id: _mouse
         hoverEnabled: true
         anchors.fill: parent
-        onClicked: clicked()
+        onClicked: baserect.clicked()
     }
 
     states: [
