@@ -77,7 +77,6 @@ ApplicationWindow {
         objectName: 'nextbutton'
         anchors.verticalCenter: cancel.verticalCenter
         x: root.width - nextbutton.width - space_01
-        // 'projectnamefield'に入力があれば下をtrueに変更する必要あり
         validbuttton: if(projectnamefield.text.length > 0){true;}else{false;}
         mytext: '次へ'
     }

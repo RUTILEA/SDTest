@@ -12,8 +12,6 @@ Rectangle {
     MouseArea {
         id: _mouse
         anchors.fill: parent
-        width: parent.width
-        height: parent.height
         hoverEnabled: true
         onClicked: baserec.clicked()
     }

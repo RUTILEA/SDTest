@@ -11,26 +11,46 @@ ApplicationWindow {
     title: 'プロジェクト名'
 
     Rectangle {
+        id: topbar
         width: parent.width
-        height: 60
+        height: 55
         color: '#F5F5F5'
-        Column {
-            Item {
-                width: 50
-                height: parent.height
-                Image {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    id: eye_logo
-                    source: "../../../resources/base/fonts/fontawesome/eye_3e3e3e.png"
-                }
+        property int currentTab: 0
 
-                Text {
-                    anchors.horizontalCenter: eye_logo.horizontalCenter
-                    anchors.top: eye_logo.bottom
-                    text: qsTr("検品")
-                    font.pointSize: 10
-                }
+        Row {
+            TopbarButton {
+                tabname: '検品'
+                mynumber: 0
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
+
+            TopbarButton {
+                tabname: '学習'
+                mynumber: 1
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
+            }
+
         }
     }
+
+    StackLayout {
+        width: parent.width
+        height: parent.height - topbar.height
+        anchors.top: topbar.bottom
+        currentIndex: topbar.currentTab
+
+        InspectionView {
+
+        }
+
+        AiOptimizationView {
+
+        }
+    }
+
+
+
+
 }
