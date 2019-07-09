@@ -10,6 +10,7 @@ import time
 from matplotlib import pyplot as plt
 from PIL import Image
 import numpy as np
+import copy
 
 class CameraModel(QObject):
     __default_instance = None
@@ -93,6 +94,10 @@ class CameraModel(QObject):
         else:
             # print(self.selected_cam_names[0])
             image = self.images[str(self.selected_cam_names[0])]
+            # image = copy.copy(self.images[str(self.selected_cam_names[0])])
+            # print(id(self.images[str(self.selected_cam_names[0])][0]))
+            # print(id(image[0]))
+
             # self.get_video_image_by_timer.emit(image)
             cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
             cv2.imshow("player", image)

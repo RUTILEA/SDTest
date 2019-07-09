@@ -46,7 +46,10 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
                 startup_window.move_to_main_window(project_file_path)
         else:
             # startup_window.show()
+
+            #プロジェクトの絶対パスに書き換えるといきなり検品画面に飛びます.
             startup_window.move_to_main_window("/Users/satoakitaka/sample_dhc/sample_dhc.sdt")
+
             # from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
             # q_camera = QCameraViewFinderWithGuide()
             # q_camera.show()
