@@ -101,16 +101,13 @@ class CameraModel(QObject):
             # self.get_video_image_by_timer.emit(image)
             cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
             cv2.imshow("player", image)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            # time.sleep(0.001)
+            image = copy.copy(cv2.cvtColor(image, cv2.COLOR_BGR2BGRA))
+            image = copy.copy(image[:, :, ::-1])
             # print(type(image))
             # print(image.shape)
-            # plt.figure()
-            # plt.imshow(image)
-            # plt.show()
             height, width, bpc = image.shape
             bpl = bpc * width
-            q_image = QImage(image.data, width, height, bpl, QImage.Format_RGB888)
+            q_image = QImage(image.data, width, height, bpl, QImage.Format_ARGB32)
             self.get_video_image_by_timer.emit(q_image)
 
     def capture(self, directory: str):
