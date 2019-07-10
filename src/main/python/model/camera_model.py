@@ -43,7 +43,7 @@ class CameraModel(QObject):
         self.images = {}
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
-        self.timer.start(1)
+        self.timer.start(1/30)
         cv2.ocl.setUseOpenCL(False)
         try:
             default_camera_name = self.get_available_camera_names()[0]
@@ -99,12 +99,13 @@ class CameraModel(QObject):
             # print(id(image[0]))
 
             # self.get_video_image_by_timer.emit(image)
-            # cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
-            # cv2.imshow("player", image)
-            image = copy.copy(cv2.cvtColor(image, cv2.COLOR_BGR2BGRA))
-            height, width, bpc = image.shape
+            image_resized = cv2.resize(image, dsize=(400, 300))
+            cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
+            cv2.imshow("player", image_resized)
+            image_preview = copy.copy(cv2.cvtColor(image_resized, cv2.COLOR_BGR2BGRA))
+            height, width, bpc = image_preview.shape
             bpl = bpc * width
-            q_image = QImage(image.data, width, height, bpl, QImage.Format_ARGB32)
+            q_image = QImage(image_preview.data, width, height, bpl, QImage.Format_ARGB32)
             self.get_video_image_by_timer.emit(q_image)
 
     def capture(self, directory: str):

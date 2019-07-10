@@ -18,7 +18,7 @@ class InspectionWidget(QWidget):
     # this signal emit on shortage of ai models
     model_file_not_found_error = pyqtSignal()
     __INSPECTED_IMAGES_DIR_NAME = '/inspection_results/images'
-    __VIEW_FINDER = QSize(400, 225)
+    __VIEW_FINDER = QSize(400, 300)
 
     def __init__(self):
         QWidget.__init__(self)
