@@ -43,7 +43,7 @@ class CameraModel(QObject):
         self.images = {}
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
-        self.timer.start(1/30)
+        self.timer.start(1000/30)
         cv2.ocl.setUseOpenCL(False)
         try:
             default_camera_name = self.get_available_camera_names()[0]
