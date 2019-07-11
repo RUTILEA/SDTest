@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/shibatakyousuke/Development/RUTILEA/SDTest/src/main/python/view/ui/inspection.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_inspection(object):
     def setupUi(self, inspection):
@@ -20,19 +21,15 @@ class Ui_inspection(object):
         spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_6.addItem(spacerItem)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_7.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.groupBox = QtWidgets.QGroupBox(inspection)
-        self.groupBox.setTitle("")
-        self.groupBox.setObjectName("groupBox")
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.groupBox)
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem2)
-        self.camera_preview = QCameraViewFinderWithGuide(self.groupBox)
+        self.camera_preview = QCameraViewFinderWithGuide(inspection)
+        self.camera_preview.setMinimumSize(QtCore.QSize(152, 102))
         self.camera_preview.setStyleSheet("background-color: #f5f5f5;\n"
 "border: 1px solid #aaaaaa;\n"
 "border-radius: 8px;\n"
@@ -41,15 +38,15 @@ class Ui_inspection(object):
 "min-height: 100px;\n"
 "")
         self.camera_preview.setObjectName("camera_preview")
-        self.verticalLayout_7.addWidget(self.camera_preview)
-        self.horizontalWidget = QtWidgets.QWidget(self.groupBox)
+        self.verticalLayout.addWidget(self.camera_preview)
+        self.horizontalWidget = QtWidgets.QWidget(inspection)
         self.horizontalWidget.setMinimumSize(QtCore.QSize(0, 0))
         self.horizontalWidget.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.horizontalWidget.setObjectName("horizontalWidget")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalWidget)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem3)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem2)
         self.select_camera_button = QtWidgets.QPushButton(self.horizontalWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -59,12 +56,9 @@ class Ui_inspection(object):
         self.select_camera_button.setShortcut("")
         self.select_camera_button.setObjectName("select_camera_button")
         self.horizontalLayout_3.addWidget(self.select_camera_button)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem4)
-        self.verticalLayout_7.addWidget(self.horizontalWidget)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem5)
-        self.verticalLayout.addWidget(self.groupBox)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem3)
+        self.verticalLayout.addWidget(self.horizontalWidget)
         self.horizontalWidget1 = QtWidgets.QWidget(inspection)
         self.horizontalWidget1.setMinimumSize(QtCore.QSize(0, 0))
         self.horizontalWidget1.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -73,16 +67,16 @@ class Ui_inspection(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalWidget1)
         self.horizontalLayout_4.setContentsMargins(-1, 1, -1, -1)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem6)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem4)
         self.inspect_button = QtWidgets.QPushButton(self.horizontalWidget1)
         self.inspect_button.setObjectName("inspect_button")
         self.horizontalLayout_4.addWidget(self.inspect_button)
         self.inspect_existing_image_button = QtWidgets.QPushButton(self.horizontalWidget1)
         self.inspect_existing_image_button.setObjectName("inspect_existing_image_button")
         self.horizontalLayout_4.addWidget(self.inspect_existing_image_button)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem7)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem5)
         self.verticalLayout.addWidget(self.horizontalWidget1)
         self.horizontalLayout_7.addLayout(self.verticalLayout)
         self.loader_label = QtWidgets.QLabel(inspection)
@@ -135,8 +129,8 @@ class Ui_inspection(object):
         self.OK.setObjectName("OK")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.OK)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem8)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem6)
         self.OK_big_icon_label = QtWidgets.QLabel(self.OK)
         self.OK_big_icon_label.setStyleSheet("border: none;\n"
 "background-color: #00000000;")
@@ -166,8 +160,8 @@ class Ui_inspection(object):
         self.ok_score.setAlignment(QtCore.Qt.AlignCenter)
         self.ok_score.setObjectName("ok_score")
         self.verticalLayout_4.addWidget(self.ok_score)
-        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem9)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem7)
         self.result.addWidget(self.OK)
         self.NG = QtWidgets.QWidget()
         self.NG.setStyleSheet("background-color: #19e66643;\n"
@@ -177,12 +171,12 @@ class Ui_inspection(object):
         self.NG.setObjectName("NG")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.NG)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem10)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem8)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem11)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem9)
         self.ng_image = QtWidgets.QLabel(self.NG)
         self.ng_image.setMinimumSize(QtCore.QSize(140, 140))
         self.ng_image.setMaximumSize(QtCore.QSize(140, 140))
@@ -193,11 +187,11 @@ class Ui_inspection(object):
         self.ng_image.setAlignment(QtCore.Qt.AlignCenter)
         self.ng_image.setObjectName("ng_image")
         self.horizontalLayout_6.addWidget(self.ng_image)
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem12)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem10)
         self.verticalLayout_5.addLayout(self.horizontalLayout_6)
-        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem13)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem11)
         self.NG_message_label = QtWidgets.QLabel(self.NG)
         font = QtGui.QFont()
         font.setPointSize(18)
@@ -217,8 +211,8 @@ class Ui_inspection(object):
         self.ng_score.setAlignment(QtCore.Qt.AlignCenter)
         self.ng_score.setObjectName("ng_score")
         self.verticalLayout_5.addWidget(self.ng_score)
-        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem14)
+        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem12)
         self.result.addWidget(self.NG)
         self.verticalLayout_2.addWidget(self.result)
         self.widget = QtWidgets.QWidget(inspection)
@@ -278,11 +272,11 @@ class Ui_inspection(object):
         self.horizontalLayout_2.addWidget(self.NG_counter_label)
         self.verticalLayout_2.addWidget(self.counter)
         self.horizontalLayout_7.addLayout(self.verticalLayout_2)
-        spacerItem15 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem15)
+        spacerItem13 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem13)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
-        spacerItem16 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_6.addItem(spacerItem16)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_6.addItem(spacerItem14)
 
         self.retranslateUi(inspection)
         self.result.setCurrentIndex(0)
@@ -299,6 +293,7 @@ class Ui_inspection(object):
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
+
 
 from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from qrc import icon_rc

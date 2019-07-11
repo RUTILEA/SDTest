@@ -89,20 +89,20 @@ class CameraModel(QObject):
 
     def get_playing_qimage(self):
         if self.selected_cam_names[0] not in self.images:
-            print('a')
             return
         else:
             # print(self.selected_cam_names[0])
-            image = self.images[str(self.selected_cam_names[0])]
+            # image = self.images[str(self.selected_cam_names[0])]
             # image = copy.copy(self.images[str(self.selected_cam_names[0])])
             # print(id(self.images[str(self.selected_cam_names[0])][0]))
             # print(id(image[0]))
-
             # self.get_video_image_by_timer.emit(image)
-            image_resized = cv2.resize(image, dsize=(400, 300))
-            cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
-            cv2.imshow("player", image_resized)
-            image_preview = copy.copy(cv2.cvtColor(image_resized, cv2.COLOR_BGR2BGRA))
+            # image_resized = cv2.resize(image, dsize=(400, 300))
+
+            image = copy.copy(self.images[str(self.selected_cam_names[0])])
+            # cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
+            # cv2.imshow("player", image)
+            image_preview = copy.copy(cv2.cvtColor(image, cv2.COLOR_BGR2BGRA))
             height, width, bpc = image_preview.shape
             bpl = bpc * width
             q_image = QImage(image_preview.data, width, height, bpl, QImage.Format_ARGB32)

@@ -1,10 +1,12 @@
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QPoint, QSize, QRect
 from model.camera_model import CameraModel
 
-
 class QCameraViewFinderWithGuide(QWidget):
+
+    __VIEW_FINDER = QSize(320, 240)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.needs_guide = True
@@ -12,9 +14,8 @@ class QCameraViewFinderWithGuide(QWidget):
         CameraModel.default().get_video_image_by_timer.connect(self.set_image)
 
     def set_image(self, image):
-        self.image = image
-        # print(self.image)
-        self.setMinimumSize(image.size())
+        self.image = image.scaled(self.__VIEW_FINDER)
+        self.setMinimumSize(self.__VIEW_FINDER)
         self.update()
 
     def paintEvent(self, event):

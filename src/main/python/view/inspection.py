@@ -18,7 +18,6 @@ class InspectionWidget(QWidget):
     # this signal emit on shortage of ai models
     model_file_not_found_error = pyqtSignal()
     __INSPECTED_IMAGES_DIR_NAME = '/inspection_results/images'
-    __VIEW_FINDER = QSize(400, 300)
 
     def __init__(self):
         QWidget.__init__(self)
@@ -28,8 +27,6 @@ class InspectionWidget(QWidget):
         self.camera_model = CameraModel.default()
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
         self.camera_model.image_saved.connect(self.on_image_saved)
-
-        self.ui.camera_preview.setFixedSize(self.__VIEW_FINDER)
 
         self.learning_model = LearningModel.default()
         self.learning_model.predicting_finished.connect(self.on_finished_predicting)
@@ -130,6 +127,8 @@ class InspectionWidget(QWidget):
 
     def set_camera_to_camera_preview(self):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
+        # self.ui.camera_preview.setFixedSize(10,10)
+        # self.ui.camera_preview
 
     def on_clicked_inspection_existing_image_button(self):
         ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'
