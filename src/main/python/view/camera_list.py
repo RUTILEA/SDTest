@@ -3,10 +3,9 @@ from view.ui.camera_list import Ui_CameraList
 from view.ui.selectable_camera_viewfinder import Ui_SelectableCameraView
 from model.camera_model import CameraModel
 from PyQt5.QtMultimedia import QCamera
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from typing import Dict
 from PyQt5.QtCore import pyqtSignal, QSize, QPoint
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtGui import QPainter
 
 
 class CameraList(QDialog):
@@ -32,7 +31,6 @@ class CameraList(QDialog):
         self.camera_model.connect_view_finders_with_all_cameras(self.__camera_views)
 
     def on_selected_camera(self, selected_widget):
-        # cam_index = self.ui.grid.indexOf(selected_widget)
         name = selected_widget.get_cam_name()
         self.camera_model.selected_cam_names = [name]
         self.clicked.emit(name)
@@ -69,9 +67,6 @@ class SelectableCameraView(QWidget):
         self.ui.camera_view.setAspectRatioMode(1)
         self.cam_device_name = cam_device_name
         self.ui.camera_device_name.setText(cam_device_name)
-        # print(self.ui.SelectableCameraView())
-        print(self.ui.horizontalWidget.frameGeometry())
-        print(self.ui.camera_view.frameGeometry())
         self.ui.checkBox.clicked.connect(self.on_checkbox_clicked)
         CameraModel.default().get_video_image_by_timer.connect(self.set_image)
 

@@ -9,7 +9,6 @@ from PyQt5.QtCore import pyqtSignal, QSize
 from PyQt5.QtGui import QPixmap, QMovie
 from shutil import move, copy2
 import os
-import pathlib
 from datetime import datetime
 
 
@@ -127,8 +126,6 @@ class InspectionWidget(QWidget):
 
     def set_camera_to_camera_preview(self):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
-        # self.ui.camera_preview.setFixedSize(10,10)
-        # self.ui.camera_preview
 
     def on_clicked_inspection_existing_image_button(self):
         ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'

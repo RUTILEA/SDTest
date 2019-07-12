@@ -6,10 +6,6 @@ from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSize
 from PyQt5.QtGui import QImage
 import queue
 import cv2
-import time
-from matplotlib import pyplot as plt
-from PIL import Image
-import numpy as np
 import copy
 
 class CameraModel(QObject):
@@ -17,7 +13,6 @@ class CameraModel(QObject):
     """This class provides QCamObjects"""
     image_saved = pyqtSignal(str)
     get_video_image_by_timer = pyqtSignal(dict)
-    # get_video_image_by_timer = pyqtSignal(QImage)
     get_selectable_image_by_timer = pyqtSignal(dict)
 
     @classmethod
@@ -45,7 +40,6 @@ class CameraModel(QObject):
         self.images = {}
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
-        # self.timer.timeout.connect(self.get_selectable_cams_qimage)
         self.timer.start(1000/30)
         cv2.ocl.setUseOpenCL(False)
         try:
@@ -87,19 +81,9 @@ class CameraModel(QObject):
         q_image = QImage(image_preview.data, width, height, bpl, QImage.Format_ARGB32)
         return q_image
 
-    # def get_playing_qimage(self):
-    #     if self.selected_cam_names[0] not in self.images:
-    #         return
-    #     else:
-    #         image = copy.copy(self.images[str(self.selected_cam_names[0])])
-    #         q_image = self.img_converter(image)
-    #         self.get_video_image_by_timer.emit(q_image)
-
     def get_playing_qimage(self):
         q_cams_image = {}
         for device_name in self.get_available_camera_names():
-            # device_name = self.selected_cam_names[0]
-            # print(device_name)
             if device_name not in self.images:
                 pass
             else:
