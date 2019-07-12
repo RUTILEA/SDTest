@@ -13,7 +13,8 @@ class QCameraViewFinderWithGuide(QWidget):
         self.image = None
         CameraModel.default().get_video_image_by_timer.connect(self.set_image)
 
-    def set_image(self, image):
+    def set_image(self, q_cams_image):
+        image = q_cams_image[CameraModel.default().selected_cam_names[0]]
         self.image = image.scaled(self.__VIEW_FINDER)
         self.setMinimumSize(self.__VIEW_FINDER)
         self.update()

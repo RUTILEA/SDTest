@@ -22,6 +22,9 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QCameraViewfinder" name="camera_view" native="true">
      <property name="styleSheet">
@@ -40,6 +43,9 @@ margin: 0;</string>
       </sizepolicy>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QCheckBox" name="checkBox">
         <property name="text">
@@ -51,6 +57,9 @@ margin: 0;</string>
        <widget class="QLabel" name="camera_device_name">
         <property name="text">
          <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>

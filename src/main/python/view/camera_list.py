@@ -5,7 +5,8 @@ from model.camera_model import CameraModel
 from PyQt5.QtMultimedia import QCamera
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from typing import Dict
-from PyQt5.QtCore import pyqtSignal, QSize
+from PyQt5.QtCore import pyqtSignal, QSize, QPoint
+from PyQt5.QtGui import QPainter, QColor, QPen
 
 
 class CameraList(QDialog):
@@ -56,19 +57,29 @@ class CameraList(QDialog):
 class SelectableCameraView(QWidget):
 
     selected = pyqtSignal(QWidget)
-    __VIEW_FINDER_SIZE = QSize(300, 200)
+    __VIEW_FINDER_VIEW_SIZE = QSize(240, 180)
+    __VIEW_FINDER_SIZE = QSize(240, 220)
 
     def __init__(self, cam_device_name):
         super().__init__()
         self.ui = Ui_SelectableCameraView()
         self.ui.setupUi(self)
-        self.ui.camera_view.setMinimumSize(self.__VIEW_FINDER_SIZE)
+        self.image = None
+        self.ui.camera_view.setFixedSize(self.__VIEW_FINDER_SIZE)
         self.ui.camera_view.setAspectRatioMode(1)
+        self.cam_device_name = cam_device_name
         self.ui.camera_device_name.setText(cam_device_name)
+        # print(self.ui.SelectableCameraView())
+        print(self.ui.horizontalWidget.frameGeometry())
+        print(self.ui.camera_view.frameGeometry())
         self.ui.checkBox.clicked.connect(self.on_checkbox_clicked)
+        CameraModel.default().get_video_image_by_timer.connect(self.set_image)
 
-    def set_q_cam(self, q_cam: QCamera):
-        q_cam.setViewfinder(self.ui.camera_view)
+    def set_image(self, q_cams_image):
+        image = q_cams_image[self.cam_device_name]
+        self.setFixedSize(self.__VIEW_FINDER_SIZE)
+        self.image = image.scaled(self.__VIEW_FINDER_VIEW_SIZE)
+        self.update()
 
     def on_checkbox_clicked(self):
         if self.ui.checkBox.isChecked():
@@ -82,4 +93,12 @@ class SelectableCameraView(QWidget):
 
     def get_cam_name(self):
         return self.ui.camera_device_name.text()
+
+    def paintEvent(self, event):
+        qp = QPainter()
+        qp.begin(self)
+        if self.image:
+            qp.drawImage(QPoint(0, 0), self.image)
+        qp.end()
+
 

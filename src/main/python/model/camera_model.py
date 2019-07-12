@@ -16,7 +16,9 @@ class CameraModel(QObject):
     __default_instance = None
     """This class provides QCamObjects"""
     image_saved = pyqtSignal(str)
-    get_video_image_by_timer = pyqtSignal(QImage)
+    get_video_image_by_timer = pyqtSignal(dict)
+    # get_video_image_by_timer = pyqtSignal(QImage)
+    get_selectable_image_by_timer = pyqtSignal(dict)
 
     @classmethod
     def default(cls):
@@ -43,6 +45,7 @@ class CameraModel(QObject):
         self.images = {}
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.get_playing_qimage)
+        # self.timer.timeout.connect(self.get_selectable_cams_qimage)
         self.timer.start(1000/30)
         cv2.ocl.setUseOpenCL(False)
         try:
@@ -77,36 +80,36 @@ class CameraModel(QObject):
             frame = uvc_capture.get_frame_robust()
             self.images[device_name] = frame.img
 
-    # def img_converter(self, image):
-    #     # scale_w = float(img_width) / float(img_width)
-    #     # scale_h = float(img_height) / float(img_height)
-    #     # scale = min([scale_w, scale_h])
-    #     #
-    #     #
-    #     # image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
-    #     image =
-    #     return image
+    def img_converter(self, image):
+        image_preview = copy.copy(cv2.cvtColor(image, cv2.COLOR_BGR2BGRA))
+        height, width, bpc = image_preview.shape
+        bpl = bpc * width
+        q_image = QImage(image_preview.data, width, height, bpl, QImage.Format_ARGB32)
+        return q_image
+
+    # def get_playing_qimage(self):
+    #     if self.selected_cam_names[0] not in self.images:
+    #         return
+    #     else:
+    #         image = copy.copy(self.images[str(self.selected_cam_names[0])])
+    #         q_image = self.img_converter(image)
+    #         self.get_video_image_by_timer.emit(q_image)
 
     def get_playing_qimage(self):
-        if self.selected_cam_names[0] not in self.images:
+        q_cams_image = {}
+        for device_name in self.get_available_camera_names():
+            # device_name = self.selected_cam_names[0]
+            # print(device_name)
+            if device_name not in self.images:
+                pass
+            else:
+                image = copy.copy(self.images[str(device_name)])
+                q_image = self.img_converter(image)
+                q_cams_image[device_name] = q_image
+        if len(q_cams_image) == 0:
             return
-        else:
-            # print(self.selected_cam_names[0])
-            # image = self.images[str(self.selected_cam_names[0])]
-            # image = copy.copy(self.images[str(self.selected_cam_names[0])])
-            # print(id(self.images[str(self.selected_cam_names[0])][0]))
-            # print(id(image[0]))
-            # self.get_video_image_by_timer.emit(image)
-            # image_resized = cv2.resize(image, dsize=(400, 300))
+        self.get_video_image_by_timer.emit(q_cams_image)
 
-            image = copy.copy(self.images[str(self.selected_cam_names[0])])
-            # cv2.namedWindow('player',  cv2.WINDOW_AUTOSIZE)
-            # cv2.imshow("player", image)
-            image_preview = copy.copy(cv2.cvtColor(image, cv2.COLOR_BGR2BGRA))
-            height, width, bpc = image_preview.shape
-            bpl = bpc * width
-            q_image = QImage(image_preview.data, width, height, bpl, QImage.Format_ARGB32)
-            self.get_video_image_by_timer.emit(q_image)
 
     def capture(self, directory: str):
         # TODO: manage image name format (e.x. use Dataset.generate_image_path())
