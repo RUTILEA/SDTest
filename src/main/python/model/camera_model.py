@@ -1,12 +1,14 @@
-from module.pyuvc import uvc
+from fbs.builtin_commands import is_windows, is_mac
 from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettings, QCameraInfo
 from datetime import datetime
 import threading
-from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QSize
+from PyQt5.QtCore import pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QImage
-import queue
-import cv2
-import copy
+import queue, cv2, copy
+if is_windows():
+    import uvc
+else:
+    from module.pyuvc import uvc
 
 class CameraModel(QObject):
     __default_instance = None
@@ -26,7 +28,7 @@ class CameraModel(QObject):
     def get_available_camera_names(cls) -> list:
         # print(uvc.device_list())
         # uvc.Capture(uvc.device_list()[0]["uid"])
-        return [device_info['name'] for device_info in uvc.device_list()]
+        return [device_info['name'] for device_info in uvc.device_list() if device_info['name'] is not "unknown"]
         # return [QCamera.deviceDescription(device_obj) for device_obj in QCamera.availableDevices()]
 
     def __init__(self):
@@ -52,7 +54,7 @@ class CameraModel(QObject):
 
     def __fetch_cam(self):
         for i, device in enumerate(uvc.device_list()):
-            if device['name'] not in self.__old_device_list:
+            if device['name'] not in self.__old_device_list and device['name'] is not "unknown":
                 self.__queues[device['name']] = queue.Queue()
                 cam = uvc.Capture(device["uid"])
                 self.cams[device['name']] = cam
