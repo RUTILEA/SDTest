@@ -220,7 +220,7 @@ class Ui_Test(object):
         self.horizontalLayout.addWidget(self.stacked_widget)
 
         self.retranslateUi(Test)
-        self.stacked_widget.setCurrentIndex(1)
+        self.stacked_widget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Test)
 
     def retranslateUi(self, Test):
