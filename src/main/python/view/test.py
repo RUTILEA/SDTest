@@ -56,6 +56,7 @@ class TestWidget(QWidget):
     def reload_test_results(self, show_training=False):
         self.ui.stacked_widget.setCurrentIndex(1)  # TODO: Refactor
         results = self.learning_model.test_results
+        self.show_overfitting_alert(results.t_value)
 
         # reload distance chart
         plt.clf()
@@ -122,6 +123,14 @@ class TestWidget(QWidget):
         self.threshold_line.axes.figure.canvas.draw()
 
         self.test_report_widget.reload_html()
+
+    def show_overfitting_alert(self, t_value):
+        if t_value > 1.96:
+            self.ui.overfitting_alert_label.setEnabled(True)
+            self.ui.overfitting_alert_label.setVisible(True)
+        else:
+            self.ui.overfitting_alert_label.setEnabled(False)
+            self.ui.overfitting_alert_label.setVisible(False)
 
     def on_clicked_details_button(self):
         self.test_report_widget.reload_html()

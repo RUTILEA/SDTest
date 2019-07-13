@@ -163,6 +163,7 @@ def execute_cmdline():
     else:
         plt.show()
 
+'''
     # T statistics
 
     n = len(train_dists)
@@ -232,7 +233,7 @@ def execute_cmdline():
         writer = csv.writer(f)
         # writer.writerow(['work', 'fitting', 'T', 'trT', 'teT', 'F', 'med_T', 'med_trT', 'med_teT', 'med_F', 'U_test_p', 'median_test_p'])
         writer.writerow([os.path.basename(os.path.dirname(args.path)), None, T, trT, teT, F, med_T, med_trT, med_teT, med_F, u_p, med_p])
-
+    '''
 
 if __name__ == '__main__':
     execute_cmdline()

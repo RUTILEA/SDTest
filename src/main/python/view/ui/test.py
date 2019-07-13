@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/Development/RUTILEA/SDTest/src/main/python/view/ui/test.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/test.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Test(object):
     def setupUi(self, Test):
@@ -41,6 +42,11 @@ class Ui_Test(object):
         self.distance_chart_widget.setMinimumSize(QtCore.QSize(400, 300))
         self.distance_chart_widget.setObjectName("distance_chart_widget")
         self.distance_area.addWidget(self.distance_chart_widget)
+        self.overfitting_alert_label = QtWidgets.QLabel(self.result_page)
+        self.overfitting_alert_label.setEnabled(False)
+        self.overfitting_alert_label.setWordWrap(True)
+        self.overfitting_alert_label.setObjectName("overfitting_alert_label")
+        self.distance_area.addWidget(self.overfitting_alert_label)
         self.threshold_title_area = QtWidgets.QHBoxLayout()
         self.threshold_title_area.setObjectName("threshold_title_area")
         self.threshold_title_label = QtWidgets.QLabel(self.result_page)
@@ -214,12 +220,13 @@ class Ui_Test(object):
         self.horizontalLayout.addWidget(self.stacked_widget)
 
         self.retranslateUi(Test)
-        self.stacked_widget.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Test)
 
     def retranslateUi(self, Test):
         _translate = QtCore.QCoreApplication.translate
         Test.setWindowTitle(_translate("Test", "Form"))
+        self.overfitting_alert_label.setText(_translate("Test", "トレーニングの結果、過学習の疑いがあります。このまま検品を行うと正答率が下がる可能性があります。(テスト表示)"))
         self.threshold_title_label.setText(_translate("Test", "閾値"))
         self.about_threshold_button.setToolTip(_translate("Test", "<html><head/><body><p><span style=\" font-size:14pt;\">閾値とは</span></p><p><span style=\" font-size:14pt;\">AIが</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">と</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を判別する境界値です。まず、検出の際、AIは各画像の「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」を計算します。そして、その「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」が閾値以下の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">、閾値以上の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を見逃しにくくなる一方、</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。</span></p></body></html>"))
         self.performance_title_label.setText(_translate("Test", "性能評価"))
@@ -230,5 +237,6 @@ class Ui_Test(object):
         self.false_negative_rate_title_label.setText(_translate("Test", "見逃し率"))
         self.false_negative_rate_label.setText(_translate("Test", "1%"))
         self.details_button.setText(_translate("Test", "詳細"))
+
 
 from qrc import icon_rc

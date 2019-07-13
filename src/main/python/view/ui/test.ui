@@ -22,7 +22,7 @@
    <item>
     <widget class="QStackedWidget" name="stacked_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="loading_page">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -65,6 +65,19 @@
              <width>400</width>
              <height>300</height>
             </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="overfitting_alert_label">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>トレーニングの結果、過学習の疑いがあります。このまま検品を行うと正答率が下がる可能性があります。(テスト表示)</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

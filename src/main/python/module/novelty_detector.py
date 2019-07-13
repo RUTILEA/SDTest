@@ -171,9 +171,9 @@ class NoveltyDetector:
 
         if self.clf.__module__.startswith('pyod.models'):
             # Tricky, the higher pyod's predict score, the more likely anormaly.
-            print(predicted_scores)
+            # print(predicted_scores)
             predicted_scores *= -1
-            print(predicted_scores)
+            # print(predicted_scores)
         return predicted_scores
 
     def predict_paths(self, paths):

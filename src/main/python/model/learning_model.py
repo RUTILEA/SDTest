@@ -2,8 +2,9 @@ from PyQt5.QtCore import pyqtSignal, QObject, QThread
 from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
-import numpy as np
-import threading, os
+import threading, os, numpy as np
+from statistics import stdev, mean
+from math import sqrt
 
 
 class TestResults(object):
@@ -103,6 +104,18 @@ class TestResults(object):
     @property
     def __number_of_distances(self) -> int:
         return len(self.distances_of_ok_images) + len(self.distances_of_ng_images)
+
+    @property
+    def t_value(self) -> float:
+        n = self.distances_of_train_images.size
+        m = self.distances_of_ok_images.size
+        if n < 2 or m < 2:
+            return 0
+        std_train = stdev(self.distances_of_train_images)
+        std_testok = stdev(self.distances_of_ok_images)
+        s = sqrt(std_train / n + std_testok / m)
+        t = abs(mean(self.distances_of_train_images) - mean(self.distances_of_ok_images)) / s
+        return t
 
 
 class LearningModel(QObject):
