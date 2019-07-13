@@ -136,7 +136,7 @@ class LearningModel(QObject):
     def __init__(self):
         super().__init__()
 
-        self.__model = NoveltyDetector(nth_layer=24, nn_name='ResNet', detector_name='ABOD')
+        self.__model = NoveltyDetector()
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
@@ -157,14 +157,15 @@ class LearningModel(QObject):
         self.__training_thread.start()
 
     def train(self):
+        self.__model = NoveltyDetector()  # FIXME: cannot update weights without reinitialization...
         self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
-        self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.save(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
     def load_weights(self):
-        self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.load(LearningModel.__weight_file_path(cam_index=0))
 
     def start_predict(self, image_paths):
         image_path = image_paths[0]

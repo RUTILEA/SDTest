@@ -9,6 +9,7 @@ opencv-contrib-python
 GitPython
 pyod
 jinja2
+opencv-python
 
 ###### Requirements with Version Specifiers ######
 fbs[sentry] == 0.8.3

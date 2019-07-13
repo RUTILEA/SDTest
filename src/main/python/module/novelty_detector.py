@@ -2,7 +2,6 @@ import glob
 import os
 import numpy as np
 
-from sklearn import svm
 from sklearn.decomposition import PCA
 from keras.models import Model
 from keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D, Flatten
@@ -13,21 +12,19 @@ import joblib
 import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='mean_kNN', pool=None, pca=None):
+
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='kNN', pool=None, pca_n_components=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
         'InceptionResNetV2', 'MobileNet', 'MobileNetV2', 'DenseNet', 'NASNet'
-        detector_name: 'RobustCovariance', 'IsolationForest'(Default), 'LocalOutlierFactor'
+        detector_name: 'RobustCovariance', 'IsolationForest, 'LocalOutlierFactor, ABOD, kNN(Default)'
         """
         self.nth_layer = nth_layer
         self.nn_name = nn_name
         self.pool = pool
-        self.pca = pca
+        self.pca_n_components = pca_n_components
         self.input_shape = None
-        self.nu = None
-        self.gamma = None
-        self.kernel = None
         self.pretrained_nn = None
         self.extracting_model = None
 
@@ -48,7 +45,7 @@ class NoveltyDetector:
             self.clf = ABOD()
             print('Novelty Detector: Angle Based Outlier Detection')
         elif detector_name_lower in ['iforest', 'isolationforest']:
-            self.detector_name = 'abod'
+            self.detector_name = 'iforest'
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
@@ -62,8 +59,6 @@ class NoveltyDetector:
         """
         This method should be called after loading images to set input shape.
         """
-        if self.extracting_model is not None:
-            return
         
         self.input_shape = input_shape
         print('Input image size is', self.input_shape)
@@ -72,14 +67,6 @@ class NoveltyDetector:
             from keras.applications.xception import Xception
             pretrained_func = Xception
             print('Neural Network: {}'.format(self.nn_name))
-#        elif self.nn_name == 'ResNetV2':
-#            from keras.applications.resnet_v2 import ResNet152V2
-#            pretrained_func = ResNet152V2
-#            print('Neural Network: {}'.format(self.nn_name))
-#        elif self.nn_name == 'ResNeXt':
-#            from keras.applications.resnext import ResNeXt101
-#            pretrained_func = ResNeXt101
-#            print('Neural Network: {}'.format(self.nn_name))
         elif self.nn_name == 'InceptionV3':
             from keras.applications.inception_v3 import InceptionV3
             pretrained_func = InceptionV3
@@ -140,8 +127,8 @@ class NoveltyDetector:
     def fit(self, imgs):
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
-        if self.pca:
-            pca = PCA(n_components=self.pca)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
             feature = pca.fit_transform(feature)
         self.clf.fit(feature)
 
@@ -162,18 +149,17 @@ class NoveltyDetector:
         Keyword arguments:
         paths -- list of image paths like [./dir/img1.jpg, ./dir/img2.jpg, ...]
         """
-        self._load_NN_model(imgs[0].shape)
+        if self.extracting_model is None:
+            self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
-        if self.pca:
-            pca = PCA(n_components=self.pca)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
             feature = pca.fit_transform(feature)
         predicted_scores = self.clf.decision_function(feature)
 
         if self.clf.__module__.startswith('pyod.models'):
-            # Tricky, the higher pyod's predict score, the more likely anormaly.
-            # print(predicted_scores)
+            # Tricky, the higher pyod's predicts score, the more likely anormaly. We want higher the score,  more likely normal.
             predicted_scores *= -1
-            # print(predicted_scores)
         return predicted_scores
 
     def predict_paths(self, paths):
@@ -181,15 +167,13 @@ class NoveltyDetector:
         return self.predict(imgs)
 
     def predict_in_dir(self, dir_path):
-        """ Predict images in the dir_oath by VGG16+oneClassSVM and returns (paths, scores)"""
         dir_path = os.path.expanduser(dir_path)
         paths = self._get_paths_in_dir(dir_path)
         return paths, self.predict_paths(paths)
 
     def _read_imgs(self, paths):
         paths = [ os.path.expanduser(path) for path in paths]
-        if self.input_shape is None:
-            self.input_shape = imageio.imread(paths[0], as_gray=False, pilmode='RGB').shape
+        self.input_shape = imageio.imread(paths[0], as_gray=False, pilmode='RGB').shape
         imgs = []
         for path in paths:
             img = imageio.imread(path, as_gray=False, pilmode='RGB').astype(np.float)
@@ -212,12 +196,11 @@ class NoveltyDetector:
         paths.extend(glob.glob(os.path.join(dir_path, '*.bmp')))
         return paths
 
-    def save_ocsvm(self, path):
-        """ Saving one class svm weights like self.save_ocsvm('filename.joblib'). """
+    def save(self, path):
         path = os.path.expanduser(path)
         joblib.dump(self.clf, path, compress=True)
 
-    def load_ocsvm(self, path):
-        """ Loading one class svm weights saved by joblib. """
+    def load(self, path):
         path = os.path.expanduser(path)
         self.clf = joblib.load(path)
+        return self
