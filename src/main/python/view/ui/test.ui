@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>840</width>
-    <height>486</height>
+    <height>503</height>
    </rect>
   </property>
   <property name="font">
@@ -74,7 +74,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>トレーニングの結果、過学習の疑いがあります。このまま検品を行うと正答率が下がる可能性があります。(テスト表示)</string>
+            <string>トレーニングと性能評価で良品画像の分布に乖離があり、検査結果が正しく無い可能性が高いです。トレーニングをやり直したり、モデルを変更することが改善のヒントになります。</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
