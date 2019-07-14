@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Test(object):
     def setupUi(self, Test):
         Test.setObjectName("Test")
-        Test.resize(840, 486)
+        Test.resize(840, 503)
         font = QtGui.QFont()
         font.setPointSize(9)
         Test.setFont(font)
@@ -226,7 +226,7 @@ class Ui_Test(object):
     def retranslateUi(self, Test):
         _translate = QtCore.QCoreApplication.translate
         Test.setWindowTitle(_translate("Test", "Form"))
-        self.overfitting_alert_label.setText(_translate("Test", "トレーニングの結果、過学習の疑いがあります。このまま検品を行うと正答率が下がる可能性があります。(テスト表示)"))
+        self.overfitting_alert_label.setText(_translate("Test", "トレーニングと性能評価で良品画像の分布に乖離があり、検査結果が正しく無い可能性が高いです。トレーニングをやり直したり、モデルを変更することが改善のヒントになります。"))
         self.threshold_title_label.setText(_translate("Test", "閾値"))
         self.about_threshold_button.setToolTip(_translate("Test", "<html><head/><body><p><span style=\" font-size:14pt;\">閾値とは</span></p><p><span style=\" font-size:14pt;\">AIが</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">と</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を判別する境界値です。まず、検出の際、AIは各画像の「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」を計算します。そして、その「</span><span style=\" font-size:14pt; font-weight:600;\">正常らしさ</span><span style=\" font-size:14pt;\">」が閾値以下の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">、閾値以上の画像を</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり</span><span style=\" font-size:14pt; font-weight:600; color:#e66643;\">不良品</span><span style=\" font-size:14pt;\">を見逃しにくくなる一方、</span><span style=\" font-size:14pt; font-weight:600; color:#3fda68;\">良品</span><span style=\" font-size:14pt;\">も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。</span></p></body></html>"))
         self.performance_title_label.setText(_translate("Test", "性能評価"))
