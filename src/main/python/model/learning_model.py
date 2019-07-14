@@ -184,7 +184,7 @@ class LearningModel(QObject):
             else:
                 self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
             if self.test_results.distances_of_ng_images.size != 0:
-                self.threshold = max(max(self.test_results.distances_of_ng_images), np.percentile(self.test_results.distances_of_ok_images, 0.13))  # default threshold is the larger of max NG distance and 0.13 percentile (-3 sigma) of OK distances
+                self.threshold = max(self.test_results.distances_of_ng_images.max(), np.percentile(self.test_results.distances_of_ok_images, 0.13))  # default threshold is the larger of max NG distance and 0.13 percentile (-3 sigma) of OK distances
                 self.__should_test = False
         except IndexError:  # TODO: handle as UndoneTrainingError
             print('TODO: tell the user to train')
