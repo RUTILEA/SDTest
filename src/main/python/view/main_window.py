@@ -11,6 +11,7 @@ from model.learning_model import LearningModel
 from model.fbs import AppInfo
 from pathlib import Path
 from PyQt5.QtGui import QMovie
+from PyQt5.QtWidgets import QDesktopWidget
 
 
 class MainWindow(QMainWindow):
@@ -44,6 +45,8 @@ class MainWindow(QMainWindow):
 
         self.setup_tool_bar()
         self.setup_menu_bar()
+
+        self.move_window_to_center()
 
         # 一旦レポート機能なし
         self.ui.past_result_action.setEnabled(False)
@@ -106,16 +109,19 @@ class MainWindow(QMainWindow):
         self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
         self.setFixedSize(self.inspection_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.inspection_widget_size)
+        self.move_window_to_center()
 
     def on_clicked_optimization_button(self):
         self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
         self.setFixedSize(self.optimization_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.optimization_widget_size)
+        self.move_window_to_center()
 
     def on_clicked_past_result_button(self):
         self.ui.main_stacked_widget.setCurrentIndex(self.past_result_widget_id)
         self.setFixedSize(self.past_result_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.past_result_widget_size)
+        self.move_window_to_center()
 
     def on_triggered_action_open(self):
         save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
@@ -162,3 +168,9 @@ class MainWindow(QMainWindow):
         self.training_message.setText('')
         self.loader_label.hide()
         self.ui.inspection_action.setDisabled(False)
+
+    def move_window_to_center(self):
+        fg = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        fg.moveCenter(cp)
+        self.move(fg.topLeft())
