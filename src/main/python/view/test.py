@@ -1,8 +1,8 @@
 ﻿from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from math import ceil
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QToolTip
 from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QMovie
+from PyQt5.QtGui import QMovie, QCursor
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -62,9 +62,9 @@ class TestWidget(QWidget):
         plt.clf()
         sns.set()
         if show_training:
-            sns.distplot(results.distances_of_train_images, kde=False, rug=False, hist_kws=dict(alpha=1, linewidth=0), label='TRAIN OK', color='b')
-        sns.distplot(results.distances_of_ok_images, kde=False, rug=False, hist_kws=dict(alpha=1, linewidth=0), label='TEST OK', color='g')  # FIXME: label
-        sns.distplot(results.distances_of_ng_images, kde=False, rug=False, hist_kws=dict(alpha=1, linewidth=0), label='TEST NG', color='r')
+            sns.distplot(results.distances_of_train_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TRAIN OK', color='b')
+        sns.distplot(results.distances_of_ok_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST OK', color='g')  # FIXME: label
+        sns.distplot(results.distances_of_ng_images, kde=False, rug=False, hist_kws=dict(alpha=1), label='TEST NG', color='r')
         plt.legend()
         self.threshold_line: Line2D = plt.axvline(x=self.learning_model.threshold,
                                                      color='#FFA00E',
@@ -101,7 +101,9 @@ class TestWidget(QWidget):
         self.ui.false_negative_rate_label.setText(f'{round(false_negative_percentage, 1)}%')
 
     def on_clicked_about_threshold_button(self):
-        print("TODO: show hint on threshold")
+        QToolTip.showText(QCursor.pos(), self.ui.about_threshold_button.toolTip())
+
+
 
     def on_threshold_changed(self):
         # calculate threshold
