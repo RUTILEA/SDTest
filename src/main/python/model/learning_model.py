@@ -2,9 +2,9 @@ from PyQt5.QtCore import pyqtSignal, QObject, QThread
 from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
-import numpy as np
-import threading, os
-
+import threading, os, numpy as np
+from statistics import stdev, mean
+from math import sqrt
 
 class TestResults(object):
     def __init__(self):
@@ -104,6 +104,18 @@ class TestResults(object):
     def __number_of_distances(self) -> int:
         return len(self.distances_of_ok_images) + len(self.distances_of_ng_images)
 
+    @property
+    def t_value(self) -> float:
+        n = self.distances_of_train_images.size
+        m = self.distances_of_ok_images.size
+        if n < 2 or m < 2:
+            return 0
+        std_train = stdev(self.distances_of_train_images)
+        std_testok = stdev(self.distances_of_ok_images)
+        s = sqrt(std_train / n + std_testok / m)
+        t = abs(mean(self.distances_of_train_images) - mean(self.distances_of_ok_images)) / s
+        return t
+
 
 class LearningModel(QObject):
     __default_instance = None
@@ -146,13 +158,13 @@ class LearningModel(QObject):
     def train(self):
         self.__model = NoveltyDetector()  # FIXME: cannot update weights without reinitialization...
         self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
-        self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.save(LearningModel.__weight_file_path(cam_index=0))
         Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
     def load_weights(self):
-        self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.load(LearningModel.__weight_file_path(cam_index=0))
 
     def start_predict(self, image_paths):
         image_path = image_paths[0]
@@ -185,7 +197,7 @@ class LearningModel(QObject):
             else:
                 self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
             if self.test_results.distances_of_ng_images.size != 0:
-                self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
+                self.threshold = max(self.test_results.distances_of_ng_images.max(), np.percentile(self.test_results.distances_of_ok_images, 0.13))  # default threshold is the larger of max NG distance and 0.13 percentile (-3 sigma) of OK distances
                 self.__should_test = False
         except IndexError:  # TODO: handle as UndoneTrainingError
             print('TODO: tell the user to train')
