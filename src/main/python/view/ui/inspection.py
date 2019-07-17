@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/shibatakyousuke/Development/RUTILEA/SDTest/src/main/python/view/ui/inspection.ui'
+# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/inspection.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_inspection(object):
     def setupUi(self, inspection):
@@ -141,7 +142,7 @@ class Ui_inspection(object):
         self.OK_big_icon_label.setStyleSheet("border: none;\n"
 "background-color: #00000000;")
         self.OK_big_icon_label.setText("")
-        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png"))
+        self.OK_big_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/large_check-circle_correctGreen.png"))
         self.OK_big_icon_label.setScaledContents(False)
         self.OK_big_icon_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.OK_big_icon_label.setObjectName("OK_big_icon_label")
@@ -247,7 +248,7 @@ class Ui_inspection(object):
         self.OK_icon_label.setStyleSheet("border:none;\n"
 "")
         self.OK_icon_label.setText("")
-        self.OK_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png"))
+        self.OK_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png"))
         self.OK_icon_label.setObjectName("OK_icon_label")
         self.horizontalLayout_2.addWidget(self.OK_icon_label)
         self.OK_counter_label = QtWidgets.QLabel(self.counter)
@@ -264,7 +265,7 @@ class Ui_inspection(object):
         self.NG_icon_label.setStyleSheet("border:none;\n"
 "")
         self.NG_icon_label.setText("")
-        self.NG_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png"))
+        self.NG_icon_label.setPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/times-circle_errorRed.png"))
         self.NG_icon_label.setObjectName("NG_icon_label")
         self.horizontalLayout_2.addWidget(self.NG_icon_label)
         self.NG_counter_label = QtWidgets.QLabel(self.counter)
@@ -299,6 +300,7 @@ class Ui_inspection(object):
         self.NG_message_label.setText(_translate("inspection", "この製品は不良品です"))
         self.ng_score.setText(_translate("inspection", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.total_header_label.setText(_translate("inspection", "累計"))
+
 
 from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from qrc import icon_rc

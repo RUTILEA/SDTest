@@ -70,7 +70,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../qrc/icon.qrc">
-          <normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell#666666.png</normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell#666666.png</iconset>
+          <normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell_darkGray.png</normaloff>:/icon/resources/base/fonts/fontawesome/dumbbell_darkGray.png</iconset>
         </property>
         <property name="flags">
          <set>ItemIsEnabled</set>
@@ -81,7 +81,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../qrc/icon.qrc">
-           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
+           <normaloff>:/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</normaloff>:/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</iconset>
          </property>
         </item>
        </item>
@@ -91,7 +91,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../qrc/icon.qrc">
-          <normaloff>:/icon/resources/base/fonts/fontawesome/test_custom#666666.png</normaloff>:/icon/resources/base/fonts/fontawesome/test_custom#666666.png</iconset>
+          <normaloff>:/icon/resources/base/fonts/fontawesome/gear-check_darkGray.png</normaloff>:/icon/resources/base/fonts/fontawesome/gear-check_darkGray.png</iconset>
         </property>
         <property name="flags">
          <set>ItemIsEnabled</set>
@@ -102,7 +102,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../qrc/icon.qrc">
-           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</iconset>
+           <normaloff>:/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</normaloff>:/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</iconset>
          </property>
         </item>
         <item>
@@ -111,7 +111,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../qrc/icon.qrc">
-           <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</iconset>
+           <normaloff>:/icon/resources/base/fonts/fontawesome/times-circle_errorRed.png</normaloff>:/icon/resources/base/fonts/fontawesome/times-circle_errorRed.png</iconset>
          </property>
         </item>
        </item>
@@ -323,7 +323,7 @@
   <action name="select_images_action">
    <property name="icon">
     <iconset resource="../../qrc/icon.qrc">
-     <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_image_32_4_3e3e3e_none.png</iconset>
+     <normaloff>:/icon/resources/base/fonts/fontawesome/image_black.png</normaloff>:/icon/resources/base/fonts/fontawesome/image_black.png</iconset>
    </property>
    <property name="text">
     <string>既存の画像 </string>
@@ -335,7 +335,7 @@
   <action name="camera_action">
    <property name="icon">
     <iconset resource="../../qrc/icon.qrc">
-     <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_camera_32_4_3e3e3e_none.png</iconset>
+     <normaloff>:/icon/resources/base/fonts/fontawesome/camera_black.png</normaloff>:/icon/resources/base/fonts/fontawesome/camera_black.png</iconset>
    </property>
    <property name="text">
     <string>カメラで撮影</string>

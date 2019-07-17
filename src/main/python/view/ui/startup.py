@@ -111,6 +111,7 @@ class Ui_StartupWidget(object):
         self.label.setStyleSheet("color: #aaaaaa;\n"
 "font-size: 14px;\n"
 "")
+        self.label.setText("")
         self.label.setTextFormat(QtCore.Qt.PlainText)
         self.label.setPixmap(QtGui.QPixmap(":/icon2/fonts/fontawesome/octicons_4-3-0_light-bulb_32_4_3e3e3e_none.png"))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
@@ -129,7 +130,7 @@ class Ui_StartupWidget(object):
         self.new_project_button.setMinimumSize(QtCore.QSize(240, 0))
         self.new_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/plus_extraLight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.new_project_button.setIcon(icon)
         self.new_project_button.setChecked(False)
         self.new_project_button.setAutoRepeat(False)
@@ -146,7 +147,7 @@ class Ui_StartupWidget(object):
         self.open_project_button.setMinimumSize(QtCore.QSize(240, 0))
         self.open_project_button.setMaximumSize(QtCore.QSize(240, 16777215))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_file_32_4_f5f5f5_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/file_extraLight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.open_project_button.setIcon(icon1)
         self.open_project_button.setIconSize(QtCore.QSize(16, 16))
         self.open_project_button.setObjectName("open_project_button")
@@ -164,7 +165,6 @@ class Ui_StartupWidget(object):
         _translate = QtCore.QCoreApplication.translate
         StartupWidget.setWindowTitle(_translate("StartupWidget", "Form"))
         self.logo_title_label.setText(_translate("StartupWidget", "Software-Defined Test"))
-        self.label.setText(_translate("StartupWidget", "Version 0.5"))
         self.new_project_button.setText(_translate("StartupWidget", "新規プロジェク ト"))
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
 

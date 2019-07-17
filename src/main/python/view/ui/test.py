@@ -78,7 +78,7 @@ class Ui_Test(object):
 "")
         self.about_threshold_button.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon/resources/base/fonts/fontawesome/question-circle_warningOrange.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.about_threshold_button.setIcon(icon)
         self.about_threshold_button.setIconSize(QtCore.QSize(28, 28))
         self.about_threshold_button.setObjectName("about_threshold_button")

@@ -144,7 +144,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../qrc/icon.qrc">
-               <normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</normaloff>:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_ffc10e_none.png</iconset>
+               <normaloff>:/icon/resources/base/fonts/fontawesome/question-circle_warningOrange.png</normaloff>:/icon/resources/base/fonts/fontawesome/question-circle_warningOrange.png</iconset>
              </property>
              <property name="iconSize">
               <size>
