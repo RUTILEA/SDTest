@@ -111,6 +111,7 @@ class Ui_StartupWidget(object):
         self.label.setStyleSheet("color: #aaaaaa;\n"
 "font-size: 14px;\n"
 "")
+        self.label.setText("")
         self.label.setTextFormat(QtCore.Qt.PlainText)
         self.label.setPixmap(QtGui.QPixmap(":/icon2/fonts/fontawesome/octicons_4-3-0_light-bulb_32_4_3e3e3e_none.png"))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
@@ -164,7 +165,6 @@ class Ui_StartupWidget(object):
         _translate = QtCore.QCoreApplication.translate
         StartupWidget.setWindowTitle(_translate("StartupWidget", "Form"))
         self.logo_title_label.setText(_translate("StartupWidget", "Software-Defined Test"))
-        self.label.setText(_translate("StartupWidget", "Version 0.5"))
         self.new_project_button.setText(_translate("StartupWidget", "新規プロジェク ト"))
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
 
