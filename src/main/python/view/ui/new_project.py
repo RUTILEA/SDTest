@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/new_project.ui'
+# Form implementation generated from reading ui file 'new_project.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_NewProjectDialog(object):
     def setupUi(self, NewProjectDialog):
@@ -107,5 +106,4 @@ class Ui_NewProjectDialog(object):
         self.project_name_label.setText(_translate("NewProjectDialog", "プロジェクト名"))
         self.cancel_button.setText(_translate("NewProjectDialog", "キャンセル"))
         self.create_button.setText(_translate("NewProjectDialog", "作成"))
-
 
