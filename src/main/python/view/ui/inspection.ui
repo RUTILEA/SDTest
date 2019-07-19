@@ -669,8 +669,6 @@ border:none;
  </customwidgets>
  <resources>
   <include location="../../qrc/icon.qrc"/>
-  <include location="../../qrc/icon.qrc"/>
-  <include location="../../../../../../../../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>
