@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/dataset.ui'
+# Form implementation generated from reading ui file 'dataset.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Dataset(object):
     def setupUi(self, Dataset):
@@ -172,6 +171,5 @@ class Ui_Dataset(object):
         self.select_images_action.setToolTip(_translate("Dataset", "既存の画像"))
         self.camera_action.setText(_translate("Dataset", "カメラで撮影"))
         self.camera_action.setToolTip(_translate("Dataset", "カメラで撮影"))
-
 
 from qrc import icon_rc

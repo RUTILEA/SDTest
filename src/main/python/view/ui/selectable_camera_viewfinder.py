@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/selectable_camera_viewfinder.ui'
+# Form implementation generated from reading ui file 'selectable_camera_viewfinder.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_SelectableCameraView(object):
     def setupUi(self, SelectableCameraView):
@@ -50,6 +49,5 @@ class Ui_SelectableCameraView(object):
         _translate = QtCore.QCoreApplication.translate
         SelectableCameraView.setWindowTitle(_translate("SelectableCameraView", "Form"))
         self.camera_device_name.setText(_translate("SelectableCameraView", "TextLabel"))
-
 
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder
