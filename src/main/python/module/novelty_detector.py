@@ -3,6 +3,7 @@ import os
 import numpy as np
 
 from sklearn.decomposition import PCA
+from keras import backend as K
 from keras.models import Model
 from keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D, Flatten
 import numpy as np
@@ -27,6 +28,8 @@ class NoveltyDetector:
         self.input_shape = None
         self.pretrained_nn = None
         self.extracting_model = None
+
+        K.clear_session()
 
         detector_name_lower = detector_name.lower()
         if detector_name_lower == 'robustcovariance':
@@ -173,7 +176,8 @@ class NoveltyDetector:
 
     def _read_imgs(self, paths):
         paths = [ os.path.expanduser(path) for path in paths]
-        self.input_shape = imageio.imread(paths[0], as_gray=False, pilmode='RGB').shape
+        if self.input_shape is None:
+            self.input_shape = imageio.imread(paths[0], as_gray=False, pilmode='RGB').shape
         imgs = []
         for path in paths:
             img = imageio.imread(path, as_gray=False, pilmode='RGB').astype(np.float)
@@ -181,7 +185,7 @@ class NoveltyDetector:
             img /= 255
             imgs.append(img)
         imgs = np.array(imgs)
-        imgs = imgs.reshape(-1, *self.input_shape)        
+        imgs = imgs.reshape(-1, *self.input_shape)
         return imgs
 
     def _get_paths_in_dir(self, dir_path):
