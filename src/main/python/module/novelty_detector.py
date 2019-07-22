@@ -186,7 +186,6 @@ class NoveltyDetector:
             imgs.append(img)
         imgs = np.array(imgs)
         imgs = imgs.reshape(-1, *self.input_shape)
-        print(imgs.shape)
         return imgs
 
     def _get_paths_in_dir(self, dir_path):
