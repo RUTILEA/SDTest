@@ -42,9 +42,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="text">
-       <string/>
-      </property>
      </widget>
     </item>
     <item row="1" column="1" rowspan="2">
@@ -95,17 +92,7 @@
    </property>
    <layout class="QGridLayout" name="project_name_layout">
     <item row="1" column="0" rowspan="2">
-     <widget class="QLineEdit" name="project_name_line">
-      <property name="inputMask">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="placeholderText">
-       <string/>
-      </property>
-     </widget>
+     <widget class="QLineEdit" name="project_name_line"/>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="project_name_label">
@@ -155,9 +142,6 @@
       </property>
       <property name="autoDefault">
        <bool>true</bool>
-      </property>
-      <property name="default">
-       <bool>false</bool>
       </property>
       <property name="flat">
        <bool>false</bool>
