@@ -318,7 +318,7 @@ background-color: #00000000;</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_96_4_3fda68_none.png</pixmap>
+              <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/large_check-circle_correctGreen.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>false</bool>
@@ -566,7 +566,7 @@ border:none;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_check-circle_32_4_3fda68_none.png</pixmap>
+             <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</pixmap>
             </property>
             <property name="margin">
              <number>0</number>
@@ -600,7 +600,7 @@ border:none;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/font-awesome_4-7-0_times-circle_32_4_e66643_none.png</pixmap>
+             <pixmap resource="../../qrc/icon.qrc">:/icon/resources/base/fonts/fontawesome/times-circle_errorRed.png</pixmap>
             </property>
            </widget>
           </item>
