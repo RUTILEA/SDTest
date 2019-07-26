@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/startup.ui'
+# Form implementation generated from reading ui file 'startup.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_StartupWidget(object):
     def setupUi(self, StartupWidget):
@@ -167,7 +166,6 @@ class Ui_StartupWidget(object):
         self.logo_title_label.setText(_translate("StartupWidget", "Software-Defined Test"))
         self.new_project_button.setText(_translate("StartupWidget", "新規プロジェク ト"))
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
-
 
 from qrc import icon_rc
 from qrc import logo_rc

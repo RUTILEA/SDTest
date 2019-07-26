@@ -10,6 +10,8 @@ from typing import Dict
 
 class ImageCaptureDialog(QDialog):
 
+    __VIEW_FINDER = QSize(320, 240)
+
     def __init__(self, image_save_location: str):
         super().__init__()
 
@@ -22,7 +24,7 @@ class ImageCaptureDialog(QDialog):
         self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
 
         self.view_finder = QCameraViewFinderWithGuide()
-        self.view_finder.setFixedSize(QSize(640, 360))
+        self.view_finder.setFixedSize(self.__VIEW_FINDER)
         self.ui.grid.addWidget(self.view_finder, 0, 0)
         self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
 
