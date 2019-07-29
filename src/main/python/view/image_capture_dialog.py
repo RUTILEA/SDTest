@@ -20,9 +20,9 @@ class ImageCaptureDialog(QDialog):
         self.camera_model.cams: Dict[str, QCamera]
         self.image_save_location = image_save_location
         self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
-
+        
         self.view_finder = QCameraViewFinderWithGuide()
-        self.view_finder.setFixedSize(QSize(640, 360))
+        self.view_finder.setFixedSize(QSize(640, 640/self.view_finder.width()*self.view_finder.height()))
         self.ui.grid.addWidget(self.view_finder, 0, 0)
         self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
 
