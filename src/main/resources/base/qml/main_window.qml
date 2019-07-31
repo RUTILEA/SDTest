@@ -5,17 +5,34 @@ import QtQuick.Layouts 1.12
 
 ApplicationWindow {
     visible: true
-    maximumWidth: 795
-    maximumHeight: 512
-    minimumWidth: 795
-    minimumHeight: 512
+    // 795, 512
+    property int fixedWidth: {
+        if (topbar.currentTab===0)
+            return 842
+        else
+            return 864
+    }
+
+    property int fixedHeight: {
+        if (topbar.currentTab===0)
+            return 532
+        else
+            return 730
+    }
+    width: fixedWidth
+    height: fixedHeight
+    maximumWidth: fixedWidth
+    maximumHeight: fixedHeight
+    minimumWidth: fixedWidth
+    minimumHeight: fixedHeight
+
     title: 'プロジェクト名'
 
     Rectangle {
         id: topbar
         width: parent.width
-        height: 55
-        color: '#F5F5F5'
+        height: 50
+        color: '#AAAAAA'
         property int currentTab: 0
 
         Row {
@@ -50,22 +67,26 @@ ApplicationWindow {
         }
 
         Rectangle {
-            color: '#F5F5F5'
+            color: 'white'
 
             StackLayout {
                 id: under_middletab
                 anchors.horizontalCenter: parent.horizontalCenter
-                // y: middletabbase.y + middletabbase.height * 0.5
+                y: 30
                 width: parent.width * 0.96
                 height: under_topbar.height - (middleTabBase.y + middleTabBase.height * 0.5 + parent.width * 0.02)
-                // anchors.bottom: under_topbar.bottom - 10
+
                 anchors.verticalCenter: under_topbar.verticalCenter
                 currentIndex: middleTabBase.currentMiddleTab
 
                 Rectangle {
                     id: middleTabLeft_Content
+
                     color: '#EEEEEE'
                     radius: under_topbar.r
+
+                    property int allPic: 100
+                    property int selectedPic: 3
 
                     Rectangle {
                         id: selector
@@ -73,7 +94,7 @@ ApplicationWindow {
                         width: under_topbar.width * 0.25
                         height: under_topbar.height * 0.8
                         x: under_topbar.width * 0.02
-                        y: under_topbar.width * 0.02
+                        y: under_topbar.width * 0.04
                         radius: under_topbar.r
                         property string selectorbackground: '#DDDDDD'
                         property int columnheight: 30
@@ -127,39 +148,135 @@ ApplicationWindow {
                         anchors.verticalCenter: selector.verticalCenter
                         x: selector.x + selector.width + under_topbar.width * 0.02
 
-                        ScrollView {
+                        Rectangle {
+                            id: insideImageViewer
                             width: parent.width * 0.95
-                            height: parent.height * 0.8
+                            height: parent.height - under_topbar.width * 0.06 - 35
                             anchors.horizontalCenter: parent.horizontalCenter
                             y: under_topbar.width * 0.02
+                            color: '#F5F5F5'
+                            radius: under_topbar.r
 
+                            StackLayout {
+                                currentIndex: selector.currentColumnTab
+
+                                Text {
+                                    text: qsTr("text_1")
+                                }
+
+                                Text {
+                                    text: qsTr("text_2")
+                                }
+
+                                Text {
+                                    text: qsTr("text_3s")
+                                }
+
+                            }
                         }
 
                         GeneralButton {
+                            id: deleteButton
                             mytext: '削除'
                             x: under_topbar.width * 0.02
-                            y: parent.y + parent.height - under_topbar.width * 0.04 - 35
+                            y: parent.y + parent.height - under_topbar.width * 0.06 - 35
                         }
+
+                        GeneralButton {
+                            mytext: '追加'
+                            anchors.verticalCenter: deleteButton.verticalCenter
+                            anchors.right: insideImageViewer.right
+                        }
+
+                        Text {
+                            text: qsTr(middleTabLeft_Content.allPic+ '枚 - ' + middleTabLeft_Content.selectedPic + '枚選択中' )
+                            color: '#666666'
+                            anchors.horizontalCenter: imageviewer.horizontalCenter
+                            anchors.verticalCenter: deleteButton.verticalCenter
+                        }
+
                     }
 
+                    Item {
+                        anchors.top: imageviewer.bottom
+                        anchors.bottom: middleTabLeft_Content.bottom
+                        anchors.left: selector.left
+                        anchors.right: imageviewer.right
+
+                        Item {
+                            id: name
+                            visible: false
+
+                            Image {
+                                source: "../fonts/fontawesome/blueeye.png"
+                            }
+
+                            Text {
+                                text: qsTr("トレーニング用画像に変更があります")
+                                color: '#FFA00E'
+                            }
+                        }
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.right: startTrainingButton.left
+                            rightPadding: 15
+                            text: qsTr("前回のトレーニング：X月Y日")
+                            color: '#666666'
+                        }
+
+                        WideButton {
+                            id: startTrainingButton
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.right: parent.right
+
+                            Row {
+                                anchors.centerIn: parent
+                                spacing: 2
+
+                                Image {
+                                    id: plus_icon
+                                    source: "../fonts/fontawesome/font-awesome_4-7-0_plus_32_4_f5f5f5_none.png"
+                                    width: startTrainingButton.height * 0.5
+                                    height: startTrainingButton.height * 0.5
+                                }
+
+                                Text {
+                                    text: qsTr("トレーニング")
+                                    color: '#F5F5F5'
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+                        }
+                    }
                 }
 
                 Rectangle {
-                   color: 'red'
+                   color: '#EEEEEE'
+                   radius: under_topbar.r
                 }
-
-
             }
 
             Rectangle {
                 id: middleTabBase
                 anchors.verticalCenter: under_middletab.top
                 width: middleTabLeft.width + middleTabRight.width
-                height: 20
+                height: 30
                 color: 'white'
                 radius: 5
                 anchors.horizontalCenter: parent.horizontalCenter
                 property int currentMiddleTab: 0
+
+                Rectangle {
+                    id: middleTabBaseBorder
+                    anchors.centerIn: parent
+                    width: middleTabLeft.width + middleTabRight.width + 2
+                    height: parent.height + 2
+                    radius: 5
+                    color: '#00000000'
+                    border.color: '#AAAAAA'
+                    border.width: 1
+                }
 
                 MiddleTabButton {
                     id: middleTabLeft
