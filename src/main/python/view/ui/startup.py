@@ -164,7 +164,7 @@ class Ui_StartupWidget(object):
         _translate = QtCore.QCoreApplication.translate
         StartupWidget.setWindowTitle(_translate("StartupWidget", "Form"))
         self.logo_title_label.setText(_translate("StartupWidget", "Software-Defined Test"))
-        self.new_project_button.setText(_translate("StartupWidget", "新規プロジェク ト"))
+        self.new_project_button.setText(_translate("StartupWidget", "新規プロジェクト"))
         self.open_project_button.setText(_translate("StartupWidget", "開く"))
 
 from qrc import icon_rc

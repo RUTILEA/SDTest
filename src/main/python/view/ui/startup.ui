@@ -278,7 +278,7 @@ font-size: 14px;
           </size>
          </property>
          <property name="text">
-          <string>新規プロジェク ト</string>
+          <string>新規プロジェクト</string>
          </property>
          <property name="icon">
           <iconset resource="../../qrc/icon.qrc">
