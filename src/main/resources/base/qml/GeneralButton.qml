@@ -40,11 +40,11 @@ Rectangle {
             when: _mouse.containsMouse && validbuttton
             PropertyChanges {
                 target: baserect
-                color: '#AAAAAA'
+                // color: '#AAAAAA'
             }
             PropertyChanges {
                 target: buttontext
-                color: '#F5F5F5'
+                color: '#AAAAAA'
             }
         }
     ]
