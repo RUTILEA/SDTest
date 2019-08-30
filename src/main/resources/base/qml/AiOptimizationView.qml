@@ -12,7 +12,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 30
         width: root.width * 0.96
-        height: under_topbar.height - (middleTabBase.y + middleTabBase.height * 0.5 + parent.width * 0.02)
+        height: under_topbar.height - 40 - (middleTabBase.y + middleTabBase.height * 0.5 + parent.width * 0.02)
 
         anchors.verticalCenter: under_topbar.verticalCenter
         currentIndex: middleTabBase.currentMiddleTab
@@ -30,7 +30,7 @@ Rectangle {
                 id: selector
                 color: selectorbackground
                 width: under_topbar.width * 0.25
-                height: under_topbar.height * 0.8
+                height: (under_topbar.height-40) * 0.8
                 x: under_topbar.width * 0.02
                 y: under_topbar.width * 0.04
                 radius: under_topbar.r
@@ -84,7 +84,7 @@ Rectangle {
                 id: imageviewer
                 radius: under_topbar.r
                 width: middleTabLeft_Content.width - selector.width - under_topbar.width * 0.06
-                height: under_topbar.height * 0.8
+                height: (under_topbar.height-40) * 0.8
                 color: selector.selectorbackground
                 anchors.verticalCenter: selector.verticalCenter
                 x: selector.x + selector.width + under_topbar.width * 0.02
@@ -126,6 +126,7 @@ Rectangle {
                 }
 
                 ColumnLayout {
+                    visible: true
                     anchors.right: insideImageViewer.right
                     anchors.verticalCenter: deleteButton.verticalCenter
                     GeneralButton {

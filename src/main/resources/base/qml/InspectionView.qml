@@ -21,12 +21,23 @@ Rectangle {
         focus : visible // to receive focus and capture key events when visible
         }
 
-    GeneralButton {
+    OpenCameraList {
         width: 160
         mytext: '表示するカメラを選択'
         anchors.horizontalCenter: finder.horizontalCenter
         y: 310
 
+    }
+
+    Dialog {
+        id: whichCamera
+        modal: true
+        standardButtons: Dialog.Close
+
+        header: Text {
+            anchors.horizontalCenter: whichCamera.horizontalCenter
+            text: qsTr("カメラの選択")
+        }
     }
 
     Item {
@@ -55,7 +66,7 @@ Rectangle {
         radius: under_topbar.r
 
         StackLayout {
-            currentIndex: 1
+            currentIndex: 0
             anchors.fill: parent
 
             Item {

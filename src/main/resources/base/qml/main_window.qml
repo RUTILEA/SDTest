@@ -16,9 +16,9 @@ ApplicationWindow {
 
     property int fixedHeight: {
         if (topbar.currentTab===0)
-            return 532
+            return 532 + 40
         else
-            return 730
+            return 730 + 40
     }
     width: fixedWidth
     height: fixedHeight
@@ -26,6 +26,28 @@ ApplicationWindow {
     maximumHeight: fixedHeight
     minimumWidth: fixedWidth
     minimumHeight: fixedHeight
+
+    menuBar: MenuBar {
+            Menu {
+                title: qsTr("&File")
+                Action { text: qsTr("&New...") }
+                Action { text: qsTr("&Open...") }
+                Action { text: qsTr("&Save") }
+                Action { text: qsTr("Save &As...") }
+                MenuSeparator { }
+                Action { text: qsTr("&Quit") }
+            }
+            Menu {
+                title: qsTr("&Edit")
+                Action { text: qsTr("Cu&t") }
+                Action { text: qsTr("&Copy") }
+                Action { text: qsTr("&Paste") }
+            }
+            Menu {
+                title: qsTr("&Help")
+                Action { text: qsTr("&About") }
+            }
+        }
 
     title: 'プロジェクト名'
 
@@ -63,11 +85,9 @@ ApplicationWindow {
 
         property int r: 8
 
-        InspectionView {
-        }
+        InspectionView {}
 
         AiOptimizationView {}
-
 
     }
 }
