@@ -10,6 +10,7 @@ GitPython
 pyod
 jinja2
 opencv-python
+zmq
 
 ###### Requirements with Version Specifiers ######
 fbs[sentry] == 0.8.3
