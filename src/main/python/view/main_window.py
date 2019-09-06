@@ -1,7 +1,7 @@
 ﻿import sys, os, webbrowser
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
-from PyQt5.QtCore import Qt, pyqtSignal, QSize
+from PyQt5.QtCore import Qt, pyqtSignal, QSize, QPoint
 from view.ui.main_window import Ui_MainWindow
 from view.inspection import InspectionWidget
 from view.ai_optimization import AIOptimizationWidget
@@ -43,10 +43,11 @@ class MainWindow(QMainWindow):
         self.optimization_widget_size = QSize(840, 600)
         self.past_result_widget_size = QSize(740, 400)
 
+        self.latest_cpos = None
+        self.move_window_position()
+
         self.setup_tool_bar()
         self.setup_menu_bar()
-
-        self.move_window_to_center()
 
         # 一旦レポート機能なし
         self.ui.past_result_action.setEnabled(False)
@@ -105,23 +106,26 @@ class MainWindow(QMainWindow):
         self.statusBar().setSizeGripEnabled(False)
 
     def on_clicked_inspection_button(self):
+        self.latest_cpos = self.frameGeometry().center()
         self.ui.main_stacked_widget.widget(self.inspection_widget_id).set_camera_to_camera_preview()
         self.ui.main_stacked_widget.setCurrentIndex(self.inspection_widget_id)
         self.setFixedSize(self.inspection_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.inspection_widget_size)
-        self.move_window_to_center()
+        self.move_window_position(self.latest_cpos)
 
     def on_clicked_optimization_button(self):
+        self.latest_cpos = self.frameGeometry().center()
         self.ui.main_stacked_widget.setCurrentIndex(self.ai_optimization_widget_id)
         self.setFixedSize(self.optimization_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.optimization_widget_size)
-        self.move_window_to_center()
+        self.move_window_position(self.latest_cpos)
 
     def on_clicked_past_result_button(self):
+        self.latest_cpos = self.frameGeometry().center()
         self.ui.main_stacked_widget.setCurrentIndex(self.past_result_widget_id)
         self.setFixedSize(self.past_result_mainwindow_size)
         self.ui.main_stacked_widget.setFixedSize(self.past_result_widget_size)
-        self.move_window_to_center()
+        self.move_window_position(self.latest_cpos)
 
     def on_triggered_action_open(self):
         save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
@@ -169,8 +173,9 @@ class MainWindow(QMainWindow):
         self.loader_label.hide()
         self.ui.inspection_action.setDisabled(False)
 
-    def move_window_to_center(self):
+    def move_window_position(self, cpos=None):
         fg = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        fg.moveCenter(cp)
+        if cpos is None:
+            cpos = QDesktopWidget().availableGeometry().center()
+        fg.moveCenter(cpos)
         self.move(fg.topLeft())
