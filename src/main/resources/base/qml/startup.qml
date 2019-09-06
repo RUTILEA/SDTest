@@ -15,9 +15,11 @@ ApplicationWindow {
         id: logo
         anchors.horizontalCenter: parent.horizontalCenter
         y: 100
-        width: 200
-        height: 47
-        source: "../images/SDTest_logo.png"
+        // もとは200, 47
+        width: 250
+        height: 59
+        // source: "../images/SDTest_logo.png"
+        source: '../images/newLogo.png'
     }
 
     Text {

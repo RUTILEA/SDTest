@@ -18,7 +18,7 @@ Rectangle {
         id: _mouse
         hoverEnabled: true
         anchors.fill: parent
-        onClicked: baserect.clicked()
+        onClicked: whichCamera.open()
     }
 
     states: [
