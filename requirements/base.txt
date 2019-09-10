@@ -14,7 +14,7 @@ pyside2
 
 ###### Requirements with Version Specifiers ######
 fbs[sentry] == 0.8.3
-PyQt5 == 5.13.0     # for QML
+# PyQt5 == 5.13.0     # for QML
 PyInstaller == 3.4
 tensorflow == 1.*
 keras == 2.*
