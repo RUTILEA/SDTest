@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/Development/RUTILEA/SDTest/src/main/python/view/ui/test.ui'
+# Form implementation generated from reading ui file 'test.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
