@@ -1,7 +1,7 @@
 ﻿# import sys, os, webbrowser
-# from fbs_runtime.application_context.PyQt5 import ApplicationContext
-# from PyQt5.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
-# from PyQt5.QtCore import Qt, pyqtSignal, QSize
+# from fbs_runtime.application_context.PySide2 import ApplicationContext
+# from PySide2.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
+# from PySide2.QtCore import Qt, pyqtSignal, QSize
 # from view.ui.main_window import Ui_MainWindow
 # from view.inspection import InspectionWidget
 # from view.ai_optimization import AIOptimizationWidget
@@ -10,7 +10,7 @@
 # from model.learning_model import LearningModel
 # from model.fbs import AppInfo
 # from pathlib import Path
-# from PyQt5.QtGui import QMovie
+# from PySide2.QtGui import QMovie
 
 class MainWindow:
 

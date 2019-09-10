@@ -1,13 +1,13 @@
 ﻿# from view.ui.new_project import Ui_NewProjectDialog
 # from model.project import Project
 # from view.main_window import MainWindow
-# from PyQt5.QtWidgets import QWidget, QFileDialog
-# from PyQt5.QtGui import QRegExpValidator
-# from PyQt5.QtCore import QRegExp, pyqtSignal
+# from PySide2.QtWidgets import QWidget, QFileDialog
+# from PySide2.QtGui import QRegExpValidator
+# from PySide2.QtCore import QRegExp, pyqtSignal
 # from model.fbs import AppInfo
 # import os.path
-from PyQt5.QtQml import QQmlApplicationEngine
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
+from PySide2.QtQml import QQmlApplicationEngine
+from fbs_runtime.application_context.PySide2 import ApplicationContext
 
 
 '''
