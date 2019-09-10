@@ -63,10 +63,10 @@ Download the latest [release][link-installer-download] and run the installer.
 
 - `git clone git@github.com:RUTILEA/SDTest.git` clones the repository into "SDTest" directory
 - `cd SDTest`
-- `python -m venv `*`venv`*`` creates a virtual environment in the project directory
+- `python -m venv your_venv` creates a virtual environment in the project directory (Choose your own virtual environment name).
 - Activate the virtual environment as your OS:
-    - On Mac/Linux: `source `*`venv`*`/bin/activate`
-    - On Windows: `call `*`venv`*`\scripts\activate.bat`
+    - On Mac/Linux: `source your_venv/bin/activate`
+    - On Windows: `call your_venv\scripts\activate.bat`
 - `pip install -r requirements/base.txt -U` installs the required libraries (most notably, fbs and PyQt5). If this produces errors, try `pip install wheel` first and try again.
 - `pip install -r requirements/(YOUR-OS).txt -U` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
 
