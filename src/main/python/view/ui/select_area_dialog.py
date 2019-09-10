@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/select_area_dialog.ui'
+# Form implementation generated from reading ui file 'select_area_dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_SelectAreaDialog(object):
     def setupUi(self, SelectAreaDialog):
@@ -72,5 +71,4 @@ class Ui_SelectAreaDialog(object):
         self.label.setText(_translate("SelectAreaDialog", "<html><head/><body><p><span style=\" font-family:\'.Hiragino Kaku Gothic Interface\';\">傷や汚れ等、欠陥が発生しやすい領域</span>を指定してください。<br/>検品の際、画像内の指定された領域に異常がないか検証し、良品か不良品かを判定します。</p></body></html>"))
         self.cancel_button.setText(_translate("SelectAreaDialog", "キャンセル"))
         self.ok_button.setText(_translate("SelectAreaDialog", "トレーニング開始"))
-
 

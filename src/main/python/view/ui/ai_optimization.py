@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/SDTest/src/main/python/view/ui/ai_optimization.ui'
+# Form implementation generated from reading ui file 'ai_optimization.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_AIOptimization(object):
     def setupUi(self, AIOptimization):
@@ -42,7 +41,6 @@ class Ui_AIOptimization(object):
         AIOptimization.setWindowTitle(_translate("AIOptimization", "学習"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.dataset_tab), _translate("AIOptimization", "データセットの管理とトレーニング"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.test_tab), _translate("AIOptimization", "性能評価"))
-
 
 from view.dataset import DatasetWidget
 from view.test import TestWidget

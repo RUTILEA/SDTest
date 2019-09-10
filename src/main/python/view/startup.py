@@ -1,9 +1,9 @@
 ﻿# from model.project import Project
 # from view.main_window import MainWindow
-# from PyQt5.QtWidgets import QWidget, QFileDialog
+# from PySide2.QtWidgets import QWidget, QFileDialog
 # from model.fbs import AppInfo
 # import os.path
-from PyQt5.QtCore import QObject, QUrl
+from PySide2.QtCore import QObject, QUrl
 from view.new_project import NewProjectWindow
 from view.main_window import MainWindow
 
