@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ### Installation
 
-Download the latest [release][link-github-release] and run the installer.
+Download the latest [release][link-installer-download] and run the installer.
 
 ## Development
 ### Dependencies
@@ -59,14 +59,14 @@ Download the latest [release][link-github-release] and run the installer.
   [VSCode][link-vscode] is recommended.
 - (Optional) [Windows SDK][link-windows-sdk] for code-signing on Windows
 
-### Installation
+### Deployment
 
 - `git clone git@github.com:RUTILEA/SDTest.git` clones the repository into "SDTest" directory
 - `cd SDTest`
-- `python -m venv venv` creates a virtual environment in the project directory
+- `python -m venv your_venv` creates a virtual environment in the project directory (Choose your own virtual environment name).
 - Activate the virtual environment as your OS:
-    - On Mac/Linux: `source venv/bin/activate`
-    - On Windows: `call venv\scripts\activate.bat`
+    - On Mac/Linux: `source your_venv/bin/activate`
+    - On Windows: `call your_venv\scripts\activate.bat`
 - `pip install -r requirements/base.txt -U` installs the required libraries (most notably, fbs and PyQt5). If this produces errors, try `pip install wheel` first and try again.
 - `pip install -r requirements/(YOUR-OS).txt -U` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
 
@@ -87,7 +87,7 @@ Download the latest [release][link-github-release] and run the installer.
    `pyrcc5 -o --import-from qrc FILENAME_rc.py FILENAME.qrc` inside that directory. Both .qrc and .py files should be 
    stored together there.
 
-### Deployment
+### Build an installer
 - `python src\build.py freeze` turns the app's source code into a standalone executable. This creates the folder 
   `target/SDTest`. You can copy this directory to any other computer (with the same OS as yours) and run the app there.
 - `python src\build.py installer` generates the app's installer into `targets/`. On Windows, this would be an executable 
@@ -129,6 +129,7 @@ Download the latest [release][link-github-release] and run the installer.
 [link-github-pull-request]: https://help.github.com/articles/creating-a-pull-request/
 [link-github-fork]: https://help.github.com/articles/fork-a-repo/
 [link-github-release]: https://github.com/RUTILEA/SDTest/releases
+[link-installer-download]: https://www.rutilea.com/download.html
 
 <!-- Dirs/Files -->
 [dir-src]: ./src/
