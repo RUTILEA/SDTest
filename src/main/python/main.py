@@ -6,7 +6,6 @@ from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from fbs_runtime.excepthook.sentry import SentryExceptionHandler
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2 import QtCore
-
 import os
 import sys
 import multiprocessing
@@ -36,7 +35,7 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         scope.set_extra('os', platform.name())
         scope.set_extra('build', AppInfo().version())
 
-    def qt_message_handler(mode, context, message):
+    def qt_message_handler(self, mode, context, message):
         if mode == QtCore.QtInfoMsg:
             mode = 'Info'
         elif mode == QtCore.QtWarningMsg:

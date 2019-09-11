@@ -1,16 +1,16 @@
-﻿# import sys, os, webbrowser
-# from fbs_runtime.application_context.PySide2 import ApplicationContext
-# from PySide2.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
-# from PySide2.QtCore import Qt, pyqtSignal, QSize
-# from view.ui.main_window import Ui_MainWindow
+﻿import sys, os, webbrowser
+from fbs_runtime.application_context.PySide2 import ApplicationContext
+from PySide2.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
+from PySide2.QtCore import Qt, QSize, QObject, QUrl
+from view.ui.main_window import Ui_MainWindow
 # from view.inspection import InspectionWidget
 # from view.ai_optimization import AIOptimizationWidget
 # from view.past_result import PastResultWidget
-# from model.project import Project
-# from model.learning_model import LearningModel
-# from model.fbs import AppInfo
-# from pathlib import Path
-# from PySide2.QtGui import QMovie
+from model.project import Project
+from model.learning_model import LearningModel
+from model.fbs import AppInfo
+from pathlib import Path
+from PySide2.QtGui import QMovie
 
 class MainWindow:
 
@@ -18,12 +18,17 @@ class MainWindow:
     # back_to_startup = pyqtSignal()
     # back_to_new_project = pyqtSignal()
 
-    def __init__(self, app_engine, appctxt):
+    def __init__(self, app_engine, appctxt, project_file_path):
         super().__init__()
 
         self.appctxt = appctxt
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
+        self.rootObject = self.engine.rootObjects()[1]
+        Project.load_settings_file(project_file_path)
+        project_name = os.path.basename(os.path.splitext(project_file_path)[0])
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
+        self.rootObject.setTitle(window_title)
 
         # # Disable maximizing window
         # self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint | Qt.CustomizeWindowHint)
