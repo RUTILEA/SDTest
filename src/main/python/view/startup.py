@@ -20,9 +20,6 @@ class StartupWindow:
         self.open_button.clicked.connect(lambda: self.on_clicked_open_project_button())
         self.new_project_window = None
 
-        # self.ui.new_project_button.clicked.connect(self.on_clicked_new_project_button)
-        # self.ui.open_project_button.clicked.connect(self.on_clicked_open_project_button)
-        # self.new_project_window = NewProjectDialog()
         # self.main_window = None
         # self.new_project_window.back_to_startup.connect(self.open_start_up_widget)
         # self.new_project_window.new_project_canceled.connect(self.open_start_up_widget)
@@ -40,23 +37,16 @@ class StartupWindow:
         if not project_file_path:
             return
 
-        self.move_to_main_window(project_file_path)
-        # self.move_to_main_window(None)
-
-    def move_to_main_window(self, project_file_path):
-
-        # Project.load_settings_file(project_file_path)
-        # project_name = os.path.basename(os.path.splitext(project_file_path)[0])
-        # window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
-
-        # self.main_window = MainWindow()
         MainWindow(self.engine, self.appctxt, project_file_path)
 
-        # self.main_window.setWindowTitle(window_title)
-        # self.main_window.show()
-        # self.close()
-        # self.main_window.back_to_new_project.connect(self.new_project_window.open_new_project_widget)
-        # self.main_window.back_to_startup.connect(self.open_start_up_widget)
+    # def move_to_main_window(self, project_file_path):
+    #
+    #     self.main_window = MainWindow()
+    #
+    #     self.main_window.show()
+    #     self.close()
+    #     self.main_window.back_to_new_project.connect(self.new_project_window.open_new_project_widget)
+    #     self.main_window.back_to_startup.connect(self.open_start_up_widget)
 
     # def open_start_up_widget(self):
     #     self.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
