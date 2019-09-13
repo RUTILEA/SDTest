@@ -56,5 +56,5 @@ class Dataset:
         size = data.size
         rect = img[int(position[1]):int(position[1])+size[1], int(position[0]):int(position[0])+size[0]]
         file_name = os.path.basename(path)
-        cv2.imwrite(os.path.join(save_path, file_name), rect)
+        imageio.imwrite(os.path.join(save_path, file_name), rect)
 
