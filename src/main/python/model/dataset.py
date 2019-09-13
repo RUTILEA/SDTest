@@ -48,7 +48,7 @@ class Dataset:
     @classmethod
     def trim_image(cls, path: Path, save_path: Path, data: TrimmingData):
         img = cv2.imread(path)
-        check = subprocess.check_output(['mogrify', path, '-coalesce', 'null'], stderr=subprocess.STDOUT)
+        check = subprocess.check_output(['convert', path, '-coalesce', 'null'], stderr=subprocess.STDOUT)
         if check:
             print('@@@ image corrupted @@@')
         position = data.position
