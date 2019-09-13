@@ -3,7 +3,7 @@ from enum import Enum, auto
 from pathlib import Path
 from model.project import Project
 from model.supporting_model import TrimmingData
-import os, cv2, subprocess
+import os, cv2, imageio
 
 
 class Dataset:
@@ -47,10 +47,11 @@ class Dataset:
 
     @classmethod
     def trim_image(cls, path: Path, save_path: Path, data: TrimmingData):
-        img = cv2.imread(path)
-        check = subprocess.check_output(['convert', path, '-coalesce', 'null'], stderr=subprocess.STDOUT)
-        if check:
-            print('@@@ image corrupted @@@')
+        try:
+            img = imageio.imread(path)
+        except:
+            os.remove(path)
+            return
         position = data.position
         size = data.size
         rect = img[int(position[1]):int(position[1])+size[1], int(position[0]):int(position[0])+size[0]]
