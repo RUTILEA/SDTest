@@ -45,7 +45,7 @@ class NewProjectDialog(QWidget):
         self.main_window = None
         self.come_from_main_window_flag = False
         # '/'の入力を制限(validation)
-        reg_ex = QRegExp("[^//]+")
+        reg_ex = QRegExp("[^/]+")
         validator = QRegExpValidator(reg_ex, self.ui.project_name_line)
         self.ui.project_name_line.setValidator(validator)
 
