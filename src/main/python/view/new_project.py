@@ -15,6 +15,7 @@ import os.path
         - NG
     - train 
         - OK
+    - truncated
 - inspection_results
     - images 
 - tmp
@@ -61,6 +62,7 @@ class NewProjectDialog(QWidget):
             os.path.join(save_location_path, 'dataset/test/OK'),
             os.path.join(save_location_path, 'dataset/test/NG'),
             os.path.join(save_location_path, 'dataset/train/OK'),
+            os.path.join(save_location_path, 'dataset/truncated'),
             os.path.join(save_location_path, 'inspection_results'),
             os.path.join(save_location_path, 'inspection_results/images'),
             os.path.join(save_location_path, 'tmp'),

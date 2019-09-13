@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSignal, QObject, QThread
 from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
-import threading, os, numpy as np
+import threading, os, shutil, numpy as np
 from statistics import stdev, mean
 from math import sqrt
 
@@ -169,10 +169,13 @@ class LearningModel(QObject):
     def start_predict(self, image_paths):
         image_path = image_paths[0]
         trimming_data = Project.latest_trimming_data()
-        Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
+        truncated_image_path = Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
+        if truncated_image_path:
+            return truncated_image_path
         self.predicting_start.emit()
         predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
         predict_thread.start()
+        return
 
     def predict(self, image_paths):
         scores = self.__model.predict_paths(image_paths)
