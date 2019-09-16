@@ -36,12 +36,12 @@ class NewProjectWindow:
         self.appctxt = appctxt
         self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        print(self.engine.rootObjects())
-        print(self.rootObject.findChild(QObject, "nextbutton"))
+        # print(self.engine.rootObjects())
+        # print(self.rootObject.findChild(QObject, "nextbutton"))
         self.project_name_line = self.rootObject.findChild(QObject, "projectnamefield")
-        self.project_name_line.textEdited.connect(lambda: self.sync_project_name_edit())
+        self.project_name_line.textEdited.connect(lambda: self.sync_project_name_edit(self.project_name_line.property('text')))
         self.save_location_line = self.rootObject.findChild(QObject, "pathfield")
-        self.save_location_line.textEdited.connect(lambda: self.sync_project_name_edit())
+        self.save_location_line.textEdited.connect(lambda: self.sync_save_location_edit(self.save_location_line.property('text')))
         self.reference_button = self.rootObject.findChild(QObject, "ref")
         self.reference_button.clicked.connect(lambda: self.on_clicked_reference_button())
         self.create_button = self.rootObject.findChild(QObject, "nextbutton")
@@ -51,22 +51,12 @@ class NewProjectWindow:
         # self.save_location_line.returnPressed.connect(self.on_clicked_create_button())
         # self.project_name_line.returnPressed.connect(self.on_clicked_create_button())
 
-
-        # self.ui = Ui_NewProjectDialog()
-        # self.setupUi(self)
-        # self.project_name_line.textEdited.connect(self.sync_project_name_edit)
-        # self.save_location_line.textEdited.connect(self.sync_save_location_edit)
-        # self.reference_button.clicked.connect(self.on_clicked_reference_button)
-        # self.create_button.clicked.connect(self.on_clicked_create_button)
-        # self.cancel_button.clicked.connect(self.on_clicked_cancel_button)
-        # self.save_location_line.returnPressed.connect(self.on_clicked_create_button)
-        # self.project_name_line.returnPressed.connect(self.on_clicked_create_button)
         # self.set_create_button_enabled()
-        # self.save_location_line.setText(os.path.expanduser('~')+'/')
+        self.save_location_line.setProperty('text', os.path.expanduser('~')+'/')
         # self.main_window = None
         self.come_from_main_window_flag = False
 
-        # '/'の入力を制限(validation)
+        # TODO: '/'の入力を制限(validation)
         # reg_ex = QRegExp("[^//]+")
         # validator = QRegExpValidator(reg_ex, self.project_name_line)
         # self.project_name_line.setValidator(validator)
@@ -74,11 +64,11 @@ class NewProjectWindow:
     def on_clicked_reference_button(self):
         save_location_path = QFileDialog.getExistingDirectory(None, '保存先フォルダを選択', os.path.expanduser('~'))
         if save_location_path:
-            self.save_location_line.setText(save_location_path+'/')
+            self.save_location_line.setProperty('text', save_location_path+'/')
 
     def on_clicked_create_button(self):
-        save_location_path = self.save_location_line.text()
-        project_name = os.path.basename(self.project_name_line.text())
+        save_location_path = self.save_location_line.property('text')
+        project_name = os.path.basename(self.project_name_line.property('text'))
         dir_paths = [
             os.path.join(save_location_path, 'dataset/test/OK'),
             os.path.join(save_location_path, 'dataset/test/NG'),
@@ -102,35 +92,36 @@ class NewProjectWindow:
         # self.main_window.back_to_startup.connect(self.on_back_to_startup_signal)
 
     def on_clicked_cancel_button(self):
-        pass
+        print(self.engine.rootObjects())
+        return
 
         # TODO:close self
 
         # if self.come_from_main_window_flag:
         #     self.close()
         #     return
-        self.new_project_canceled.emit()
+        # self.new_project_canceled.emit()
         # self.close()
 
     def sync_project_name_edit(self, text):
         project_name = text
-        save_location_path = self.save_location_line.text()
+        save_location_path = self.save_location_line.property('text')
         save_dir_path = os.path.dirname(save_location_path)
         path = os.path.join(save_dir_path, project_name)
-        self.save_location_line.setText(path)
-        self.set_create_button_enabled()
+        self.save_location_line.setProperty('text', path)
+        # self.set_create_button_enabled()
 
     def sync_save_location_edit(self, text):
         save_location_path = text
         project_name = os.path.basename(save_location_path)
-        self.project_name_line.setText(project_name)
-        self.set_create_button_enabled()
+        self.project_name_line.setProperty('text', project_name)
+        # self.set_create_button_enabled()
 
-    def set_create_button_enabled(self):
-        if self.project_name_line.text():
-            self.create_button.setEnabled(True)
-        elif not self.project_name_line.text():
-            self.create_button.setEnabled(False)
+    # def set_create_button_enabled(self):
+    #     if self.project_name_line.property('text'):
+    #         self.create_button.setEnabled(True)
+    #     elif not self.project_name_line.property('text'):
+    #         self.create_button.setEnabled(False)
 
     def open_new_project_widget(self):
         self.come_from_main_window_flag = True
