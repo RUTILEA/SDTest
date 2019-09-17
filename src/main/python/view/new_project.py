@@ -1,7 +1,7 @@
 ﻿# from view.ui.new_project import Ui_NewProjectDialog
 # from model.project import Project
 # from view.main_window import MainWindow
-# from PySide2.QtWidgets import QWidget, QFileDialog
+from PySide2.QtWidgets import QWidget, QFileDialog
 # from PySide2.QtGui import QRegExpValidator
 # from PySide2.QtCore import QRegExp, pyqtSignal
 # from model.fbs import AppInfo
@@ -25,7 +25,7 @@ from fbs_runtime.application_context.PySide2 import ApplicationContext
 '''
 
 
-class NewProjectWindow:
+class NewProjectWindow(QWidget):
 
     # # Signal for cancel button
     # back_to_startup = pyqtSignal()

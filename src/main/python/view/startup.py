@@ -7,7 +7,7 @@ from model.project import Project
 from model.fbs import AppInfo
 
 
-class StartupWindow:
+class StartupWindow(QWidget):
     def __init__(self, app_engine, appctxt):
         # self.appctxt = ApplicationContext()
         self.appctxt = appctxt
