@@ -108,7 +108,7 @@ class Project:
         # json書き込み中にクラッシュしても元ファイルが壊れないように一旦別ファイルとして書き出す
         tmp_path = Path(cls.project_path()) / 'tmp' / (cls.project_name() + cls.__project_file_extension)
         with open(tmp_path, 'w') as fw:
-            json.dump(settings_dict, fw, indent=4)
+            json.dump(settings_dict, fw, indent=4, ensure_ascii=False)
         shutil.copy(src=str(tmp_path), dst=cls.project_path())
         os.remove(tmp_path)
 
