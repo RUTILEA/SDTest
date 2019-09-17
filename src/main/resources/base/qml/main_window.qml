@@ -12,6 +12,8 @@ ApplicationWindow {
     property int fixedWidth: {
         if (topbar.currentTab===0)
             return 842
+        else if (topbar.currentTab===1)
+            return 864
         else
             return 864
     }
@@ -19,6 +21,8 @@ ApplicationWindow {
     property int fixedHeight: {
         if (topbar.currentTab===0)
             return 532 + 40
+        else if (topbar.currentTab===1)
+            return 730 + 40
         else
             return 730 + 40
     }
@@ -146,5 +150,6 @@ ApplicationWindow {
 
         AiOptimizationView {}
 
+        PastResultView {}
     }
 }
