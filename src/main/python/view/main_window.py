@@ -87,12 +87,12 @@ class MainWindow(QMainWindow):
     #
     #     appctxt = ApplicationContext()
         loader_gif_path = self.appctxt.get_resource('images/loader.gif')
-        self.loader = QMovie(loader_gif_path)
-        self.loader.start()
-        self.loader_label = QLabel()
-        self.loader_label.setMovie(self.loader)
-        self.loader_label.hide()
-        self.training_message = QLabel()
+        # self.loader = QMovie(loader_gif_path)
+        # self.loader.start()
+        # self.loader_label = QLabel()
+        # self.loader_label.setMovie(self.loader)
+        # self.loader_label.hide()
+        # self.training_message = QLabel()
 
         spacer = QWidget()
         spacer.setFixedWidth(2)
