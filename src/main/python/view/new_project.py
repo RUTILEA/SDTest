@@ -24,12 +24,15 @@ from fbs_runtime.application_context.PySide2 import ApplicationContext
 '''
 
 
-class NewProjectWindow:
+class NewProjectSignal(QObject):
 
     # Signal for cancel button
     back_to_startup = Signal()
     new_project_canceled = Signal()
     close_old_project = Signal()
+
+
+class NewProjectWindow:
 
     def __init__(self, app_engine, appctxt):
         self.engine = app_engine
@@ -61,6 +64,11 @@ class NewProjectWindow:
         # validator = QRegExpValidator(reg_ex, self.project_name_line)
         # self.project_name_line.setValidator(validator)
 
+        self.new_project_signal = NewProjectSignal()
+
+        # self.new_project_signal.new_project_canceled.connect(self.test)
+
+
     def on_clicked_reference_button(self):
         save_location_path = QFileDialog.getExistingDirectory(None, '保存先フォルダを選択', os.path.expanduser('~'))
         if save_location_path:
@@ -84,24 +92,20 @@ class NewProjectWindow:
         # プロジェクトファイル作成部分
         project_path = save_location_path
         Project.generate_project_file(project_path, project_name)
-        MainWindow(self.engine, self.appctxt, project_path)
+        MainWindow(self.engine, self.appctxt)
 
-        # self.close_old_project.emit()
+        # self.new_project_signal.close_old_project.emit()
         # self.close()
         # self.main_window.back_to_new_project.connect(self.open_new_project_widget)
         # self.main_window.back_to_startup.connect(self.on_back_to_startup_signal)
 
     def on_clicked_cancel_button(self):
-        print(self.engine.rootObjects())
-        return
-
-        # TODO:close self
-
         # if self.come_from_main_window_flag:
-        #     self.close()
+        #     self.rootObject.close()
         #     return
-        # self.new_project_canceled.emit()
-        # self.close()
+        self.new_project_signal.new_project_canceled.emit()
+        # print('hoge')
+        self.rootObject.close()
 
     def sync_project_name_edit(self, text):
         project_name = text
@@ -128,5 +132,8 @@ class NewProjectWindow:
         # self.show()
 
     def on_back_to_startup_signal(self):
-        self.back_to_startup.emit()
+        self.new_project_signal.back_to_startup.emit()
     #     self.main_window = MainWindow()
+
+    def test(self):
+        print('huga')
