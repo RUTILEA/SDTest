@@ -77,7 +77,7 @@ ApplicationWindow {
         objectName: 'nextbutton'
         anchors.verticalCenter: cancel.verticalCenter
         x: root.width - nextbutton.width - space_01
-        validbuttton: if(projectnamefield.text.length > 0){true;}else{false;}
+        validbuttton: if(projectnamefield.text){true;}else{false;}
         mytext: '次へ'
     }
 }

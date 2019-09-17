@@ -17,16 +17,13 @@ class StartupWindow(QWidget):
         self.new_project_button.clicked.connect(lambda: self.on_clicked_new_project_button())
         self.open_button = self.rootObject.findChild(QObject, "openbutton")
         self.open_button.clicked.connect(lambda: self.on_clicked_open_project_button())
-        self.new_project_signal = NewProjectSignal()
-
-        # self.main_window = None
-        # self.new_project_signal.back_to_startup.connect(self.open_start_up_widget)
-        self.new_project_signal.new_project_canceled.connect(self.open_start_up_widget)
-        # self.new_project_signal.close_old_project.connect(self.close_old_project)
 
     def on_clicked_new_project_button(self):
         # self.new_project_window.come_from_main_window_flag = False
-        NewProjectWindow(self.engine, self.appctxt)
+        new_project_window = NewProjectWindow(self.engine, self.appctxt)
+        new_project_window.signal.back_to_startup.connect(self.open_start_up_widget)
+        new_project_window.signal.new_project_canceled.connect(self.open_start_up_widget)
+        new_project_window.signal.close_old_project.connect(self.close_old_project)
         self.rootObject.close()
 
     def on_clicked_open_project_button(self):
@@ -52,11 +49,8 @@ class StartupWindow(QWidget):
         # self.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
         # if self.main_window:
         #     self.main_window = MainWindow()
+        self.__init__(self.engine, self.appctxt)
 
-        print('hero')
-        # self.__init__(self.engine, self.appctxt)
-        # self.engine.load(self.appctxt.get_resource('qml/startup.qml'))
-        # self.rootObject = self.engine.rootObjects()[-1]
-
-    # def close_old_project(self):
-    #     self.main_window = self.new_project_window.main_window
+    def close_old_project(self):
+        print('TODO: close old project')
+        # self.main_window = self.new_project_window.main_window

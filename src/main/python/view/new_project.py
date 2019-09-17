@@ -54,7 +54,6 @@ class NewProjectWindow(QWidget):
         # self.save_location_line.returnPressed.connect(self.on_clicked_create_button())
         # self.project_name_line.returnPressed.connect(self.on_clicked_create_button())
 
-        # self.set_create_button_enabled()
         self.save_location_line.setProperty('text', os.path.expanduser('~')+'/')
         # self.main_window = None
         self.come_from_main_window_flag = False
@@ -64,10 +63,7 @@ class NewProjectWindow(QWidget):
         # validator = QRegExpValidator(reg_ex, self.project_name_line)
         # self.project_name_line.setValidator(validator)
 
-        self.new_project_signal = NewProjectSignal()
-
-        # self.new_project_signal.new_project_canceled.connect(self.test)
-
+        self.signal = NewProjectSignal()
 
     def on_clicked_reference_button(self):
         save_location_path = QFileDialog.getExistingDirectory(None, '保存先フォルダを選択', os.path.expanduser('~'))
@@ -94,7 +90,7 @@ class NewProjectWindow(QWidget):
         Project.generate_project_file(project_path, project_name)
         MainWindow(self.engine, self.appctxt)
 
-        # self.new_project_signal.close_old_project.emit()
+        # self.signal.close_old_project.emit()
         # self.close()
         # self.main_window.back_to_new_project.connect(self.open_new_project_widget)
         # self.main_window.back_to_startup.connect(self.on_back_to_startup_signal)
@@ -103,7 +99,7 @@ class NewProjectWindow(QWidget):
         # if self.come_from_main_window_flag:
         #     self.rootObject.close()
         #     return
-        self.new_project_signal.new_project_canceled.emit()
+        self.signal.new_project_canceled.emit()
         # print('hoge')
         self.rootObject.close()
 
@@ -132,8 +128,5 @@ class NewProjectWindow(QWidget):
         # self.show()
 
     def on_back_to_startup_signal(self):
-        self.new_project_signal.back_to_startup.emit()
+        self.signal.back_to_startup.emit()
     #     self.main_window = MainWindow()
-
-    def test(self):
-        print('huga')
