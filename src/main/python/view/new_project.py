@@ -32,7 +32,7 @@ class NewProjectSignal(QObject):
     close_old_project = Signal()
 
 
-class NewProjectWindow:
+class NewProjectWindow(QWidget):
 
     def __init__(self, app_engine, appctxt):
         self.engine = app_engine
