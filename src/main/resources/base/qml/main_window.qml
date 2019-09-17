@@ -109,6 +109,7 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '検品'
                 mynumber: 0
+                objectName: 'inspectionbutton'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -116,6 +117,15 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '学習'
                 mynumber: 1
+                objectName: 'optimizationbutton'
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
+            }
+
+            TopbarButton {
+                tabname: 'レポート'
+                mynumber: 2
+                objectName: 'pastresultbutton'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
