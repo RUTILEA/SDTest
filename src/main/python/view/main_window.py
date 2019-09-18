@@ -34,14 +34,6 @@ class MainWindow(QMainWindow):
 
         self.msgBox = None
 
-        # self.inspection_mainwindow_size = QSize(780, 550)
-        # self.optimization_mainwindow_size = QSize(864, 730)
-        # self.past_result_mainwindow_size = QSize(780, 600)
-        #
-        # self.inspection_widget_size = QSize(740, 420)
-        # self.optimization_widget_size = QSize(840, 600)
-        # self.past_result_widget_size = QSize(740, 400)
-
         self.setup_tool_bar()
         self.setup_menu_bar()
 
@@ -55,11 +47,15 @@ class MainWindow(QMainWindow):
         # LearningModel.default().training_finished.connect(self.on_finished_training)
 
     def setup_menu_bar(self):
-        pass
-        # self.action_new_project.triggered.connect(self.on_triggered_action_new_project)
+        self.action_new_project = self.rootObject.findChild(QObject, "newprojectaction")
+        self.action_new_project.triggered.connect(self.on_triggered_action_new_project)
+        # self.action_open = self.rootObject.findChild(QObject, "openaction")
         # self.action_open.triggered.connect(self.on_triggered_action_open)
-        # self.action_close.triggered.connect(self.on_triggered_action_close)
+        self.action_close = self.rootObject.findChild(QObject, "closeaction")
+        self.action_close.triggered.connect(self.on_triggered_action_close)
+        # self.action_website = self.rootObject.findChild(QObject, "websiteaction")
         # self.action_website.triggered.connect(self.on_triggered_action_website)
+        # self.action_version = self.rootObject.findChild(QObject, "versionaction")
         # self.action_version.triggered.connect(self.on_triggered_action_version)
 
     def setup_tool_bar(self):
@@ -97,11 +93,11 @@ class MainWindow(QMainWindow):
         spacer = QWidget()
         spacer.setFixedWidth(2)
 
-        self.statusBar().addPermanentWidget(self.training_message)
-        self.statusBar().addPermanentWidget(self.loader_label)
-        self.statusBar().addPermanentWidget(spacer)
-
-        self.statusBar().setSizeGripEnabled(False)
+        # self.statusBar().addPermanentWidget(self.training_message)
+        # self.statusBar().addPermanentWidget(self.loader_label)
+        # self.statusBar().addPermanentWidget(spacer)
+        #
+        # self.statusBar().setSizeGripEnabled(False)
 
     def on_clicked_inspection_button(self):
         pass

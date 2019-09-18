@@ -64,11 +64,13 @@ ApplicationWindow {
 
             MenuItem {
                 text: qsTr("新規プロジェクト/開く")
+                objectName: 'newprojectaction'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("閉じる")
+                objectName: 'closeaction'
                 // onTriggered:
             }
         }
