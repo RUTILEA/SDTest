@@ -35,6 +35,7 @@ class StartupWindow(QWidget):
             return
         Project.load_settings_file(project_file_path)
         MainWindow(self.engine, self.appctxt)
+        self.rootObject.close()
 
     # def move_to_main_window(self, project_file_path):
     #

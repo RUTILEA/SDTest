@@ -24,8 +24,7 @@ class MainWindow(QMainWindow):
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        Project.load_settings_file(project_file_path)
-        project_name = os.path.basename(os.path.splitext(project_file_path)[0])
+        project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
         window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
         self.rootObject.setProperty('title', window_title)
 

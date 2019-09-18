@@ -91,6 +91,7 @@ class NewProjectWindow(QWidget):
         project_path = save_location_path
         Project.generate_project_file(project_path, project_name)
         MainWindow(self.engine, self.appctxt)
+        self.rootObject.close()
 
         # self.signal.close_old_project.emit()
         # self.close()
