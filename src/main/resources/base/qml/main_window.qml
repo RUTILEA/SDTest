@@ -81,21 +81,25 @@ ApplicationWindow {
 
             MenuItem {
                 text: qsTr("SDTestについて")
+                objectName: 'aboutaction'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("ドキュメント")
+                objectName: 'documentaction'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("SDTestホームページ")
+                objectName: 'websiteaction'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("アップデートを確認")
+                objectName: 'versionaction'
                 // onTriggered:
             }
         }

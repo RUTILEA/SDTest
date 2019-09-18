@@ -48,14 +48,14 @@ class MainWindow(QMainWindow):
     def setup_menu_bar(self):
         self.action_new_project = self.rootObject.findChild(QObject, "newprojectaction")
         self.action_new_project.triggered.connect(self.on_triggered_action_new_project)
-        # self.action_open = self.rootObject.findChild(QObject, "openaction")
-        # self.action_open.triggered.connect(self.on_triggered_action_open)
+        self.action_open = self.rootObject.findChild(QObject, "openaction")
+        self.action_open.triggered.connect(self.on_triggered_action_open)
         self.action_close = self.rootObject.findChild(QObject, "closeaction")
         self.action_close.triggered.connect(self.on_triggered_action_close)
-        # self.action_website = self.rootObject.findChild(QObject, "websiteaction")
-        # self.action_website.triggered.connect(self.on_triggered_action_website)
-        # self.action_version = self.rootObject.findChild(QObject, "versionaction")
-        # self.action_version.triggered.connect(self.on_triggered_action_version)
+        self.action_website = self.rootObject.findChild(QObject, "websiteaction")
+        self.action_website.triggered.connect(self.on_triggered_action_website)
+        self.action_version = self.rootObject.findChild(QObject, "versionaction")
+        self.action_version.triggered.connect(self.on_triggered_action_version)
 
     def setup_tool_bar(self):
         self.optimization_action = self.rootObject.findChild(QObject, "optimizationbutton")
@@ -117,36 +117,36 @@ class MainWindow(QMainWindow):
     #     self.setFixedSize(self.past_result_mainwindow_size)
     #     self.main_stacked_widget.setFixedSize(self.past_result_widget_size)
     #
-    # def on_triggered_action_open(self):
-    #     save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
-    #                                                      AppInfo().app_name() + ' プロジェクト(*.sdt);;すべて(*.*)')[0]
-    #     if not save_location_path:
-    #         return
-    #     Project.load_settings_file(save_location_path)
-    #     project_name = os.path.basename(os.path.splitext(save_location_path)[0])
-    #     window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
-    #     self.setWindowTitle(window_title)
-    #     self.show()
-    #     self.setup_tool_bar()
-    #
-    # def on_triggered_action_new_project(self):
-    #     self.back_to_new_project.emit()
-    #
-    # def on_triggered_action_close(self):
-    #     self.back_to_startup.emit()
-    #
-    # def on_triggered_action_website(self):
-    #     webbrowser.open('https://www.rutilea.com/')
-    #
-    # def on_triggered_action_version(self):
-    #     self.msgBox = QMessageBox()
-    #     self.msgBox.setText(AppInfo().app_name() + '\nVersion ' + AppInfo().version() + '\n(c) ' + AppInfo().author())
-    #     self.msgBox.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
-    #     self.msgBox.exec()
-    #
-    # def closeEvent(self, QCloseEvent):
-    #     sys.exit()
-    #
+    def on_triggered_action_open(self):
+        save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),
+                                                         AppInfo().app_name() + ' プロジェクト(*.sdt);;すべて(*.*)')[0]
+        if not save_location_path:
+            return
+        Project.load_settings_file(save_location_path)
+        project_name = os.path.basename(os.path.splitext(save_location_path)[0])
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
+        self.setWindowTitle(window_title)
+        self.show()
+        self.setup_tool_bar()
+
+    def on_triggered_action_new_project(self):
+        self.back_to_new_project.emit()
+
+    def on_triggered_action_close(self):
+        self.back_to_startup.emit()
+
+    def on_triggered_action_website(self):
+        webbrowser.open('https://www.rutilea.com/')
+
+    def on_triggered_action_version(self):
+        self.msgBox = QMessageBox()
+        self.msgBox.setText(AppInfo().app_name() + '\nVersion ' + AppInfo().version() + '\n(c) ' + AppInfo().author())
+        self.msgBox.setWindowTitle(AppInfo().app_name() + ' Version ' + AppInfo().version())
+        self.msgBox.exec()
+
+    def closeEvent(self, QCloseEvent):
+        sys.exit()
+
     # def on_start_predicting(self):
     #     self.optimization_action.setDisabled(True)
     #
