@@ -87,9 +87,13 @@ class NewProjectWindow(QWidget):
         # プロジェクトファイル作成部分
         project_path = save_location_path
         Project.generate_project_file(project_path, project_name)
-        main_window = MainWindow(self.engine, self.appctxt)
-        main_window.signal.back_to_new_project.connect(self.open_new_project_widget)
-        main_window.signal.back_to_startup.connect(self.on_back_to_startup_signal)
+        if self.come_from_main_window_flag:
+            self.signal.close_old_project.emit()
+            self.main_window.rootObject.close()
+        self.main_window = MainWindow(self.engine, self.appctxt)
+        self.come_from_main_window_flag = True
+        self.main_window.signal.back_to_new_project.connect(self.open_new_project_widget)
+        self.main_window.signal.back_to_startup.connect(self.on_back_to_startup_signal)
         self.rootObject.close()
 
     def on_clicked_cancel_button(self):
@@ -123,3 +127,4 @@ class NewProjectWindow(QWidget):
 
     def on_back_to_startup_signal(self):
         self.signal.back_to_startup.emit()
+
