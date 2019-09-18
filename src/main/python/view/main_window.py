@@ -17,7 +17,7 @@ class MainWindow(QMainWindow):
     # back_to_startup = pyqtSignal()
     # back_to_new_project = pyqtSignal()
 
-    def __init__(self, app_engine, appctxt, project_file_path):
+    def __init__(self, app_engine, appctxt):
         super().__init__()
 
         self.appctxt = appctxt
