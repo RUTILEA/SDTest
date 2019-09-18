@@ -63,10 +63,18 @@ ApplicationWindow {
             title: qsTr("ファイル")
 
             MenuItem {
-                text: qsTr("新規プロジェクト/開く")
+                text: qsTr("新規プロジェクト")
                 objectName: 'newprojectaction'
                 // onTriggered:
             }
+
+            MenuItem {
+                text: qsTr("開く")
+                objectName: 'openaction'
+                // onTriggered:
+                }
+
+            MenuSeparator { }
 
             MenuItem {
                 text: qsTr("閉じる")
@@ -78,18 +86,6 @@ ApplicationWindow {
         Menu {
             id: helpMenu
             title: qsTr("ヘルプ")
-
-            MenuItem {
-                text: qsTr("SDTestについて")
-                objectName: 'aboutaction'
-                // onTriggered:
-            }
-
-            MenuItem {
-                text: qsTr("ドキュメント")
-                objectName: 'documentaction'
-                // onTriggered:
-            }
 
             MenuItem {
                 text: qsTr("SDTestホームページ")
@@ -114,6 +110,7 @@ ApplicationWindow {
         height: 50
         color: '#AAAAAA'
         property int currentTab: 0
+        objectName: 'topbar'
 
         Row {
             TopbarButton {

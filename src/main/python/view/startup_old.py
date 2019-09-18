@@ -47,7 +47,7 @@ class StartupWidget(QWidget):
         self.main_window.setWindowTitle(window_title)
         self.main_window.show()
         self.close()
-        self.main_window.back_to_new_project.connect(self.new_project_window.open_new_project_widget)
+        self.main_window.back_to_new_project.connect(self.new_project_window.open_new_project_widget(self.engine, self.appctxt))
         self.main_window.back_to_startup.connect(self.open_start_up_widget)
 
     def open_start_up_widget(self):

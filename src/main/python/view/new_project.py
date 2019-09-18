@@ -39,8 +39,6 @@ class NewProjectWindow(QWidget):
         self.appctxt = appctxt
         self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        # print(self.engine.rootObjects())
-        # print(self.rootObject.findChild(QObject, "nextbutton"))
         self.project_name_line = self.rootObject.findChild(QObject, "projectnamefield")
         self.project_name_line.textEdited.connect(lambda: self.sync_project_name_edit(self.project_name_line.property('text')))
         self.save_location_line = self.rootObject.findChild(QObject, "pathfield")
@@ -57,7 +55,6 @@ class NewProjectWindow(QWidget):
         # self.project_name_line.returnPressed.connect(self.on_clicked_create_button())
 
         self.save_location_line.setProperty('text', os.path.expanduser('~')+'/')
-        # self.main_window = None
         self.come_from_main_window_flag = False
 
         # TODO: '/'の入力を制限(validation)
@@ -90,18 +87,15 @@ class NewProjectWindow(QWidget):
         # プロジェクトファイル作成部分
         project_path = save_location_path
         Project.generate_project_file(project_path, project_name)
-        MainWindow(self.engine, self.appctxt)
+        main_window = MainWindow(self.engine, self.appctxt)
+        main_window.signal.back_to_new_project.connect(self.open_new_project_widget)
+        main_window.signal.back_to_startup.connect(self.on_back_to_startup_signal)
         self.rootObject.close()
 
-        # self.signal.close_old_project.emit()
-        # self.close()
-        # self.main_window.back_to_new_project.connect(self.open_new_project_widget)
-        # self.main_window.back_to_startup.connect(self.on_back_to_startup_signal)
-
     def on_clicked_cancel_button(self):
-        # if self.come_from_main_window_flag:
-        #     self.rootObject.close()
-        #     return
+        if self.come_from_main_window_flag:
+            self.rootObject.close()
+            return
         self.signal.new_project_canceled.emit()
         self.rootObject.close()
 
@@ -124,9 +118,8 @@ class NewProjectWindow(QWidget):
     #         self.create_button.setEnabled(False)
 
     def open_new_project_widget(self):
+        self.__init__(self.engine, self.appctxt)
         self.come_from_main_window_flag = True
-        # self.show()
 
     def on_back_to_startup_signal(self):
         self.signal.back_to_startup.emit()
-    #     self.main_window = MainWindow()
