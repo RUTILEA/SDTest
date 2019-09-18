@@ -51,6 +51,8 @@ class NewProjectWindow(QWidget):
         self.create_button.clicked.connect(lambda: self.on_clicked_create_button())
         self.cancel_button = self.rootObject.findChild(QObject, "cancel")
         self.cancel_button.clicked.connect(lambda: self.on_clicked_cancel_button())
+
+        # TODO: returnPress.connect
         # self.save_location_line.returnPressed.connect(self.on_clicked_create_button())
         # self.project_name_line.returnPressed.connect(self.on_clicked_create_button())
 
@@ -100,7 +102,6 @@ class NewProjectWindow(QWidget):
         #     self.rootObject.close()
         #     return
         self.signal.new_project_canceled.emit()
-        # print('hoge')
         self.rootObject.close()
 
     def sync_project_name_edit(self, text):
@@ -109,13 +110,11 @@ class NewProjectWindow(QWidget):
         save_dir_path = os.path.dirname(save_location_path)
         path = os.path.join(save_dir_path, project_name)
         self.save_location_line.setProperty('text', path)
-        # self.set_create_button_enabled()
 
     def sync_save_location_edit(self, text):
         save_location_path = text
         project_name = os.path.basename(save_location_path)
         self.project_name_line.setProperty('text', project_name)
-        # self.set_create_button_enabled()
 
     # def set_create_button_enabled(self):
     #     if self.project_name_line.property('text'):
