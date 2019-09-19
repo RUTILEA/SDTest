@@ -12,6 +12,8 @@ ApplicationWindow {
     property int fixedWidth: {
         if (topbar.currentTab===0)
             return 842
+        else if (topbar.currentTab===1)
+            return 864
         else
             return 864
     }
@@ -19,6 +21,8 @@ ApplicationWindow {
     property int fixedHeight: {
         if (topbar.currentTab===0)
             return 532 + 40
+        else if (topbar.currentTab===1)
+            return 730 + 40
         else
             return 730 + 40
     }
@@ -59,12 +63,22 @@ ApplicationWindow {
             title: qsTr("ファイル")
 
             MenuItem {
-                text: qsTr("新規プロジェクト/開く")
+                text: qsTr("新規プロジェクト")
+                objectName: 'newprojectaction'
                 // onTriggered:
             }
 
             MenuItem {
+                text: qsTr("開く")
+                objectName: 'openaction'
+                // onTriggered:
+                }
+
+            MenuSeparator { }
+
+            MenuItem {
                 text: qsTr("閉じる")
+                objectName: 'closeaction'
                 // onTriggered:
             }
         }
@@ -74,22 +88,14 @@ ApplicationWindow {
             title: qsTr("ヘルプ")
 
             MenuItem {
-                text: qsTr("SDTestについて")
-                // onTriggered:
-            }
-
-            MenuItem {
-                text: qsTr("ドキュメント")
-                // onTriggered:
-            }
-
-            MenuItem {
                 text: qsTr("SDTestホームページ")
+                objectName: 'websiteaction'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("アップデートを確認")
+                objectName: 'versionaction'
                 // onTriggered:
             }
         }
@@ -104,11 +110,13 @@ ApplicationWindow {
         height: 50
         color: '#AAAAAA'
         property int currentTab: 0
+        objectName: 'topbar'
 
         Row {
             TopbarButton {
                 tabname: '検品'
                 mynumber: 0
+                objectName: 'inspectionbutton'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -116,6 +124,15 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '学習'
                 mynumber: 1
+                objectName: 'optimizationbutton'
+                imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
+                imgsource_selected: '../fonts/fontawesome/blueeye.png'
+            }
+
+            TopbarButton {
+                tabname: 'レポート'
+                mynumber: 2
+                objectName: 'pastresultbutton'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -136,5 +153,6 @@ ApplicationWindow {
 
         AiOptimizationView {}
 
+        PastResultView {}
     }
 }
