@@ -1,6 +1,6 @@
 ﻿import sys, os, webbrowser
 from fbs_runtime.application_context.PySide2 import ApplicationContext
-from PySide2.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QWidget, QLayout, QLabel, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, QSize, QObject, Signal
 # from view.inspection import InspectionWidget
 # from view.ai_optimization import AIOptimizationWidget
@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        # print(self.engine.rootObjects())
+        print(self.engine.rootObjects())
         project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
         window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
         self.rootObject.setProperty('title', window_title)
@@ -69,6 +69,11 @@ class MainWindow(QMainWindow):
         self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+        self.stack_layout = self.rootObject.findChild(QObject, "stacklayout")
+
+        # print(self.stack_layout)
+        # inspection_widget = InspectionWidget(self.engine, self.appctxt)
+        # inspection_widget.setParent(self.stack_layout)
 
         try:
             self.on_clicked_inspection_button()

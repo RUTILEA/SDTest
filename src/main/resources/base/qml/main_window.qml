@@ -146,8 +146,10 @@ ApplicationWindow {
         height: root.height - topbar.height
         anchors.top: topbar.bottom
         currentIndex: topbar.currentTab
+        objectName: 'stacklayout'
 
         property int r: 8
+
 
         InspectionView {}
 

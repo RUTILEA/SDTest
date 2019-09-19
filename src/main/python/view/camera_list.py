@@ -3,7 +3,7 @@ from view.ui.camera_list import Ui_CameraList
 from view.ui.selectable_camera_viewfinder import Ui_SelectableCameraView
 from model.camera_model import CameraModel
 from PyQt5.QtMultimedia import QCamera
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
+# from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 from typing import Dict
 from PyQt5.QtCore import pyqtSignal, QSize
 
