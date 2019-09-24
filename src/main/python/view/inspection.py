@@ -19,13 +19,13 @@ class InspectionWidget(QWidget):
     __INSPECTED_IMAGES_DIR_NAME = '/inspection_results/images'
     __VIEW_FINDER = QSize(400, 225)
 
-    def __init__(self, app_engine, appctxt):
+    def __init__(self, app_engine, appctxt, stack_view):
         super().__init__()
         # QWidget.__init__(self)
         self.engine = app_engine
         self.appctxt = appctxt
-        self.engine.load(self.appctxt.get_resource('qml/InspectionView.qml'))
-        self.rootObject = self.engine.rootObjects()[-1]
+        self.stack_view = stack_view
+        print('debag!!!')
 
         # # camera preview settings
         # self.camera_model = CameraModel.default()

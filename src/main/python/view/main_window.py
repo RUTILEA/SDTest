@@ -2,7 +2,7 @@
 from fbs_runtime.application_context.PySide2 import ApplicationContext
 from PySide2.QtWidgets import QMainWindow, QWidget, QLayout, QLabel, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, QSize, QObject, Signal
-# from view.inspection import InspectionWidget
+from view.inspection import InspectionWidget
 # from view.ai_optimization import AIOptimizationWidget
 # from view.past_result import PastResultWidget
 from model.project import Project
@@ -69,11 +69,10 @@ class MainWindow(QMainWindow):
         self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
-        self.stack_layout = self.rootObject.findChild(QObject, "stacklayout")
+        self.inspection_view = self.rootObject.findChild(QObject, "inspectionview")
 
-        # print(self.stack_layout)
-        # inspection_widget = InspectionWidget(self.engine, self.appctxt)
-        # inspection_widget.setParent(self.stack_layout)
+        print(self.inspection_view)
+        inspection_widget = InspectionWidget(self.engine, self.appctxt, self.inspection_view)
 
         try:
             self.on_clicked_inspection_button()
