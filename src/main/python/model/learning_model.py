@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSignal, QObject, QThread
+from PySide2.QtCore import Signal, QObject, QThread
 from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
@@ -107,11 +107,11 @@ class TestResults(object):
 
 class LearningModel(QObject):
     __default_instance = None
-    training_finished = pyqtSignal()
-    training_start = pyqtSignal()
-    predicting_finished = pyqtSignal(dict)
-    predicting_start = pyqtSignal()
-    test_finished = pyqtSignal(bool)
+    training_finished = Signal()
+    training_start = Signal()
+    predicting_finished = Signal(dict)
+    predicting_start = Signal()
+    test_finished = Signal(bool)
 
     @classmethod
     def default(cls):
@@ -200,7 +200,7 @@ class LearningModel(QObject):
 
 
 class PredictingThread(QThread):
-    finished = pyqtSignal(dict)
+    finished = Signal(dict)
 
     def __init__(self, model):
         super().__init__()

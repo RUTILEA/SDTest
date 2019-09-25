@@ -27,7 +27,7 @@ ApplicationWindow {
 
         TextField {
             id: projectnamefield
-            objectName: 'projectnamefield'
+            objectName: 'project_name_field'
             width: root.width - space_01 * 2
             height: ref.height
             anchors.left: projectname.left
@@ -47,7 +47,7 @@ ApplicationWindow {
 
         TextField {
             id: pathfield
-            objectName: 'pathfield'
+            objectName: 'path_field'
             width: root.width - space_01 * 2 - ref.width - space_02
             height: ref.height
             anchors.top: save_to.bottom
@@ -66,7 +66,7 @@ ApplicationWindow {
 
     GeneralButton {
         id: cancel
-        objectName: 'cancel'
+        objectName: 'cancel_button'
         x: nextbutton.x - cancel.width - space_02
         y: 225
         mytext: 'キャンセル'
@@ -74,7 +74,7 @@ ApplicationWindow {
 
     GeneralButton {
         id: nextbutton
-        objectName: 'nextbutton'
+        objectName: 'next_button'
         anchors.verticalCenter: cancel.verticalCenter
         x: root.width - nextbutton.width - space_01
         validbuttton: if(projectnamefield.text){true;}else{false;}

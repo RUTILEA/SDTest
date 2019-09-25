@@ -1,8 +1,8 @@
 ﻿import sys, os, webbrowser
 from fbs_runtime.application_context.PySide2 import ApplicationContext
-from PySide2.QtWidgets import QMainWindow, QWidget, QActionGroup, QLabel, QFileDialog, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QWidget, QLayout, QLabel, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, QSize, QObject, Signal
-# from view.inspection import InspectionWidget
+from view.inspection import InspectionWidget
 # from view.ai_optimization import AIOptimizationWidget
 # from view.past_result import PastResultWidget
 from model.project import Project
@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        # print(self.engine.rootObjects())
+        print(self.engine.rootObjects())
         project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
         window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
         self.rootObject.setProperty('title', window_title)
@@ -50,11 +50,11 @@ class MainWindow(QMainWindow):
         LearningModel.default().training_finished.connect(self.on_finished_training)
 
     def setup_menu_bar(self):
-        self.action_new_project = self.rootObject.findChild(QObject, "newprojectaction")
-        self.action_open = self.rootObject.findChild(QObject, "openaction")
-        self.action_close = self.rootObject.findChild(QObject, "closeaction")
-        self.action_website = self.rootObject.findChild(QObject, "websiteaction")
-        self.action_version = self.rootObject.findChild(QObject, "versionaction")
+        self.action_new_project = self.rootObject.findChild(QObject, 'new_project_action')
+        self.action_open = self.rootObject.findChild(QObject, 'open_action')
+        self.action_close = self.rootObject.findChild(QObject, 'close_action')
+        self.action_website = self.rootObject.findChild(QObject, 'website_action')
+        self.action_version = self.rootObject.findChild(QObject, 'version_action')
         self.action_new_project.triggered.connect(self.on_triggered_action_new_project)
         self.action_open.triggered.connect(self.on_triggered_action_open)
         self.action_close.triggered.connect(self.on_triggered_action_close)
@@ -62,13 +62,16 @@ class MainWindow(QMainWindow):
         self.action_version.triggered.connect(self.on_triggered_action_version)
 
     def setup_tool_bar(self):
-        self.topbar = self.rootObject.findChild(QObject, "topbar")
-        self.inspection_action = self.rootObject.findChild(QObject, "inspectionbutton")
-        self.optimization_action = self.rootObject.findChild(QObject, "optimizationbutton")
-        self.past_result_action = self.rootObject.findChild(QObject, "pastresultbutton")
+        self.topbar = self.rootObject.findChild(QObject, 'topbar')
+        self.inspection_action = self.rootObject.findChild(QObject, 'inspection_button')
+        self.optimization_action = self.rootObject.findChild(QObject, 'optimization_button')
+        self.past_result_action = self.rootObject.findChild(QObject, 'past_result_button')
         self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+        self.inspection_view = self.rootObject.findChild(QObject, 'inspection_view')
+
+        inspection_widget = InspectionWidget(self.engine, self.appctxt, self.inspection_view)
 
         try:
             self.on_clicked_inspection_button()
@@ -120,6 +123,7 @@ class MainWindow(QMainWindow):
     def on_triggered_action_close(self):
         self.signal.back_to_startup.emit()
         self.rootObject.close()
+        sys.exit()
 
     def on_triggered_action_website(self):
         webbrowser.open('https://www.rutilea.com/')

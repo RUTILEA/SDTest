@@ -1,14 +1,14 @@
-from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettings, QCameraInfo
+from PySide2.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettings, QCameraInfo
 from datetime import datetime
 from typing import Dict
-from PyQt5.QtCore import pyqtSignal, QObject
+from PySide2.QtCore import Signal, QObject
 import cv2
 
 
 class CameraModel(QObject):
     __default_instance = None
     """This class provides QCamObjects"""
-    image_saved = pyqtSignal(str)
+    image_saved = Signal(str)
 
     @classmethod
     def default(cls):

@@ -13,9 +13,9 @@ class StartupWindow(QWidget):
         self.engine = app_engine
         self.engine.load(self.appctxt.get_resource('qml/startup.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        self.new_project_button = self.rootObject.findChild(QObject, "newprojectbutton")
+        self.new_project_button = self.rootObject.findChild(QObject, "new_project_button")
+        self.open_button = self.rootObject.findChild(QObject, "open_button")
         self.new_project_button.clicked.connect(lambda: self.on_clicked_new_project_button())
-        self.open_button = self.rootObject.findChild(QObject, "openbutton")
         self.open_button.clicked.connect(lambda: self.on_clicked_open_project_button())
         self.come_from_main_window_flag = False
 

@@ -15,7 +15,7 @@ class Dataset:
 
     @classmethod
     def _root_path(cls) -> str:
-        return Project.project_path() + "/dataset"
+        return Project.project_path() + '/dataset'
 
     @classmethod
     def images_path(cls, category: Category) -> Path:
