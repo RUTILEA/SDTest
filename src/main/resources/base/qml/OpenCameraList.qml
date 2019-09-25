@@ -18,7 +18,8 @@ Rectangle {
         id: _mouse
         hoverEnabled: true
         anchors.fill: parent
-        onClicked: whichCamera.open()
+        objectName: 'select_camera_button'
+//        onClicked: whichCamera.open()
     }
 
     states: [

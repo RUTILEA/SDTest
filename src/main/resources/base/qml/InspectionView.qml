@@ -26,9 +26,9 @@ Rectangle {
         mytext: '表示するカメラを選択'
         anchors.horizontalCenter: finder.horizontalCenter
         y: 310
-
     }
 
+/*
     Dialog {
         id: whichCamera
         modal: true
@@ -39,22 +39,24 @@ Rectangle {
             text: qsTr("カメラの選択")
         }
     }
+*/
 
     Item {
         width: 320
         anchors.horizontalCenter: finder.horizontalCenter
         y: 365
+
         GeneralButton {
             width: 150
             mytext: '撮影して判定'
-            objectName: 'inspectbutton'
+            objectName: 'inspect_button'
         }
 
         GeneralButton {
             x: 170
             width: 150
             mytext: '既存の画像を判定'
-            objectName: 'inspectexistingimagebutton'
+            objectName: 'inspect_existing_image_button'
         }
     }
 

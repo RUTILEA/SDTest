@@ -11,11 +11,13 @@ from model.fbs import AppInfo
 from pathlib import Path
 from PySide2.QtGui import QMovie
 
+
 class MainWindowSignal(QObject):
 
     # Signal
     back_to_startup = Signal()
     back_to_new_project = Signal()
+
 
 class MainWindow(QMainWindow):
 
