@@ -47,13 +47,14 @@ Rectangle {
         GeneralButton {
             width: 150
             mytext: '撮影して判定'
-
+            objectName: 'inspectbutton'
         }
 
         GeneralButton {
             x: 170
             width: 150
             mytext: '既存の画像を判定'
+            objectName: 'inspectexistingimagebutton'
         }
     }
 
@@ -68,6 +69,7 @@ Rectangle {
         StackLayout {
             currentIndex: 0
             anchors.fill: parent
+            objectName: "result_layout"
 
             Item {
                 Text {
@@ -208,7 +210,8 @@ Rectangle {
                 id: number_of_ok
                 x: 150
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("87")
+                objectName: "ok_counter"
+                text: None
             }
             Image {
                 id: name
@@ -220,7 +223,8 @@ Rectangle {
                 id: number_of_failed
                 x: 260
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("13")
+                text: None
+                objectName: "ng_counter"
             }
         }
 
