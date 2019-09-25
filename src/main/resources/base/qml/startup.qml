@@ -45,7 +45,7 @@ ApplicationWindow {
 
         WideButton {
             id: newprojectbutton
-            objectName: 'newprojectbutton'
+            objectName: 'new_project_button'
 
             Row {
                 anchors.centerIn: parent
@@ -68,7 +68,7 @@ ApplicationWindow {
 
         WideButton {
             id: openbutton
-            objectName: 'openbutton'
+            objectName: 'open_button'
 
             Row {
                 anchors.centerIn: parent

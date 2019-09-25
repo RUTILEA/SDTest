@@ -64,13 +64,13 @@ ApplicationWindow {
 
             MenuItem {
                 text: qsTr("新規プロジェクト")
-                objectName: 'newprojectaction'
+                objectName: 'new_project_action'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("開く")
-                objectName: 'openaction'
+                objectName: 'open_action'
                 // onTriggered:
                 }
 
@@ -78,7 +78,7 @@ ApplicationWindow {
 
             MenuItem {
                 text: qsTr("閉じる")
-                objectName: 'closeaction'
+                objectName: 'close_action'
                 // onTriggered:
             }
         }
@@ -89,13 +89,13 @@ ApplicationWindow {
 
             MenuItem {
                 text: qsTr("SDTestホームページ")
-                objectName: 'websiteaction'
+                objectName: 'website_action'
                 // onTriggered:
             }
 
             MenuItem {
                 text: qsTr("アップデートを確認")
-                objectName: 'versionaction'
+                objectName: 'version_action'
                 // onTriggered:
             }
         }
@@ -116,7 +116,7 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '検品'
                 mynumber: 0
-                objectName: 'inspectionbutton'
+                objectName: 'inspection_button'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -124,7 +124,7 @@ ApplicationWindow {
             TopbarButton {
                 tabname: '学習'
                 mynumber: 1
-                objectName: 'optimizationbutton'
+                objectName: 'optimization_button'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -132,7 +132,7 @@ ApplicationWindow {
             TopbarButton {
                 tabname: 'レポート'
                 mynumber: 2
-                objectName: 'pastresultbutton'
+                objectName: 'past_result_button'
                 imgsource: '../fonts/fontawesome/eye_3e3e3e.png'
                 imgsource_selected: '../fonts/fontawesome/blueeye.png'
             }
@@ -151,7 +151,7 @@ ApplicationWindow {
 
 
         InspectionView {
-            objectName: 'inspectionview'
+            objectName: 'inspection_view'
         }
 
         AiOptimizationView {}

@@ -39,15 +39,15 @@ class NewProjectWindow(QWidget):
         self.appctxt = appctxt
         self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
-        self.project_name_line = self.rootObject.findChild(QObject, "projectnamefield")
-        self.project_name_line.textEdited.connect(lambda: self.sync_project_name_edit(self.project_name_line.property('text')))
-        self.save_location_line = self.rootObject.findChild(QObject, "pathfield")
-        self.save_location_line.textEdited.connect(lambda: self.sync_save_location_edit(self.save_location_line.property('text')))
+        self.project_name_line = self.rootObject.findChild(QObject, "project_name_field")
+        self.save_location_line = self.rootObject.findChild(QObject, "path_field")
         self.reference_button = self.rootObject.findChild(QObject, "ref")
+        self.create_button = self.rootObject.findChild(QObject, "next_button")
+        self.cancel_button = self.rootObject.findChild(QObject, "cancel_button")
+        self.project_name_line.textEdited.connect(lambda: self.sync_project_name_edit(self.project_name_line.property('text')))
+        self.save_location_line.textEdited.connect(lambda: self.sync_save_location_edit(self.save_location_line.property('text')))
         self.reference_button.clicked.connect(lambda: self.on_clicked_reference_button())
-        self.create_button = self.rootObject.findChild(QObject, "nextbutton")
         self.create_button.clicked.connect(lambda: self.on_clicked_create_button())
-        self.cancel_button = self.rootObject.findChild(QObject, "cancel")
         self.cancel_button.clicked.connect(lambda: self.on_clicked_cancel_button())
 
         # TODO: returnPress.connect
