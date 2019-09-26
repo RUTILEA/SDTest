@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'main_window.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -118,4 +116,5 @@ class Ui_MainWindow(object):
         self.action_about_SDT.setText(_translate("MainWindow", "SDTestについて"))
         self.action_about_SDT.setToolTip(_translate("MainWindow", "SDTestについて"))
         self.action_quit_SDTest.setText(_translate("MainWindow", "SDTestを終了"))
+
 from qrc import icon_rc

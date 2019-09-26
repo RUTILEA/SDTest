@@ -168,6 +168,12 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
+        if not os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)):
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('テストNG画像が入っていません. NG画像を少なくとも1枚は入れてからトレーニングを開始してください(仮)')
+            self.msgBox.exec()
+            return
+
         del self.select_area_dialog
         self.select_area_dialog = SelectAreaDialog()
         self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
