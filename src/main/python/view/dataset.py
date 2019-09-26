@@ -168,9 +168,23 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
-        if not os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)):
+
+        if not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)) if
+                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
             self.msgBox = QMessageBox()
-            self.msgBox.setText('テストNG画像が入っていません. NG画像を少なくとも1枚は入れてからトレーニングを開始してください(仮)')
+            self.msgBox.setText('性能評価用の不良品画像フォルダが空です.\nトレーニングを開始するには不良品画像を1枚以上を追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_OK)) if
+                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('性能評価用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上を追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TRAINING_OK)) if
+                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('トレーニング用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上を追加してください.')
             self.msgBox.exec()
             return
 
