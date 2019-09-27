@@ -169,22 +169,24 @@ class DatasetWidget(QWidget):
 
     def on_clicked_train_button(self):
 
+        img_suffix_list = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+
         if not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)) if
-                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
+                     Path(img).suffix in img_suffix_list]:
             self.msgBox = QMessageBox()
-            self.msgBox.setText('性能評価用の不良品画像フォルダが空です.\nトレーニングを開始するには不良品画像を1枚以上を追加してください.')
+            self.msgBox.setText('性能評価用の不良品画像フォルダが空です.\nトレーニングを開始するには不良品画像を1枚以上追加してください.')
             self.msgBox.exec()
             return
         elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_OK)) if
-                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
+                     Path(img).suffix in img_suffix_list]:
             self.msgBox = QMessageBox()
-            self.msgBox.setText('性能評価用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上を追加してください.')
+            self.msgBox.setText('性能評価用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
             self.msgBox.exec()
             return
         elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TRAINING_OK)) if
-                     Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]:
+                     Path(img).suffix in img_suffix_list]:
             self.msgBox = QMessageBox()
-            self.msgBox.setText('トレーニング用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上を追加してください.')
+            self.msgBox.setText('トレーニング用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
             self.msgBox.exec()
             return
 
