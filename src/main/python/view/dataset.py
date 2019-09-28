@@ -168,6 +168,28 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
+
+        img_suffix_list = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+
+        if not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('性能評価用の不良品画像フォルダが空です.\nトレーニングを開始するには不良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_OK)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('性能評価用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TRAINING_OK)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('トレーニング用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+
         del self.select_area_dialog
         self.select_area_dialog = SelectAreaDialog()
         self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
