@@ -56,10 +56,12 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
             _, ext = os.path.splitext(project_file_path)
             if ext == '.sdt':
                 # startup_window.move_to_main_window(project_file_path)
-                StartupWindow(app_engine, appctxt)
+                startup_window = StartupWindow(app_engine, appctxt)
 
         else:
-            StartupWindow(app_engine, appctxt)
+            startup_window = StartupWindow(app_engine, appctxt)
+
+        startup_window.show()
 
         # スタイルをwindows共用に(for develop)
         # self.app.setStyle(QStyleFactory.create('Fusion'))

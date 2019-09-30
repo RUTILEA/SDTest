@@ -24,12 +24,6 @@ class MainWindow(QMainWindow):
 
         self.appctxt = appctxt
         self.engine = app_engine
-        self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
-        self.rootObject = self.engine.rootObjects()[-1]
-        print(self.engine.rootObjects())
-        project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
-        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
-        self.rootObject.setProperty('title', window_title)
 
         # Disable maximizing window
         self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint | Qt.CustomizeWindowHint)
@@ -37,17 +31,21 @@ class MainWindow(QMainWindow):
         self.msgBox = None
         self.signal = MainWindowSignal()
 
-        self.setup_tool_bar()
-        self.setup_menu_bar()
-
-        # 一旦レポート機能なし
-        self.past_result_action.setProperty('enabled', False)
-        self.past_result_action.setProperty('visible', False)
-
         LearningModel.default().predicting_start.connect(self.on_start_predicting)
         LearningModel.default().predicting_finished.connect(self.on_finished_predicting)
         LearningModel.default().training_start.connect(self.on_start_training)
         LearningModel.default().training_finished.connect(self.on_finished_training)
+
+    def show(self):
+        self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
+        self.rootObject = self.engine.rootObjects()[-1]
+        print(self.engine.rootObjects())
+        project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
+        self.rootObject.setProperty('title', window_title)
+
+        self.setup_tool_bar()
+        self.setup_menu_bar()
 
     def setup_menu_bar(self):
         self.action_new_project = self.rootObject.findChild(QObject, 'new_project_action')
@@ -96,6 +94,10 @@ class MainWindow(QMainWindow):
         self.statusBar().addPermanentWidget(spacer)
 
         self.statusBar().setSizeGripEnabled(False)
+
+        # 一旦レポート機能なし
+        self.past_result_action.setProperty('enabled', False)
+        self.past_result_action.setProperty('visible', False)
 
     def on_clicked_inspection_button(self):
         pass
