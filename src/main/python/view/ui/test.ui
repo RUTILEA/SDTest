@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>840</width>
-    <height>640</height>
+    <height>503</height>
    </rect>
   </property>
   <property name="font">
@@ -22,7 +22,7 @@
    <item>
     <widget class="QStackedWidget" name="stacked_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="loading_page">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -47,6 +47,9 @@
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
@@ -59,9 +62,22 @@
           <widget class="QWidget" name="distance_chart_widget" native="true">
            <property name="minimumSize">
             <size>
-             <width>0</width>
+             <width>400</width>
              <height>300</height>
             </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="overfitting_alert_label">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>トレーニングと性能評価で良品画像の分布に乖離があり、検査結果が正しく無い可能性が高いです。トレーニングをやり直したり、モデルを変更することが改善のヒントになります。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -117,7 +133,7 @@
            <item>
             <widget class="QPushButton" name="about_threshold_button">
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;閾値とは&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;AIが&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;と&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を判別する境界です。この値を変更すると、AIの性能が変化します。&lt;br/&gt;性能評価の&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;正解率&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;が高く&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;、&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;見逃し率&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;が低く&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;なるよう調整するのをおすすめします。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;閾値とは&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;AIが&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;と&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を判別する境界値です。まず、検出の際、AIは各画像の「&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;正常らしさ&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;」を計算します。そして、その「&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;正常らしさ&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;」が閾値以下の画像を&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;、閾値以上の画像を&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;だと判定します。よって、閾値を高くすると、製品を「良品」と判定する基準が厳しくなり&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#e66643;&quot;&gt;不良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;を見逃しにくくなる一方、&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#3fda68;&quot;&gt;良品&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;も「不良品」と判定してしまう可能性が高くなります。閾値はバランス良く調整してください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;
@@ -127,8 +143,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../../../icon.qrc">
-               <normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</normaloff>:/icon/assets/fonts/fontawesome/font-awesome_4-7-0_question-circle_32_4_4298f9_none.png</iconset>
+              <iconset resource="../../qrc/icon.qrc">
+               <normaloff>:/icon/resources/base/fonts/fontawesome/question-circle_warningOrange.png</normaloff>:/icon/resources/base/fonts/fontawesome/question-circle_warningOrange.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -197,11 +213,30 @@
         </layout>
        </item>
        <item>
+        <spacer name="performance_chart_area_left_spacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>30</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <layout class="QVBoxLayout" name="performance_area">
          <item>
           <spacer name="performance_area_top_spacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -230,24 +265,11 @@
          <item>
           <layout class="QHBoxLayout" name="performance_chart_area">
            <item>
-            <spacer name="performance_chart_area_left_spacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QWidget" name="performance_chart_background" native="true">
              <property name="minimumSize">
               <size>
-               <width>250</width>
-               <height>250</height>
+               <width>280</width>
+               <height>280</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -258,28 +280,36 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>250</width>
-                <height>250</height>
+                <width>280</width>
+                <height>280</height>
                </rect>
               </property>
-              <property name="styleSheet">
-               <string notr="true"/>
+              <property name="minimumSize">
+               <size>
+                <width>280</width>
+                <height>280</height>
+               </size>
               </property>
              </widget>
              <widget class="QWidget" name="verticalLayoutWidget">
               <property name="geometry">
                <rect>
                 <x>70</x>
-                <y>80</y>
-                <width>111</width>
+                <y>90</y>
+                <width>140</width>
                 <height>98</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="performance_rates_area">
                <item>
-                <layout class="QHBoxLayout" name="correct_rate_area">
+                <layout class="QHBoxLayout" name="accuracy_area">
                  <item>
-                  <widget class="QLabel" name="correct_rate_title_label">
+                  <widget class="QLabel" name="accuracy_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -289,7 +319,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="correct_rate_area_spacer">
+                  <spacer name="accuracy_area_spacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -302,10 +332,10 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="correct_rate_label">
+                  <widget class="QLabel" name="accuracy_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -337,6 +367,11 @@
                 <layout class="QHBoxLayout" name="false_positive_rate_area">
                  <item>
                   <widget class="QLabel" name="false_positive_rate_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -362,7 +397,7 @@
                   <widget class="QLabel" name="false_positive_rate_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -381,6 +416,11 @@
                 <layout class="QHBoxLayout" name="false_negative_rate_area">
                  <item>
                   <widget class="QLabel" name="false_negative_rate_title_label">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">color: #3e3e3e</string>
                    </property>
@@ -406,7 +446,7 @@
                   <widget class="QLabel" name="false_negative_rate_label">
                    <property name="font">
                     <font>
-                     <pointsize>15</pointsize>
+                     <pointsize>10</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -430,9 +470,12 @@
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>20</width>
                <height>20</height>
               </size>
              </property>
@@ -453,6 +496,45 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>235</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="details_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>詳細</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
        </item>
       </layout>
@@ -462,7 +544,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

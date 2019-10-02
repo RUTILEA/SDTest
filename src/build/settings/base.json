@@ -3,5 +3,10 @@
     "author": "RUTILEA, Inc.",
     "main_module": "src/main/python/main.py",
     "version": "0.5",
-    "hidden_imports": ["sklearn.utils._cython_blas", "sklearn.neighbors.typedefs", "sklearn.neighbors.quad_tree", "sklearn.tree._utils", "pywt._extensions._cwt"]
+    "hidden_imports": ["sklearn.utils._cython_blas", "sklearn.neighbors.typedefs", "sklearn.neighbors.quad_tree", "sklearn.tree._utils", "pywt._extensions._cwt"],
+    "files_to_filter": [
+        "src/freeze/base/SDTest.pfx"
+    ],
+    "sentry_dsn": "https://dbacbb493b2d441283a5bb734dfbbfbc@sentry.io/1473686",
+    "public_settings": ["sentry_dsn"]
 }

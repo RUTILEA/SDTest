@@ -1,50 +1,67 @@
-import numpy as np
-from sklearn import svm
-from keras.models import Model
-from keras.layers import GlobalAveragePooling2D
-import numpy as np
-import imageio
 import glob
 import os
+import numpy as np
+
+from sklearn.decomposition import PCA
+from keras import backend as K
+from keras.models import Model
+from keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D, Flatten
+import numpy as np
+import imageio
 import skimage.transform
 import joblib
+import pyod
 
 class NoveltyDetector:
-    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='LocalOutlierFactor'):
+
+    def __init__(self, nth_layer=24, nn_name='ResNet', detector_name='kNN', pool=None, pca_n_components=None):
         """
         Extract feature by neural network and detector train normal samples then predict new data
         nn_name: 'Xception', 'ResNet'(Default), 'InceptionV3',
         'InceptionResNetV2', 'MobileNet', 'MobileNetV2', 'DenseNet', 'NASNet'
-        detector_name: 'RobustCovariance', 'IsolationForest'(Default), 'LocalOutlierFactor'
+        detector_name: 'RobustCovariance', 'IsolationForest, 'LocalOutlierFactor, ABOD, kNN(Default)'
         """
         self.nth_layer = nth_layer
         self.nn_name = nn_name
+        self.pool = pool
+        self.pca_n_components = pca_n_components
         self.input_shape = None
-        self.nu = None
-        self.gamma = None
-        self.kernel = None
         self.pretrained_nn = None
         self.extracting_model = None
 
-        if detector_name == 'RobustCovariance':
+        K.clear_session()
+
+        detector_name_lower = detector_name.lower()
+        if detector_name_lower == 'robustcovariance':
+            self.detector_name = 'rc'
             from sklearn.covariance import EllipticEnvelope
             self.clf = EllipticEnvelope()
             print('Novelty Detector: Robust covariance')
-        elif detector_name == 'LocalOutlierFactor':
+        elif detector_name_lower in ['localoutlierfactor', 'lof']:
+            self.detector_name = 'lof'
             from sklearn.neighbors import LocalOutlierFactor
             self.clf = LocalOutlierFactor(novelty=True)
             print('Novelty Detector: Local Outlier Factor')
-        else: # detector_name == 'IsolationForest':
+        elif detector_name_lower in ['abod', 'fastabod', 'anglebasedoutlierdetection']:
+            self.detector_name = 'abod'
+            from pyod.models.abod import ABOD
+            self.clf = ABOD()
+            print('Novelty Detector: Angle Based Outlier Detection')
+        elif detector_name_lower in ['iforest', 'isolationforest']:
+            self.detector_name = 'iforest'
             from sklearn.ensemble import IsolationForest
             self.clf = IsolationForest()
             print('Novelty Detector: Isolation Forest')
+        elif detector_name_lower in ['knn', 'median_knn']:
+            self.detector_name = 'median_kNN'
+            from pyod.models.knn import KNN
+            self.clf = KNN(method='median', contamination=0.1)
+            print('Novelty Detector: Median K Nearest Neighbors')
 
     def _load_NN_model(self, input_shape=(229, 229, 3)):
         """
         This method should be called after loading images to set input shape.
         """
-        if self.extracting_model is not None:
-            return
         
         self.input_shape = input_shape
         print('Input image size is', self.input_shape)
@@ -53,14 +70,6 @@ class NoveltyDetector:
             from keras.applications.xception import Xception
             pretrained_func = Xception
             print('Neural Network: {}'.format(self.nn_name))
-#        elif self.nn_name == 'ResNetV2':
-#            from keras.applications.resnet_v2 import ResNet152V2
-#            pretrained_func = ResNet152V2
-#            print('Neural Network: {}'.format(self.nn_name))
-#        elif self.nn_name == 'ResNeXt':
-#            from keras.applications.resnext import ResNeXt101
-#            pretrained_func = ResNeXt101
-#            print('Neural Network: {}'.format(self.nn_name))
         elif self.nn_name == 'InceptionV3':
             from keras.applications.inception_v3 import InceptionV3
             pretrained_func = InceptionV3
@@ -101,15 +110,29 @@ class NoveltyDetector:
 
     def _get_nth_layer(self, nth_layer, nn_model):
         model = Model(inputs=nn_model.input, outputs=nn_model.layers[nth_layer].output)
-        if len(model.output_shape) > 2:
+        if len(model.output_shape) <= 2:
+            return model
+
+        if self.pool is None:
+            x = model.output
+            x = Flatten()(x)
+            return Model(inputs=model.input, outputs=x)
+        elif self.pool == 'average':
             x = model.output
             x = GlobalAveragePooling2D()(x)
-            model = Model(inputs=model.input, outputs=x)
+            return Model(inputs=model.input, outputs=x)
+        elif self.pool == 'max':
+            x = model.output
+            x = GlobalMaxPooling2D()(x)
+            return Model(inputs=model.input, outputs=x)
         return model
 
     def fit(self, imgs):
         self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
+            feature = pca.fit_transform(feature)
         self.clf.fit(feature)
 
     def fit_paths(self, paths):
@@ -125,13 +148,21 @@ class NoveltyDetector:
         self.fit_paths(paths)
 
     def predict(self, imgs):
-        """ Return the list of signed distance of each images from SVM super-plane.
+        """ Return the list of score. Higher the score, the more likely normal.
         Keyword arguments:
         paths -- list of image paths like [./dir/img1.jpg, ./dir/img2.jpg, ...]
         """
-        self._load_NN_model(imgs[0].shape)
+        if self.extracting_model is None:
+            self._load_NN_model(imgs[0].shape)
         feature = self.extracting_model.predict(imgs)
+        if self.pca_n_components:
+            pca = PCA(n_components=self.pca_n_components)
+            feature = pca.fit_transform(feature)
         predicted_scores = self.clf.decision_function(feature)
+
+        if self.clf.__module__.startswith('pyod.models'):
+            # Tricky, the higher pyod's predicts score, the more likely anormaly. We want higher the score,  more likely normal.
+            predicted_scores *= -1
         return predicted_scores
 
     def predict_paths(self, paths):
@@ -139,7 +170,6 @@ class NoveltyDetector:
         return self.predict(imgs)
 
     def predict_in_dir(self, dir_path):
-        """ Predict images in the dir_oath by VGG16+oneClassSVM and returns (paths, scores)"""
         dir_path = os.path.expanduser(dir_path)
         paths = self._get_paths_in_dir(dir_path)
         return paths, self.predict_paths(paths)
@@ -155,7 +185,7 @@ class NoveltyDetector:
             img /= 255
             imgs.append(img)
         imgs = np.array(imgs)
-        imgs = imgs.reshape(-1, *self.input_shape)        
+        imgs = imgs.reshape(-1, *self.input_shape)
         return imgs
 
     def _get_paths_in_dir(self, dir_path):
@@ -170,12 +200,11 @@ class NoveltyDetector:
         paths.extend(glob.glob(os.path.join(dir_path, '*.bmp')))
         return paths
 
-    def save_ocsvm(self, path):
-        """ Saving one class svm weights like self.save_ocsvm('filename.joblib'). """
+    def save(self, path):
         path = os.path.expanduser(path)
         joblib.dump(self.clf, path, compress=True)
 
-    def load_ocsvm(self, path):
-        """ Loading one class svm weights saved by joblib. """
+    def load(self, path):
         path = os.path.expanduser(path)
         self.clf = joblib.load(path)
+        return self

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/tazama/src/view/ui/camera_list.ui'
+# Form implementation generated from reading ui file 'camera_list.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_CameraList(object):
     def setupUi(self, CameraList):
@@ -28,5 +27,4 @@ class Ui_CameraList(object):
     def retranslateUi(self, CameraList):
         _translate = QtCore.QCoreApplication.translate
         CameraList.setWindowTitle(_translate("CameraList", "カメラの選択"))
-
 

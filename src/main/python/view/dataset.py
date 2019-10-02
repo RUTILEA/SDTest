@@ -1,15 +1,18 @@
 import os
 import shutil
+from distutils.dir_util import copy_tree
 from typing import Optional, Set
 from pathlib import Path
-from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal
+from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QRect, QSize
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox
+from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.ui.dataset import Ui_Dataset
 from view.image_capture_dialog import ImageCaptureDialog
+from view.select_area_dialog import SelectAreaDialog
 from model.project import Project
 from model.learning_model import LearningModel
 from model.dataset import Dataset
+from model.supporting_model import TrimmingData
 
 
 class Thumbnail(QObject):
@@ -48,11 +51,18 @@ class DatasetWidget(QWidget):
 
         self.capture_dialog: Optional[ImageCaptureDialog] = None
 
+        self.preview_window = PreviewWindow()
+
         self.watcher = QFileSystemWatcher(self)
         self.watcher.addPaths([str(Dataset.images_path(Dataset.Category.TRAINING_OK)),
                                str(Dataset.images_path(Dataset.Category.TEST_OK)),
                                str(Dataset.images_path(Dataset.Category.TEST_NG))])
         self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
+
+        self.select_area_dialog = None
+        self.msgBox = None
+
+        LearningModel.default().training_finished.connect(self.on_finished_training)
 
     def _reload_images(self, category: Dataset.Category):
         # reset selection
@@ -75,6 +85,7 @@ class DatasetWidget(QWidget):
         for thumbnail in self.all_thumbnails:
             thumbnail_cell = ThumbnailCell(thumbnail=thumbnail)
             thumbnail_cell.selection_changed.connect(self.on_changed_thumbnail_selection)
+            thumbnail_cell.double_clicked.connect(self.on_double_clicked_thumbnail)
             self.ui.images_grid_area.addWidget(thumbnail_cell, row, column)
 
             if column == 4:
@@ -102,6 +113,18 @@ class DatasetWidget(QWidget):
             self.ui.delete_images_button.setEnabled(False)
         self.ui.number_of_images_label.setText(number_of_images_description)
 
+    def on_double_clicked_thumbnail(self, thumbnail: Thumbnail):
+        self.preview_window.set_thumbnail(thumbnail)
+        self.preview_window.show()
+        self.preview_window.activateWindow()
+        self.preview_window.raise_()
+
+        # move preview to center
+        preview_geometry: QRect = self.preview_window.frameGeometry()
+        screen_center = QDesktopWidget().availableGeometry().center()
+        preview_geometry.moveCenter(screen_center)
+        self.preview_window.move(preview_geometry.topLeft())
+
     def on_clicked_camera_button(self):
         selected_category = self.__selected_dataset_category()
         if selected_category is None:
@@ -119,7 +142,10 @@ class DatasetWidget(QWidget):
             return
 
         ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'
-        source_image_names = QFileDialog.getOpenFileNames(caption='データセットに取り込む', filter=ext_filter)[0]
+        source_image_names = QFileDialog.getOpenFileNames(caption='データセットに取り込む',
+                                                          filter=ext_filter,
+                                                          directory=Project.latest_dataset_image_path())[0]
+        Project.save_latest_dataset_image_path(os.path.dirname(source_image_names[0]))
         if source_image_names:
             for source_image_name in source_image_names:
                 try:
@@ -142,13 +168,79 @@ class DatasetWidget(QWidget):
             self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
-        LearningModel.default().train()
+
+        img_suffix_list = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+
+        if not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_NG)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('性能評価用の不良品画像フォルダが空です.\nトレーニングを開始するには不良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TEST_OK)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('性能評価用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+        elif not [img for img in os.listdir(Dataset.images_path(Dataset.Category.TRAINING_OK)) if
+                     Path(img).suffix in img_suffix_list]:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText('トレーニング用の良品画像フォルダが空です.\nトレーニングを開始するには良品画像を1枚以上追加してください.')
+            self.msgBox.exec()
+            return
+
+        del self.select_area_dialog
+        self.select_area_dialog = SelectAreaDialog()
+        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
+        self.select_area_dialog.show()
         self.__reload_recent_training_date()
+
+    def on_finished_selecting_area(self, data: TrimmingData):
+        categories = [Dataset.Category.TRAINING_OK, Dataset.Category.TEST_OK, Dataset.Category.TEST_NG]
+        truncated_image_paths = []
+        for category in categories:
+            dir_path = Dataset.images_path(category)
+            save_path = Dataset.trimmed_path(category)
+            if os.path.exists(save_path):
+                shutil.rmtree(save_path)
+            os.mkdir(save_path)
+            if not data.needs_trimming:
+                copy_tree(str(dir_path), str(save_path))
+            else:
+                file_list = os.listdir(dir_path)
+                file_list = [img for img in file_list if
+                                  Path(img).suffix in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']]
+                for file_name in file_list:
+                    truncated_image_path = Dataset.trim_image(os.path.join(dir_path, file_name), save_path, data)
+                    if truncated_image_path:
+                        file_name = os.path.basename(truncated_image_path)
+                        shutil.move(truncated_image_path,
+                                    os.path.join(Dataset.images_path(Dataset.Category.TRUNCATED), file_name))
+                        truncated_image_paths.append(truncated_image_path)
+            Project.save_latest_trimming_data(data)
+
+        # alert for moving truncated images
+        if truncated_image_paths:
+            self.msgBox = QMessageBox()
+            self.msgBox.setText(str(len(truncated_image_paths))+'枚の画像を読み込めませんでした. これらの画像はtruncatedフォルダに移動されました.\n\n'\
+                                + 'このままトレーニングを開始しますか？')
+            self.msgBox.setStandardButtons(self.msgBox.Yes | self.msgBox.No)
+            self.msgBox.setDefaultButton(self.msgBox.Yes)
+            reply = self.msgBox.exec()
+            if reply == self.msgBox.No:
+                return
+
+        # start training
+        LearningModel.default().start_training()
 
     def on_dataset_directory_changed(self, directory: str):
         selected_category = self.__selected_dataset_category()
         if str(Dataset.images_path(selected_category)) == directory:
             self._reload_images(selected_category)
+
+    def on_finished_training(self):
+        self.__reload_recent_training_date()
 
     def __selected_dataset_category(self) -> Optional[Dataset.Category]:
         current_item = self.ui.image_list_widget.currentItem()
@@ -178,6 +270,7 @@ class DatasetWidget(QWidget):
 
 class ThumbnailCell(QWidget):
     selection_changed = pyqtSignal(bool, Thumbnail)
+    double_clicked = pyqtSignal(Thumbnail)
 
     def __init__(self, thumbnail: Thumbnail):
         super().__init__()
@@ -206,16 +299,21 @@ class ThumbnailCell(QWidget):
         self.__selection_overlay = ThumbnailSelectionOverlay(parent=self)
         self.__selection_overlay.setFixedSize(CELL_LENGTH, CELL_LENGTH)
         self.__selection_overlay.selection_changed.connect(self.__on_changed_selection)
+        self.__selection_overlay.double_clicked.connect(self.__on_double_clicked)
 
         # NOTE: https://stackoverflow.com/questions/31178695/qt-stylesheet-not-working
         self.__selection_overlay.setAttribute(Qt.WA_StyledBackground)
 
-    def __on_changed_selection(self, selected):
+    def __on_changed_selection(self, selected: bool):
         self.selection_changed.emit(selected, self.thumbnail)
+
+    def __on_double_clicked(self):
+        self.double_clicked.emit(self.thumbnail)
 
 
 class ThumbnailSelectionOverlay(QWidget):
     selection_changed = pyqtSignal(bool)
+    double_clicked = pyqtSignal()
 
     def __init__(self, parent):
         super().__init__(parent=parent)
@@ -233,3 +331,22 @@ class ThumbnailSelectionOverlay(QWidget):
             self.setStyleSheet('')
         self.selection_changed.emit(self.selected)
 
+    def mouseDoubleClickEvent(self, mouse_event):
+        self.double_clicked.emit()
+
+
+class PreviewWindow(QLabel):
+    def set_thumbnail(self, thumbnail: Thumbnail):
+        self.setWindowTitle(thumbnail.path.name)
+
+        desktop_size: QSize = QDesktopWidget().availableGeometry().size()
+        max_size = QSize(desktop_size.width() - 50, desktop_size.height() - 50)
+        image_size: QSize = thumbnail.pixmap.size()
+        scaled_size = image_size.scaled(max_size, Qt.KeepAspectRatio)
+        if image_size.width() < scaled_size.width():
+            preview_size = image_size
+        else:
+            preview_size = scaled_size
+
+        self.setFixedSize(preview_size)
+        self.setPixmap(thumbnail.pixmap.scaled(preview_size))

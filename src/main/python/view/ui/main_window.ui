@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>795</width>
-    <height>534</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
     <item>
      <widget class="QStackedWidget" name="main_stacked_widget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page"/>
       <widget class="QWidget" name="page_2"/>
@@ -45,12 +45,6 @@
      <width>795</width>
      <height>22</height>
     </rect>
-   </property>
-   <property name="defaultUp">
-    <bool>false</bool>
-   </property>
-   <property name="nativeMenuBar">
-    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menu_file">
     <property name="title">
@@ -97,8 +91,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/eye#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/small_eye_black.png</normaloff>:/icon/resources/base/fonts/fontawesome/small_eye_black.png</iconset>
    </property>
    <property name="text">
     <string>検品</string>
@@ -109,8 +103,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/brain#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/brain_black.png</normaloff>:/icon/resources/base/fonts/fontawesome/brain_black.png</iconset>
    </property>
    <property name="text">
     <string>学習</string>
@@ -124,8 +118,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../icon.qrc">
-     <normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</normaloff>:/icon/assets/fonts/fontawesome/history#3e3e3e.png</iconset>
+    <iconset resource="../../qrc/icon.qrc">
+     <normaloff>:/icon/resources/base/fonts/fontawesome/history_black.png</normaloff>:/icon/resources/base/fonts/fontawesome/history_black.png</iconset>
    </property>
    <property name="text">
     <string>レポート</string>
@@ -171,7 +165,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../../../icon.qrc"/>
+  <include location="../../qrc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -7,7 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.github/
 .Python
 develop-eggs/
 dist/
@@ -26,10 +25,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
-# fbs
-target/
-venv/
 
 # Installer logs
 pip-log.txt
@@ -120,8 +115,17 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# PyCharm
+# JetBrains IDE
 .idea/
+*.iml
+
+# fbs
+target/
+venv/
+src/freeze/base/version
+
+# certificates
+*.pfx
 
 # OS dependent
 .DS_Store

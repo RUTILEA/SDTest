@@ -2,6 +2,7 @@ from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QImageEncoderSettin
 from datetime import datetime
 from typing import Dict
 from PyQt5.QtCore import pyqtSignal, QObject
+import cv2
 
 
 class CameraModel(QObject):
@@ -28,7 +29,8 @@ class CameraModel(QObject):
         self.selected_cam_names = []
         try:
             default_camera_name = QCameraInfo.defaultCamera().description()
-            self.selected_cam_names.append(default_camera_name)
+            if default_camera_name is not '':
+                self.selected_cam_names.append(default_camera_name)
         # TODO: Find correct error by using the computer which has no default camera
         except Exception:
             print('No default camera')
@@ -45,9 +47,7 @@ class CameraModel(QObject):
             cam_image_capture.captureDestination()
             cam_image_capture.imageSaved.connect(self.on_image_saved)
             self.__cam_image_captures[str(cam_name)] = cam_image_capture
-
             cam.statusChanged.connect(self.set_resolution)
-        self.set_resolution()
 
     def capture(self, directory: str):
         for i, cam_name in enumerate(self.selected_cam_names):
@@ -62,6 +62,12 @@ class CameraModel(QObject):
             cam.unlock()
 
     def on_image_saved(self, id, image_path):
+        RESIZED_WIDTH = 640
+        img = cv2.imread(image_path)
+        img_height, img_width, _ = img.shape
+        RESIZED_HEIGHT = int(RESIZED_WIDTH / img_width * img_height)
+        img = cv2.resize(img, (RESIZED_WIDTH, RESIZED_HEIGHT))
+        cv2.imwrite(image_path, img)
         self.image_saved.emit(image_path)
 
     def start(self):
@@ -75,7 +81,6 @@ class CameraModel(QObject):
     def set_resolution(self):
         for cam_name, cam in self.cams.items():
             image_settings = QImageEncoderSettings()
-            image_settings.setResolution(640, 480)
             for size in cam.supportedViewfinderResolutions():
                 if 600 <= size.width() <= 700:
                     image_settings.setResolution(size.width(), size.height())

@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/satoakitaka/Documents/rutilea/OSS/sdtest/src/view/ui/past_result.ui'
+# Form implementation generated from reading ui file 'past_result.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_past_result(object):
     def setupUi(self, past_result):
         past_result.setObjectName("past_result")
-        past_result.resize(842, 588)
-        past_result.setMinimumSize(QtCore.QSize(842, 588))
+        past_result.resize(842, 532)
+        past_result.setMinimumSize(QtCore.QSize(842, 532))
         past_result.setStyleSheet("")
         self.horizontalLayoutWidget = QtWidgets.QWidget(past_result)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 30, 781, 531))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 30, 781, 471))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -85,5 +84,4 @@ class Ui_past_result(object):
         self.past_result_tree_widget.setSortingEnabled(False)
         self.past_result_tree_widget.headerItem().setText(0, _translate("past_result", "ファイル名"))
         self.past_result_tree_widget.headerItem().setText(1, _translate("past_result", "日付"))
-
 

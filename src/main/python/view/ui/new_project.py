@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/Yusaku/仕事(ローカル)/RUTILEA/tazama/src/view/ui/new_project.ui'
+# Form implementation generated from reading ui file 'new_project.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_NewProjectDialog(object):
     def setupUi(self, NewProjectDialog):
@@ -22,7 +21,7 @@ class Ui_NewProjectDialog(object):
         font.setPointSize(9)
         NewProjectDialog.setFont(font)
         self.verticalLayoutWidget = QtWidgets.QWidget(NewProjectDialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 130, 511, 61))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(70, 130, 511, 91))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.save_location_layout = QtWidgets.QGridLayout(self.verticalLayoutWidget)
         self.save_location_layout.setContentsMargins(0, 0, 0, 0)
@@ -54,6 +53,12 @@ class Ui_NewProjectDialog(object):
         self.save_location_label.setFont(font)
         self.save_location_label.setObjectName("save_location_label")
         self.save_location_layout.addWidget(self.save_location_label, 0, 0, 1, 1)
+        self.notation_label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.notation_label.setFont(font)
+        self.notation_label.setObjectName("notation_label")
+        self.save_location_layout.addWidget(self.notation_label, 3, 0, 1, 1)
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(NewProjectDialog)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(70, 50, 511, 61))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
@@ -104,8 +109,8 @@ class Ui_NewProjectDialog(object):
         NewProjectDialog.setWindowTitle(_translate("NewProjectDialog", "Dialog"))
         self.reference_button.setText(_translate("NewProjectDialog", "参照"))
         self.save_location_label.setText(_translate("NewProjectDialog", "保存先"))
+        self.notation_label.setText(_translate("NewProjectDialog", "注意 : 英数字以外の文字は使えません."))
         self.project_name_label.setText(_translate("NewProjectDialog", "プロジェクト名"))
         self.cancel_button.setText(_translate("NewProjectDialog", "キャンセル"))
         self.create_button.setText(_translate("NewProjectDialog", "作成"))
-
 

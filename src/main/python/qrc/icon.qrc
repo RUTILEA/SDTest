@@ -1,0 +1,27 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>../../resources/base/fonts/fontawesome/brain_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/camera_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/camera_extraLight.png</file>
+    <file>../../resources/base/fonts/fontawesome/clock_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/dumbbell_darkGray.png</file>
+    <file>../../resources/base/fonts/fontawesome/dumbbell_white.png</file>
+    <file>../../resources/base/fonts/fontawesome/file_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/file_extraLight.png</file>
+    <file>../../resources/base/fonts/fontawesome/gear-check_darkGray.png</file>
+    <file>../../resources/base/fonts/fontawesome/history_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/image_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/large_check-circle_correctGreen.png</file>
+    <file>../../resources/base/fonts/fontawesome/large_eye_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/large_eye_extraLight.png</file>
+    <file>../../resources/base/fonts/fontawesome/light-bulb_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/plus_extraLight.png</file>
+    <file>../../resources/base/fonts/fontawesome/question-circle_mainBlue.png</file>
+    <file>../../resources/base/fonts/fontawesome/question-circle_warningOrange.png</file>
+    <file>../../resources/base/fonts/fontawesome/running-people_extraLight.png</file>
+    <file>../../resources/base/fonts/fontawesome/small_check-circle_correctGreen.png</file>
+    <file>../../resources/base/fonts/fontawesome/small_eye_black.png</file>
+    <file>../../resources/base/fonts/fontawesome/small_eye_white.png</file>
+    <file>../../resources/base/fonts/fontawesome/times-circle_errorRed.png</file>
+  </qresource>
+</RCC>

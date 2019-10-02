@@ -2,11 +2,13 @@ from PyQt5.QtCore import pyqtSignal, QObject, QThread
 from module.novelty_detector import NoveltyDetector
 from model.dataset import Dataset
 from model.project import Project
-import numpy as np
-
+import threading, os, shutil, numpy as np
+from statistics import stdev, mean
+from math import sqrt
 
 class TestResults(object):
     def __init__(self):
+        self.__distances_of_train_images = np.empty(shape=0)
         self.__distances_of_ok_images = np.empty(shape=0)
         self.__distances_of_ng_images = np.empty(shape=0)
         self.min_distance = 0
@@ -20,10 +22,16 @@ class TestResults(object):
     def distances_of_ng_images(self) -> np.ndarray:
         return self.__distances_of_ng_images
 
-    def reload(self, distances_of_ok_images: np.ndarray, distances_of_ng_images: np.ndarray):
+    @property
+    def distances_of_train_images(self) -> np.ndarray:
+        return self.__distances_of_train_images
+
+    def reload(self, distances_of_ok_images: np.ndarray, distances_of_ng_images: np.ndarray, distances_of_train_images: np.ndarray=None):
         assert(len(distances_of_ok_images.shape) == 1 and len(distances_of_ng_images.shape) == 1)
         self.__distances_of_ok_images = distances_of_ok_images
         self.__distances_of_ng_images = distances_of_ng_images
+        if distances_of_train_images is not None:
+            self.__distances_of_train_images = distances_of_train_images
 
         # update min/max distances
         all_distances = np.hstack([self.distances_of_ok_images, self.distances_of_ng_images])
@@ -36,22 +44,26 @@ class TestResults(object):
 
     @property
     def true_positive(self) -> int:
-        return len([ok for ok in self.distances_of_ok_images if ok >= LearningModel.default().threshold])
+        """Number of NG images judged to be NG"""
+        return len([ng for ng in self.distances_of_ng_images if ng <= LearningModel.default().threshold])
 
     @property
     def true_negative(self) -> int:
-        return len([ng for ng in self.distances_of_ng_images if ng < LearningModel.default().threshold])
+        """Number of OK images judged to be OK"""
+        return len([ok for ok in self.distances_of_ok_images if ok > LearningModel.default().threshold])
 
     @property
     def false_positive(self) -> int:
-        return len(self.distances_of_ok_images) - self.true_positive
+        """Number of OK images judged to be NG"""
+        return len(self.distances_of_ok_images) - self.true_negative
 
     @property
     def false_negative(self) -> int:
-        return len(self.distances_of_ng_images) - self.true_negative
+        """Number of NG images judged to be OK"""
+        return len(self.distances_of_ng_images) - self.true_positive
 
     @property
-    def correct_rate(self) -> float:
+    def accuracy(self) -> float:
         if self.__number_of_distances == 0:
             return 0
         return float(self.true_positive + self.true_negative) / self.__number_of_distances
@@ -69,8 +81,40 @@ class TestResults(object):
         return float(self.false_negative) / self.__number_of_distances
 
     @property
+    def recall(self) -> float:
+        if self.distances_of_ng_images.size == 0:
+            return 0
+        return float(self.true_positive) / float(self.distances_of_ng_images.size)
+
+    @property
+    def precision(self) -> float:
+        TP = self.true_positive
+        FP = self.false_positive
+        if TP + FP == 0:
+            return 0
+        return float(self.true_positive) / float(TP+FP)
+
+    @property
+    def specificity(self) -> float:
+        if self.distances_of_ok_images.size == 0:
+            return 0
+        return float(self.true_negative) / float(self.distances_of_ok_images.size)
+
+    @property
     def __number_of_distances(self) -> int:
         return len(self.distances_of_ok_images) + len(self.distances_of_ng_images)
+
+    @property
+    def t_value(self) -> float:
+        n = self.distances_of_train_images.size
+        m = self.distances_of_ok_images.size
+        if n < 2 or m < 2:
+            return 0
+        std_train = stdev(self.distances_of_train_images)
+        std_testok = stdev(self.distances_of_ok_images)
+        s = sqrt(std_train / n + std_testok / m)
+        t = abs(mean(self.distances_of_train_images) - mean(self.distances_of_ok_images)) / s
+        return t
 
 
 class LearningModel(QObject):
@@ -79,7 +123,7 @@ class LearningModel(QObject):
     training_start = pyqtSignal()
     predicting_finished = pyqtSignal(dict)
     predicting_start = pyqtSignal()
-    test_finished = pyqtSignal()
+    test_finished = pyqtSignal(bool)
 
     @classmethod
     def default(cls):
@@ -90,17 +134,12 @@ class LearningModel(QObject):
 
     def __init__(self):
         super().__init__()
-        self.__model = NoveltyDetector(nth_layer=102, nn_name='ResNet', detector_name='IsolationForest')
+
+        self.__model = NoveltyDetector()
         self.__threshold = Project.latest_threshold()
         self.__should_test = True  # TODO: assign True on dataset change
         self.test_results = TestResults()
-
-        self.__predicting_thread = PredictingThread(self.__model)
-        self.__predicting_thread.finished.connect(self.predicting_finished)
-        self.__training_thread = TrainingThread(self.__model)
-        self.__training_thread.finished.connect(self.on_training_finished)
-        self.__test_thread = TestThread(self.__model, self)
-        self.__test_thread.finished.connect(self.on_test_finished)
+        self.__training_thread = None
 
     @property
     def threshold(self) -> float:
@@ -111,43 +150,64 @@ class LearningModel(QObject):
         self.__threshold = new_value
         Project.save_latest_threshold(new_value)
 
-    def train(self):
+    def start_training(self):
         self.training_start.emit()
+        self.__training_thread = threading.Thread(target=self.train)
         self.__training_thread.start()
 
-    def on_training_finished(self):
-        self.__model.save_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+    def train(self):
+        self.__model = NoveltyDetector()  # FIXME: cannot update weights without reinitialization...
+        self.__model.fit_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
+        self.__model.save(LearningModel.__weight_file_path(cam_index=0))
+        Project.save_latest_training_date()
         self.__should_test = True
         self.training_finished.emit()
 
-    def cancel_training(self):
-        self.__training_thread.exit()
-
     def load_weights(self):
-        self.__model.load_ocsvm(LearningModel.__weight_file_path(cam_index=0))
+        self.__model.load(LearningModel.__weight_file_path(cam_index=0))
+
+    def start_predict(self, image_paths):
+        image_path = image_paths[0]
+        trimming_data = Project.latest_trimming_data()
+        truncated_image_path = Dataset.trim_image(image_path, os.path.dirname(image_path), trimming_data)
+        if truncated_image_path:
+            return truncated_image_path
+        self.predicting_start.emit()
+        predict_thread = threading.Thread(target=self.predict, args=([image_paths]))
+        predict_thread.start()
+        return
 
     def predict(self, image_paths):
-        self.predicting_start.emit()
-        self.__predicting_thread.set_image_paths(image_paths)
-        self.__predicting_thread.start()
+        scores = self.__model.predict_paths(image_paths)
+        self.predicting_finished.emit({'scores': scores, 'image_paths': image_paths})
 
-    def on_predicting_finished(self, result):
-        self.predicting_finished.emit(result)
-
-    def test_if_needed(self):
+    def test_if_needed(self, predict_training=False):
         if not self.__should_test:
-            self.test_finished.emit()
+            self.test_finished.emit(predict_training)
             return
 
         # TODO: check if test images exist
+        test_thread = threading.Thread(target=self.test, args=(predict_training,))
+        test_thread.start()
 
-        self.__test_thread.start()
-
-    def on_test_finished(self):
-        if self.test_results.distances_of_ng_images.size != 0:
-            self.threshold = max(self.test_results.distances_of_ng_images)  # default threshold FIXME: logic
-            self.__should_test = False
-        self.test_finished.emit()
+    def test(self, predict_training=False):
+        try:
+            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_OK)))
+            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TEST_NG)))
+            if predict_training:
+                _, pred_of_train_images = self.__model.predict_in_dir(str(Dataset.trimmed_path(Dataset.Category.TRAINING_OK)))
+                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images, distances_of_train_images=pred_of_train_images)
+            else:
+                self.test_results.reload(distances_of_ok_images=pred_of_ok_images, distances_of_ng_images=pred_of_ng_images)
+            if self.test_results.distances_of_ng_images.size != 0:
+                self.threshold = max(self.test_results.distances_of_ng_images.max(), np.percentile(self.test_results.distances_of_ok_images, 0.13))  # default threshold is the larger of max NG distance and 0.13 percentile (-3 sigma) of OK distances
+                self.__should_test = False
+        except IndexError:  # TODO: handle as UndoneTrainingError
+            print('TODO: tell the user to train')
+        except OSError:
+            print('TODO: repair directory for test images')
+        finally:
+            self.test_finished.emit(predict_training)
 
     @classmethod
     def __weight_file_path(cls, cam_index: int) -> str:
@@ -168,42 +228,3 @@ class PredictingThread(QThread):
     def run(self):
         scores = self.__model.predict_paths(self.__image_paths)
         self.finished.emit({'scores': list(scores), 'image_paths': self.__image_paths})
-
-
-class TrainingThread(QThread):
-    def __init__(self, model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-
-    def set_image_path(self, image_path):
-        self.__image_paths = image_path
-
-    def run(self):
-        try:
-            self.__model.fit_in_dir(str(Dataset.images_path(Dataset.Category.TRAINING_OK)))
-        except OSError:
-            print('TODO: repair directory for training images')
-
-
-class TestThread(QThread):
-    finished = pyqtSignal()
-
-    def __init__(self, model, learning_model):
-        super().__init__()
-        self.__image_paths = None
-        self.__model = model
-        self.__learning_model = learning_model
-
-    def run(self):
-        try:
-            _, pred_of_ok_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_OK)))
-            _, pred_of_ng_images = self.__model.predict_in_dir(str(Dataset.images_path(Dataset.Category.TEST_NG)))
-            self.__learning_model.test_results.reload(distances_of_ok_images=pred_of_ok_images,
-                                                      distances_of_ng_images=pred_of_ng_images)
-            self.finished.emit()
-        except IndexError:  # TODO: handle as UndoneTrainingError
-            print('TODO: tell the user to train')
-            self.finished.emit()
-        except OSError:
-            print('TODO: repair directory for test images')
