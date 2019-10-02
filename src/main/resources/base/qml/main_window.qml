@@ -156,6 +156,8 @@ ApplicationWindow {
 
         AiOptimizationView {}
 
-        PastResultView {}
+        PastResultView {
+            objectName: 'past_result_view'
+        }
     }
 }
