@@ -102,8 +102,8 @@ class MainWindow(QMainWindow):
         self.statusBar().setSizeGripEnabled(False)
 
         # 一旦レポート機能なし
-        # self.past_result_action.setProperty('enabled', False)
-        # self.past_result_action.setProperty('visible', False)
+        self.past_result_action.setProperty('enabled', False)
+        self.past_result_action.setProperty('visible', False)
 
     def on_clicked_inspection_button(self):
         pass

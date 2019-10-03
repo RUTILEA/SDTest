@@ -45,7 +45,7 @@ Rectangle {
                 Rectangle {
                 width: parent.width
                 height: 30
-                color: index % 2 == 0 ? "#ffffff" : "#f5f5f5"
+                // color: index % 2 == 0 ? "#ffffff" : "#f5f5f5"
 
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
