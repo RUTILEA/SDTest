@@ -227,10 +227,5 @@ Rectangle {
                 objectName: "ng_counter"
             }
         }
-
-
     }
-
-
-
 }

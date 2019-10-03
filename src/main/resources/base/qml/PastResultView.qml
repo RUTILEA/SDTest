@@ -13,7 +13,7 @@ Rectangle {
 
 
         ListModel {
-            id: fruitModel
+            id: resultModel
 
             ListElement {
                 name: "nut"
@@ -37,14 +37,22 @@ Rectangle {
             height: parent.height - title.height - 20
             anchors.top: title.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            model: fruitModel
+            model: resultModel
+            highlight: Rectangle {
+                color: '#4298F9'
+                radius: 5
+                opacity: 0.2
+
+            }
+            focus: true
 
             // ScrollBar.vertical: ScrollBar {}
 
             delegate:
-                Rectangle {
+                Item {
                 width: parent.width
                 height: 30
+
                 // color: index % 2 == 0 ? "#ffffff" : "#f5f5f5"
 
                 Text {
@@ -56,6 +64,11 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x: 365
                     text: date
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: list.currentIndex = index
                 }
             }
 
