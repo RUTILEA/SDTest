@@ -29,7 +29,14 @@ class CameraList(QDialog):
         self.camera_model.cams: Dict[str, QCamera]
         self.__camera_views = []
 
-        self.showEvent()
+        self.show()
+
+    def show(self):
+        self.set_cams()
+        for camera_view in self.__camera_views:
+            if camera_view.ui.camera_device_name.text() == self.camera_model.selected_cam_names[0]:
+                camera_view.check()
+        self.__camera_views = []
 
     def set_cams(self):
         for i, (cam_device_name) in enumerate(self.camera_model.get_available_camera_names()):
@@ -51,13 +58,6 @@ class CameraList(QDialog):
         self.grid.children = []
         # for camera_view in self.__camera_views:
         #     self.grid.removeWidget(camera_view)
-
-    def showEvent(self):
-        self.set_cams()
-        for camera_view in self.__camera_views:
-            if camera_view.ui.camera_device_name.text() == self.camera_model.selected_cam_names[0]:
-                camera_view.check()
-        self.__camera_views = []
 
     # def closeEvent(self, QCloseEvent):
     #     self.closed.emit()
@@ -85,10 +85,13 @@ class SelectableCameraView(QObject):
             self.selected.emit(self)
 
     def un_check(self):
-        self.ui.checkBox.setChecked(False)
+        pass
+        # self.ui.checkBox.setChecked(False)
 
     def check(self):
-        self.ui.checkBox.setChecked(True)
+        pass
+        # self.ui.checkBox.setChecked(True)
 
     def get_cam_name(self):
-        return self.ui.camera_device_name.text()
+        pass
+        # return self.ui.camera_device_name.text()
