@@ -102,17 +102,11 @@ Rectangle {
                         currentIndex: selector.currentColumnTab
                         anchors.fill: parent
 
-                        Text {
-                            text: qsTr("text_1")
-                        }
+                        ImageNameList{}
 
-                        Text {
-                            text: qsTr("text_2")
-                        }
+                        ImageNameList{}
 
-                        Text {
-                            text: qsTr("text_3")
-                        }
+                        ImageNameList{}
 
                     }
                 }
