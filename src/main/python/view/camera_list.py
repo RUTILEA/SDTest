@@ -21,22 +21,20 @@ class CameraList(QDialog):
         self.setModal(True)
         self.appctxt = appctxt
         self.engine = app_engine
-        self.engine.load(self.appctxt.get_resource('qml/camera_list.qml'))
-        self.rootObject = self.engine.rootObjects()[-1]
-        self.grid = self.rootObject.findChild(QObject, 'grid')
+        self.rootObject = None
 
         self.camera_model = CameraModel.default()
         self.camera_model.cams: Dict[str, QCamera]
         self.__camera_views = []
 
-        self.show()
-
     def show(self):
-        self.set_cams()
-        for camera_view in self.__camera_views:
-            if camera_view.ui.camera_device_name.text() == self.camera_model.selected_cam_names[0]:
-                camera_view.check()
-        self.__camera_views = []
+        self.engine.load(self.appctxt.get_resource('qml/camera_list.qml'))
+        self.rootObject = self.engine.rootObjects()[-1]
+        # self.set_cams()
+        # for camera_view in self.__camera_views:
+        #     if camera_view.ui.camera_device_name.text() == self.camera_model.selected_cam_names[0]:
+        #         camera_view.check()
+        # self.__camera_views = []
 
     def set_cams(self):
         for i, (cam_device_name) in enumerate(self.camera_model.get_available_camera_names()):
@@ -44,7 +42,7 @@ class CameraList(QDialog):
             selectable_camera_view.selected.connect(self.on_selected_camera)
             self.__camera_views.append(selectable_camera_view)
             selectable_camera_view.setParent(self.grid)
-        self.camera_model.connect_view_finders_with_all_cameras(self.__camera_views)
+        # self.camera_model.connect_view_finders_with_all_cameras(self.__camera_views)
 
     def on_selected_camera(self, selected_widget):
         cam_index = self.grid.indexOf(selected_widget)

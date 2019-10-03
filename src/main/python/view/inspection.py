@@ -90,12 +90,13 @@ class InspectionWidget(QWidget):
 
         if True:  # self.select_camera_widget.isHidden():
             self.select_camera_widget = CameraList(self.engine, self.appctxt)
+            self.select_camera_widget.show()
             self.select_camera_signal.clicked.connect(self.on_clicked_camera_list)
             self.select_camera_signal.closed.connect(self.on_closed_camera_list)
 
-        else:
-            self.select_camera_widget.activateWindow()
-            self.select_camera_widget.raise_()
+        # else:
+        #     self.select_camera_widget.activateWindow()
+        #     self.select_camera_widget.raise_()
 
     def on_clicked_inspect_button(self):
         self.inspect_button.setProperty('enabled', False)
