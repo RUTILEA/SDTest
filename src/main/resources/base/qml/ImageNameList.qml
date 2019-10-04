@@ -46,11 +46,7 @@ Item {
                 x: 5
                 text: name
             }
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                x: 365
-                text: date
-            }
+
 
             MouseArea {
                 anchors.fill: parent
