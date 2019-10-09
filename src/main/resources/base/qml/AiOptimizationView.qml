@@ -291,6 +291,8 @@ Rectangle {
         // modal: true
         width: 400
         height: 300
+        // anchors.horizontalCenter: parent.horizontalCenter
+        
 
         contentItem:
             Item {
