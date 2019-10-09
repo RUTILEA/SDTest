@@ -10,9 +10,9 @@ from PySide2.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, 
 from view.image_capture_dialog import ImageCaptureDialog
 from view.select_area_dialog import SelectAreaDialog, SelectAreaSignal
 from model.project import Project
-# from model.learning_model import LearningModel
+from model.learning_model import LearningModel
 from model.dataset import Dataset
-# from model.supporting_model import TrimmingData
+from model.supporting_model import TrimmingData
 
 
 # class Thumbnail(QObject):
@@ -48,6 +48,7 @@ class DatasetWidget(QWidget):
         self.camera_button = self.stack_view.findChild(QObject, 'camera_button')
         self.select_images_button.clicked.connect(lambda: self.on_clicked_select_images_button())
         self.camera_button.clicked.connect(lambda: self.on_clicked_camera_button())
+        self.latest_training_date_label = self.stack_view.findChild(QObject, 'latest_training_date_label')
 
         # self.ui.image_list_widget.setCurrentItem(self.ui.image_list_widget.topLevelItem(0).child(0))  # FIXME: refactor
         # self.ui.image_list_widget.expandAll()
@@ -178,12 +179,12 @@ class DatasetWidget(QWidget):
         del self.select_area_dialog
         self.select_area_dialog = SelectAreaDialog(self.engine, self.appctxt)
         self.select_area_signal = SelectAreaSignal()
-        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
+        self.select_area_signal.finish_selecting_area.connect(self.on_finished_selecting_area)
         self.select_area_dialog.show()
         self.__reload_recent_training_date()
 
-    # def on_finished_selecting_area(self, data: TrimmingData):
-    #     pass
+    def on_finished_selecting_area(self, data: TrimmingData):
+        pass
         # categories = [Dataset.Category.TRAINING_OK, Dataset.Category.TEST_OK, Dataset.Category.TEST_NG]
         # for category in categories:
         #     dir_path = Dataset.images_path(category)
@@ -239,13 +240,13 @@ class DatasetWidget(QWidget):
         # else:
         #     assert False
 
-    # def __reload_recent_training_date(self):
-    #     latest_training_date = Project.latest_training_date()
-    #     if latest_training_date is None:
-    #         self.ui.latest_training_date_label.setText('トレーニング未実行')
-    #     else:
-    #         date_description = latest_training_date.strftime('%Y/%m/%d')
-    #         self.ui.latest_training_date_label.setText(f'前回のトレーニング：{date_description}')
+    def __reload_recent_training_date(self):
+        latest_training_date = Project.latest_training_date()
+        if latest_training_date is None:
+            self.latest_training_date_label.setProperty('text', 'トレーニング未実行')
+        else:
+            date_description = latest_training_date.strftime('%Y/%m/%d')
+            self.latest_training_date_label.setProperty(f'前回のトレーニング：{date_description}')
 
 
 # class ThumbnailCell(QWidget):

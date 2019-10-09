@@ -15,7 +15,7 @@ ApplicationWindow {
     minimumWidth: fixedWidth
     minimumHeight: fixedHeight
 
-    title: 'カメラで撮影'
+    title: '領域を選択'
 
     Image {
         id: finder
@@ -27,7 +27,7 @@ ApplicationWindow {
         objectName: 'original_image_view'
     }
 
-    GeneralButton {
+     GeneralButton {
         x: 317
         y: 277
         height: 20
@@ -50,7 +50,7 @@ ApplicationWindow {
         y: 259
         width: 146
         height: 38
-        text: None
+        text: ''
         font.pixelSize: 12
         objectName: 'notation_label'
     }

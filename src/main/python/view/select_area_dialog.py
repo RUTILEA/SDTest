@@ -1,6 +1,6 @@
 ﻿from PySide2.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsProxyWidget, QLabel, QFrame
 from PySide2.QtGui import QPixmap, QColor, QPen, QPalette
-from PySide2.QtCore import QRectF, QSize, Qt, Signal, QPoint, QObject
+from PySide2.QtCore import QRectF, QSize, Qt, Signal, QPoint, QObject, QMetaObject, QGenericArgument, QUrl
 # from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
 from model.project import Project
@@ -39,17 +39,13 @@ class SelectAreaDialog(QDialog):
         self.cancel_button = None
         self.original_image_view = None
 
-        self.get_ng_sample_image_path()
-
-        if self.h <= self.height and self.w <= self.width:
-            self.size_flag = False
-
-        if self.size_flag:
-            self.show_select_area_at_default_position()
-        else:
-            self.notation_label.setText('この画像サイズは十分小さいため, 画像全体でトレーニングを行います.'
-                                           '\nこのままトレーニング開始ボタンを押してください.')
-            pass
+        # if self.h <= self.height and self.w <= self.width:
+        #     self.size_flag = False
+        # if self.size_flag:
+        #     self.show_select_area_at_default_position()
+        # else:
+        #     self.notation_label.setText('この画像サイズは十分小さいため, 画像全体でトレーニングを行います.'
+        #                                    '\nこのままトレーニング開始ボタンを押してください.')
 
     def show(self):
         self.engine.load(self.appctxt.get_resource('qml/select_area_dialog.qml'))
@@ -59,10 +55,10 @@ class SelectAreaDialog(QDialog):
         self.ok_button = self.rootObject.findChild(QObject, 'ok_button')
         self.cancel_button = self.rootObject.findChild(QObject, 'cancel_button')
         self.original_image_view = self.rootObject.findChild(QObject, 'original_image_view')
-        self.ok_button.clicked.connect(self.on_clicked_ok_button)
-        self.cancel_button.clicked.connect(self.on_clicked_cancel_button)
+        self.ok_button.clicked.connect(lambda: self.on_clicked_ok_button())
+        self.cancel_button.clicked.connect(lambda: self.on_clicked_cancel_button())
 
-        print(self.original_image_view)
+        self.get_ng_sample_image_path()
 
     def get_ng_sample_image_path(self):
         test_ng_path = str(Dataset.images_path(Dataset.Category.TEST_NG))
@@ -79,8 +75,8 @@ class SelectAreaDialog(QDialog):
         # original_image_item.setZValue(0)
         # self.original_image_scene = QGraphicsScene()
         # self.original_image_scene.addItem(original_image_item)
-        # self.original_image_view.setProperty('', self.original_image_scene)
-        self.original_image_view.setProerty('source', original_image_path)
+        self.original_image_view.setProperty('source', QUrl.fromLocalFile(original_image_path))
+        # self.rootObject.setImage(self.original_image_scene)
         # self.original_image_view.setBaseSize(original_image_shape)
         # self.original_image_view.setMaximumSize(original_image_shape)
         # self.resize(self.w+32, self.h+72)
@@ -124,7 +120,7 @@ class SelectAreaDialog(QDialog):
                 self.close()
 
     def on_clicked_cancel_button(self):
-        self.close()
+        self.rootObject.close()
 
     def closeEvent(self, QCloseEvent):
         self.close()

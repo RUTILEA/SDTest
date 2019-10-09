@@ -200,6 +200,7 @@ Rectangle {
                     rightPadding: 15
                     text: qsTr("前回のトレーニング：X月Y日")
                     color: '#666666'
+                    objectName: 'latest_training_date_label'
                 }
 
                 WideButton {
