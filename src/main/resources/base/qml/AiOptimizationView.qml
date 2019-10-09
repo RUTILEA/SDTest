@@ -16,6 +16,7 @@ Rectangle {
 
         anchors.verticalCenter: under_topbar.verticalCenter
         currentIndex: middleTabBase.currentMiddleTab
+        objectName: 'midbar'
 
         Rectangle {
             id: middleTabLeft_Content
@@ -25,6 +26,8 @@ Rectangle {
 
             property int allPic: 100
             property int selectedPic: 3
+
+           objectName: 'dataset_view'
 
             Rectangle {
                 id: selector
@@ -38,6 +41,8 @@ Rectangle {
                 property int columnheight: 30
                 property int indent: 30
                 property int currentColumnTab: 0
+
+                objectName: 'selector'
 
                 ColumnLayout {
                     SelectorButton {
@@ -133,14 +138,14 @@ Rectangle {
                         mytext: '既存の画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'addOldPicture'
+                        objectName: 'select_images_button'
                     }
 
                     GeneralButton {
                         mytext: 'カメラから画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'addNewPicture'
+                        objectName: 'camera_button'
                     }
                 }
 
@@ -195,6 +200,8 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
 
+                   objectName: 'train_button'
+
                     Row {
                         anchors.centerIn: parent
                         spacing: 2
@@ -219,6 +226,8 @@ Rectangle {
         Rectangle {
            color: '#EEEEEE'
            radius: under_topbar.r
+
+           objectName: 'test_view'
 
            Text {
                text: qsTr("性能評価")

@@ -17,35 +17,41 @@ ApplicationWindow {
 
     title: 'カメラで撮影'
 
-        Camera{
-            id: camera
-        }
-
-    VideoOutput {
+    Image {
         id: finder
         x: 28
         y: 23
-        source: camera
         width: 424
-        height: 218
+        height: 230
         anchors.horizontalCenter: roundborder.horizontalCenter
+        objectName: 'original_image_view'
     }
 
     GeneralButton {
-        x: 200
-        y: 287
+        x: 317
+        y: 277
         height: 20
-        width: 80
-        mytext: '撮影'
-        objectName: 'hoge'
+        width: 140
+        mytext: "トレーニング開始"
+        objectName: 'ok_button'
     }
 
     GeneralButton {
-        x: 190
-        y: 254
+        x: 196
+        y: 277
         height: 20
         width: 100
-        mytext: 'カメラを変更'
-        objectName: 'hoge'
+        mytext: "キャンセル"
+        objectName: 'cancel_button'
+    }
+    Text {
+        id: label
+        x: 28
+        y: 259
+        width: 146
+        height: 38
+        text: None
+        font.pixelSize: 12
+        objectName: 'notation_label'
     }
 }
