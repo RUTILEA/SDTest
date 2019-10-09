@@ -213,7 +213,7 @@ Rectangle {
                 x: 150
                 anchors.verticalCenter: parent.verticalCenter
                 objectName: "ok_counter"
-                text: None
+                text: ''
             }
             Image {
                 id: name
@@ -225,7 +225,7 @@ Rectangle {
                 id: number_of_failed
                 x: 260
                 anchors.verticalCenter: parent.verticalCenter
-                text: None
+                text: ''
                 objectName: "ng_counter"
             }
         }
