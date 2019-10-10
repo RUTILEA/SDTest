@@ -131,11 +131,12 @@ class NewProjectDialog(QWidget):
         forbidden_characters = ['\\', ':', '*', '?', '"', '<', '>', '|']
         for letter in project_name:
             if unicodedata.east_asian_width(letter) != 'Na' or letter in forbidden_characters:
-                break
+                return False
             else:
-                for letter2 in save_location_path:
-                    if unicodedata.east_asian_width(letter2) != 'Na':
-                        break
-                    else:
-                        return True
-        return False
+                continue
+        for letter2 in save_location_path:
+            if unicodedata.east_asian_width(letter2) != 'Na':
+                return False
+            else:
+                continue
+        return True
