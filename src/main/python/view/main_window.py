@@ -3,19 +3,21 @@ from fbs_runtime.application_context.PySide2 import ApplicationContext
 from PySide2.QtWidgets import QMainWindow, QWidget, QLayout, QLabel, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, QSize, QObject, Signal
 from view.inspection import InspectionWidget
-# from view.ai_optimization import AIOptimizationWidget
-# from view.past_result import PastResultWidget
+from view.ai_optimization import AIOptimizationWidget
+from view.past_result import PastResultWidget
 from model.project import Project
 from model.learning_model import LearningModel
 from model.fbs import AppInfo
 from pathlib import Path
 from PySide2.QtGui import QMovie
 
+
 class MainWindowSignal(QObject):
 
     # Signal
     back_to_startup = Signal()
     back_to_new_project = Signal()
+
 
 class MainWindow(QMainWindow):
 
@@ -24,12 +26,6 @@ class MainWindow(QMainWindow):
 
         self.appctxt = appctxt
         self.engine = app_engine
-        self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
-        self.rootObject = self.engine.rootObjects()[-1]
-        print(self.engine.rootObjects())
-        project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
-        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
-        self.rootObject.setProperty('title', window_title)
 
         # Disable maximizing window
         self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint | Qt.CustomizeWindowHint)
@@ -37,17 +33,21 @@ class MainWindow(QMainWindow):
         self.msgBox = None
         self.signal = MainWindowSignal()
 
-        self.setup_tool_bar()
-        self.setup_menu_bar()
-
-        # 一旦レポート機能なし
-        self.past_result_action.setProperty('enabled', False)
-        self.past_result_action.setProperty('visible', False)
-
         LearningModel.default().predicting_start.connect(self.on_start_predicting)
         LearningModel.default().predicting_finished.connect(self.on_finished_predicting)
         LearningModel.default().training_start.connect(self.on_start_training)
         LearningModel.default().training_finished.connect(self.on_finished_training)
+
+    def show(self):
+        self.engine.load(self.appctxt.get_resource('qml/main_window.qml'))
+        self.rootObject = self.engine.rootObjects()[-1]
+        print(self.engine.rootObjects())
+        project_name = os.path.basename(os.path.splitext(Project().project_path())[0])
+        window_title = project_name + ' - ' + AppInfo().app_name() + ' Version ' + AppInfo().version()
+        self.rootObject.setProperty('title', window_title)
+
+        self.setup_tool_bar()
+        self.setup_menu_bar()
 
     def setup_menu_bar(self):
         self.action_new_project = self.rootObject.findChild(QObject, 'new_project_action')
@@ -67,13 +67,18 @@ class MainWindow(QMainWindow):
         self.optimization_action = self.rootObject.findChild(QObject, 'optimization_button')
         self.past_result_action = self.rootObject.findChild(QObject, 'past_result_button')
         self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
+        self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+
         self.inspection_view = self.rootObject.findChild(QObject, 'inspection_view')
         self.ai_optimization_view = self.rootObject.findChild(QObject, 'ai_optimization_view')
         self.past_result_view = self.rootObject.findChild(QObject, 'past_result_view')
 
         inspection_widget = InspectionWidget(self.engine, self.appctxt, self.inspection_view)
+        ai_optimization_widget = AIOptimizationWidget(self.engine, self.appctxt, self.ai_optimization_view)
+        past_result_widget = PastResultWidget(self.engine, self.appctxt, self.past_result_view)
 
         try:
             self.on_clicked_inspection_button()
@@ -81,6 +86,7 @@ class MainWindow(QMainWindow):
             LearningModel.default().load_weights()
         except FileNotFoundError:
             self.topbar.setProperty('currentTab', 1)
+
 
         loader_gif_path = self.appctxt.get_resource('images/loader.gif')
         self.loader = QMovie(loader_gif_path)
@@ -99,6 +105,10 @@ class MainWindow(QMainWindow):
 
         self.statusBar().setSizeGripEnabled(False)
 
+        # 一旦レポート機能なし
+        self.past_result_action.setProperty('enabled', False)
+        self.past_result_action.setProperty('visible', False)
+
     def on_clicked_inspection_button(self):
         pass
         # self.main_stacked_widget.widget(self.inspection_widget_id).set_camera_to_camera_preview()
@@ -108,6 +118,9 @@ class MainWindow(QMainWindow):
     #
     # def on_clicked_past_result_button(self):
     #     pass
+
+    def on_clicked_past_result_button(self):
+        pass
 
     def on_triggered_action_open(self):
         save_location_path = QFileDialog.getOpenFileName(self, 'プロジェクトを開く', os.path.expanduser('~'),

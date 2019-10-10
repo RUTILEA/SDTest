@@ -1,5 +1,5 @@
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PySide2.QtMultimediaWidgets import QCameraViewfinder
+from PySide2.QtGui import QPainter, QColor, QPen
 
 
 class QCameraViewFinderWithGuide(QCameraViewfinder):

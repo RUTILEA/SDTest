@@ -37,6 +37,17 @@ class NewProjectWindow(QWidget):
     def __init__(self, app_engine, appctxt):
         self.engine = app_engine
         self.appctxt = appctxt
+
+        self.come_from_main_window_flag = False
+
+        # TODO: '/'の入力を制限(validation)
+        # reg_ex = QRegExp("[^//]+")
+        # validator = QRegExpValidator(reg_ex, self.project_name_line)
+        # self.project_name_line.setValidator(validator)
+
+        self.signal = NewProjectSignal()
+
+    def show(self):
         self.engine.load(self.appctxt.get_resource('qml/new_project.qml'))
         self.rootObject = self.engine.rootObjects()[-1]
         self.project_name_line = self.rootObject.findChild(QObject, "project_name_field")
@@ -55,14 +66,6 @@ class NewProjectWindow(QWidget):
         # self.project_name_line.returnPressed.connect(self.on_clicked_create_button())
 
         self.save_location_line.setProperty('text', os.path.expanduser('~')+'/')
-        self.come_from_main_window_flag = False
-
-        # TODO: '/'の入力を制限(validation)
-        # reg_ex = QRegExp("[^//]+")
-        # validator = QRegExpValidator(reg_ex, self.project_name_line)
-        # self.project_name_line.setValidator(validator)
-
-        self.signal = NewProjectSignal()
 
     def on_clicked_reference_button(self):
         save_location_path = QFileDialog.getExistingDirectory(None, '保存先フォルダを選択', os.path.expanduser('~'))
@@ -91,6 +94,7 @@ class NewProjectWindow(QWidget):
             self.signal.close_old_project.emit()
             self.main_window.rootObject.close()
         self.main_window = MainWindow(self.engine, self.appctxt)
+        self.main_window.show()
         self.come_from_main_window_flag = True
         self.main_window.signal.back_to_new_project.connect(self.open_new_project_widget)
         self.main_window.signal.back_to_startup.connect(self.on_back_to_startup_signal)

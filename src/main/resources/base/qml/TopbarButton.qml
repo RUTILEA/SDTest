@@ -25,7 +25,7 @@ Rectangle{
         onClicked: {
             baserec.clicked();
             setCurrentNumber(mynumber);
-            console.log(topbar.currentTab===0)
+            // console.log('topbar.currentTab': +topbar.currentTab)
         }
     }
 

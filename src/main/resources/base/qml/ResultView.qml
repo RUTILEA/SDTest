@@ -2,16 +2,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtMultimedia 5.12
-// import QtQuick.Dialogs 1.2
-
-
 
 Rectangle {
-    id: aiOptimize
+    id: pastResult
     color: 'white'
-
-    property string image_filename: 'value'
-    property string imagesource: 'value'
 
     StackLayout {
         id: under_middletab
@@ -19,8 +13,9 @@ Rectangle {
         y: 30
         width: root.width * 0.96
         height: under_topbar.height - 40 - (middleTabBase.y + middleTabBase.height * 0.5 + parent.width * 0.02)
+
+        anchors.verticalCenter: under_topbar.verticalCenter
         currentIndex: middleTabBase.currentMiddleTab
-        objectName: 'midbar'
 
         Rectangle {
             id: middleTabLeft_Content
@@ -28,12 +23,8 @@ Rectangle {
             color: '#EEEEEE'
             radius: under_topbar.r
 
-            property int allPic: 0
-            property int selectedPic: 0
-
-           objectName: 'dataset_view'
-
-           objectName: 'dataset_view'
+            property int allPic: 100
+            property int selectedPic: 3
 
             Rectangle {
                 id: selector
@@ -47,8 +38,6 @@ Rectangle {
                 property int columnheight: 30
                 property int indent: 30
                 property int currentColumnTab: 0
-
-                objectName: 'selector'
 
                 ColumnLayout {
                     SelectorButton {
@@ -79,14 +68,14 @@ Rectangle {
                         iconSource: '../fonts/fontawesome/dumbbell_666666.png'
                         mytext: '良品'
                         mynumber: 1
-                        objectName: 'test_OK'
+                        objectName: 'evaluation_OK'
                     }
 
                     SelectorButton {
                         iconSource: '../fonts/fontawesome/dumbbell_666666.png'
                         mytext: '不良品'
                         mynumber: 2
-                        objectName: 'test_NG'
+                        objectName: 'evaluation_NG'
                     }
                 }
             }
@@ -113,22 +102,16 @@ Rectangle {
                         currentIndex: selector.currentColumnTab
                         anchors.fill: parent
 
-                        ImageNameTableView{
-                            implicitWidth: parent.width
-                            implicitHeight: parent.height
-                            objectName: 'train_OK_table'
+                        Text {
+                            text: qsTr("text_1")
                         }
 
-                        ImageNameTableView{
-                            implicitWidth: parent.width
-                            implicitHeight: parent.height
-                            objectName: 'test_OK_table'
+                        Text {
+                            text: qsTr("text_2")
                         }
 
-                        ImageNameTableView{
-                            implicitWidth: parent.width
-                            implicitHeight: parent.height
-                            objectName: 'test_NG_table'
+                        Text {
+                            text: qsTr("text_3")
                         }
 
                     }
@@ -150,14 +133,14 @@ Rectangle {
                         mytext: '既存の画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'select_images_button'
+                        objectName: 'addOldPicture'
                     }
 
                     GeneralButton {
                         mytext: 'カメラから画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'camera_button'
+                        objectName: 'addNewPicture'
                     }
                 }
 
@@ -205,15 +188,12 @@ Rectangle {
                     rightPadding: 15
                     text: qsTr("前回のトレーニング：X月Y日")
                     color: '#666666'
-                    objectName: 'latest_training_date_label'
                 }
 
                 WideButton {
                     id: startTrainingButton
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-
-                   objectName: 'train_button'
 
                     Row {
                         anchors.centerIn: parent
@@ -239,8 +219,6 @@ Rectangle {
         Rectangle {
            color: '#EEEEEE'
            radius: under_topbar.r
-
-           objectName: 'test_view'
 
            Text {
                text: qsTr("性能評価")
@@ -298,31 +276,5 @@ Rectangle {
             anchors.left: middleTabLeft.right
 
         }
-    }
-
-    Dialog {
-        id: image_dialog
-        title: aiOptimize.image_filename
-        // modal: true
-        width: 400
-        height: 300
-        // anchors.horizontalCenter: parent.horizontalCenter
-        
-
-        contentItem:
-            Item {
-                Image {
-                    width: 320
-                    height: 240
-                    // anchors.centerIn: image_dialog
-                    // anchors.fill: image_dialog
-                    source: aiOptimize.imagesource
-
-                }
-            }
-        //standardButtons: Dialog.Close
-        modal: false
-
-
     }
 }

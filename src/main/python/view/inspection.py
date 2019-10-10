@@ -3,7 +3,7 @@ from model.camera_model import CameraModel
 from model.project import Project
 from model.learning_model import LearningModel
 # from view.ui.inspection import Ui_inspection
-from view.camera_list import CameraList
+from view.camera_list import CameraList, CameraListSignal
 from PySide2.QtWidgets import QWidget, QMessageBox, QFileDialog
 from PySide2.QtCore import Signal, QSize, QObject
 from PySide2.QtGui import QPixmap, QMovie
@@ -40,15 +40,16 @@ class InspectionWidget(QWidget):
         self.learning_model = LearningModel.default()
         self.learning_model.predicting_finished.connect(self.on_finished_predicting)
 
-        # self.select_camera_widget = CameraList()
-        # self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
-        # self.select_camera_widget.closed.connect(self.on_closed_camera_list)
+        self.select_camera_signal = CameraListSignal()
+        self.select_camera_signal.clicked.connect(self.on_clicked_camera_list)
+        self.select_camera_signal.closed.connect(self.on_closed_camera_list)
 
-        # self.ui.select_camera_button.clicked.connect(self.on_clicked_select_camera_button)
-        self.inspect_button = self.stack_view.findChild(QObject, 'inspectbutton')
-        self.inspect_existing_image_button = self.stack_view.findChild(QObject, 'inspectexistingimagebutton')
+        self.inspect_button = self.stack_view.findChild(QObject, 'inspect_button')
+        self.inspect_existing_image_button = self.stack_view.findChild(QObject, 'inspect_existing_image_button')
+        self.select_camera_button = self.stack_view.findChild(QObject, 'select_camera_button')
         self.inspect_button.clicked.connect(lambda: self.on_clicked_inspect_button())
         self.inspect_existing_image_button.clicked.connect(lambda: self.on_clicked_inspection_existing_image_button())
+        self.select_camera_button.clicked.connect(lambda: self.on_clicked_select_camera_button())
 
         # self.ui.result.setCurrentWidget(self.ui.default_result)
 
@@ -82,22 +83,22 @@ class InspectionWidget(QWidget):
         self.__ng_counter = new_value
         self.NG_counter_label.setProperty('text', str(self.ng_counter))
 
-    # def on_clicked_select_camera_button(self):
-    #     if not CameraModel.get_available_camera_names():
-    #         QMessageBox.warning(None, 'エラー', 'カメラが接続されていません', QMessageBox.Close)
-    #         return
-    #
-    #     # if self.select_camera_widget.isHidden():
-    #     #     self.select_camera_widget = CameraList()
-    #     #     self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
-    #     #     self.select_camera_widget.closed.connect(self.on_closed_camera_list)
-    #     #     self.select_camera_widget.show()
-    #     # else:
-    #     #     self.select_camera_widget.activateWindow()
-    #     #     self.select_camera_widget.raise_()
+    def on_clicked_select_camera_button(self):
+        if not CameraModel.get_available_camera_names():
+            QMessageBox.warning(None, 'エラー', 'カメラが接続されていません', QMessageBox.Close)
+            return
+
+        if True:  # self.select_camera_widget.isHidden():
+            self.select_camera_widget = CameraList(self.engine, self.appctxt)
+            self.select_camera_widget.show()
+            self.select_camera_signal.clicked.connect(self.on_clicked_camera_list)
+            self.select_camera_signal.closed.connect(self.on_closed_camera_list)
+
+        # else:
+        #     self.select_camera_widget.activateWindow()
+        #     self.select_camera_widget.raise_()
 
     def on_clicked_inspect_button(self):
-        print('### debag ###')
         self.inspect_button.setProperty('enabled', False)
         self.inspect_existing_image_button.setProperty('enabled', False)
         self.camera_model.capture(Project.project_path() + '/tmp')
@@ -141,7 +142,6 @@ class InspectionWidget(QWidget):
         self.camera_model.set_selected_camera_to_view_finder(self.ui.camera_preview)
 
     def on_clicked_inspection_existing_image_button(self):
-        print('### debag2 ###')
         ext_filter = '画像ファイル(*.jpg *.jpeg *.png *.gif *.bmp)'
         original_image_path, _ = QFileDialog.getOpenFileName(self,
                                                              caption='Open Directory',

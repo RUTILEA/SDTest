@@ -7,7 +7,7 @@ from PySide2.QtCore import Qt, QObject, QFileSystemWatcher, Signal, QRect, QSize
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.image_capture_dialog import ImageCaptureDialog
-from view.select_area_dialog import SelectAreaDialog
+from view.select_area_dialog import SelectAreaDialog, SelectAreaSignal
 from model.project import Project
 from model.learning_model import LearningModel
 from model.dataset import Dataset
@@ -66,13 +66,13 @@ class DatasetWidget(QWidget):
         #
         self.capture_dialog: Optional[ImageCaptureDialog] = None
 
-        self.preview_window = PreviewWindow()
-
-        self.watcher = QFileSystemWatcher(self)
-        self.watcher.addPaths([str(Dataset.images_path(Dataset.Category.TRAINING_OK)),
-                               str(Dataset.images_path(Dataset.Category.TEST_OK)),
-                               str(Dataset.images_path(Dataset.Category.TEST_NG))])
-        self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
+        # self.preview_window = PreviewWindow()
+        #
+        # self.watcher = QFileSystemWatcher(self)
+        # self.watcher.addPaths([str(Dataset.images_path(Dataset.Category.TRAINING_OK)),
+        #                        str(Dataset.images_path(Dataset.Category.TEST_OK)),
+        #                        str(Dataset.images_path(Dataset.Category.TEST_NG))])
+        # self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
 
         self.select_area_dialog = None
         self.select_area_signal = None
@@ -161,7 +161,7 @@ class DatasetWidget(QWidget):
             return
 
         del self.capture_dialog
-        self.capture_dialog = ImageCaptureDialog(image_save_location=str(Dataset.images_path(selected_category)))
+        self.capture_dialog = ImageCaptureDialog(self.engine, self.appctxt, image_save_location=str(Dataset.images_path(selected_category)))
         self.capture_dialog.show()
 
     def on_clicked_select_images_button(self):
@@ -187,19 +187,21 @@ class DatasetWidget(QWidget):
                     print("TODO: fix destination")
 
     def on_clicked_delete_images_button(self):
-        assert self.selected_thumbnails
-
-        message = f'{len(self.selected_thumbnails)}枚の画像を削除してよろしいですか?\nこの操作は取り消せません'
-        selected_action = QMessageBox.warning(None, '', message, QMessageBox.Cancel, QMessageBox.Yes)
-        if selected_action == QMessageBox.Yes:
-            for selected_thumbnail in self.selected_thumbnails:
-                os.remove(path=str(selected_thumbnail.path))
-            self._reload_images(self.__selected_dataset_category())
+        pass
+        # assert self.selected_thumbnails
+        #
+        # message = f'{len(self.selected_thumbnails)}枚の画像を削除してよろしいですか?\nこの操作は取り消せません'
+        # selected_action = QMessageBox.warning(None, '', message, QMessageBox.Cancel, QMessageBox.Yes)
+        # if selected_action == QMessageBox.Yes:
+        #     for selected_thumbnail in self.selected_thumbnails:
+        #         os.remove(path=str(selected_thumbnail.path))
+        #     self._reload_images(self.__selected_dataset_category())
 
     def on_clicked_train_button(self):
         del self.select_area_dialog
-        self.select_area_dialog = SelectAreaDialog()
-        self.select_area_dialog.finish_selecting_area.connect(self.on_finished_selecting_area)
+        self.select_area_dialog = SelectAreaDialog(self.engine, self.appctxt)
+        self.select_area_signal = SelectAreaSignal()
+        self.select_area_signal.finish_selecting_area.connect(self.on_finished_selecting_area)
         self.select_area_dialog.show()
         self.__reload_recent_training_date()
 
@@ -242,13 +244,29 @@ class DatasetWidget(QWidget):
         else:
             assert False
 
+        # # pyqt style(old)
+        # current_item = self.ui.image_list_widget.currentItem()
+        # current_item_text = current_item.text(0)
+        # if current_item_text == 'トレーニング用画像' or current_item_text == '性能評価用画像':
+        #     return None
+        # elif current_item.parent().text(0) == 'トレーニング用画像':
+        #     if current_item_text == '良品':  # train_OK
+        #         return Dataset.Category.TRAINING_OK
+        # elif current_item.parent().text(0) == '性能評価用画像':
+        #     if current_item_text == '良品':  # test_OK
+        #         return Dataset.Category.TEST_OK
+        #     elif current_item_text == '不良品':  # test_NG
+        #         return Dataset.Category.TEST_NG
+        # else:
+        #     assert False
+
     def __reload_recent_training_date(self):
         latest_training_date = Project.latest_training_date()
         if latest_training_date is None:
-            self.ui.latest_training_date_label.setText('トレーニング未実行')
+            self.latest_training_date_label.setProperty('text', 'トレーニング未実行')
         else:
             date_description = latest_training_date.strftime('%Y/%m/%d')
-            self.ui.latest_training_date_label.setText(f'前回のトレーニング：{date_description}')
+            self.latest_training_date_label.setProperty(f'前回のトレーニング：{date_description}')
 
 
 # class ThumbnailCell(QWidget):
@@ -278,7 +296,6 @@ class DatasetWidget(QWidget):
 #             thumbnail_style_sheet = f'margin: {vertical_margin}px {MIN_MARGIN}px'
 #         self.thumbnail_label.setPixmap(scaled_thumbnail)
 #         self.thumbnail_label.setStyleSheet(thumbnail_style_sheet)
-
 #         self.__selection_overlay = ThumbnailSelectionOverlay(parent=self)
 #         self.__selection_overlay.setFixedSize(CELL_LENGTH, CELL_LENGTH)
 #         self.__selection_overlay.selection_changed.connect(self.__on_changed_selection)
@@ -330,6 +347,5 @@ class DatasetWidget(QWidget):
 #             preview_size = image_size
 #         else:
 #             preview_size = scaled_size
-
 #         self.setFixedSize(preview_size)
 #         self.setPixmap(thumbnail.pixmap.scaled(preview_size))

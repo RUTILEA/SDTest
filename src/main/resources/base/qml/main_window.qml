@@ -10,12 +10,12 @@ ApplicationWindow {
     visible: true
     // 795, 512
     property int fixedWidth: {
-        if (topbar.currentTab===0)
+        if (topbar.currentTab === 0)
             return 842
-        else if (topbar.currentTab===1)
+        else if (topbar.currentTab === 1)
             return 864
-        else
-            return 864
+        else if (topbar.currentTab === 2)
+            return 842
     }
 
     property int fixedHeight: {
@@ -23,8 +23,8 @@ ApplicationWindow {
             return 532 + 40
         else if (topbar.currentTab===1)
             return 730 + 40
-        else
-            return 730 + 40
+        else if (topbar.currentTab === 2)
+            return 532 + 50
     }
     width: fixedWidth
     height: fixedHeight
