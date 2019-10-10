@@ -33,8 +33,6 @@ Rectangle {
 
            objectName: 'dataset_view'
 
-           objectName: 'dataset_view'
-
             Rectangle {
                 id: selector
                 color: selectorbackground

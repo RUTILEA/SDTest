@@ -66,11 +66,11 @@ class MainWindow(QMainWindow):
         self.inspection_action = self.rootObject.findChild(QObject, 'inspection_button')
         self.optimization_action = self.rootObject.findChild(QObject, 'optimization_button')
         self.past_result_action = self.rootObject.findChild(QObject, 'past_result_button')
-        self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
-        self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
-
-        # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
+        # self.inspection_action.clicked.connect(lambda: self.on_clicked_inspection_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+
+        self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
+        self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
 
         self.inspection_view = self.rootObject.findChild(QObject, 'inspection_view')
         self.ai_optimization_view = self.rootObject.findChild(QObject, 'ai_optimization_view')
