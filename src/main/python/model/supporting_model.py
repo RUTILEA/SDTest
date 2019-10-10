@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QObject
+from PySide2.QtCore import QObject
 
 
 class TrimmingData(QObject):

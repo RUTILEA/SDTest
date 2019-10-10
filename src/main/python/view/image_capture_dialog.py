@@ -1,40 +1,45 @@
-﻿from PyQt5.QtWidgets import QDialog
-from view.ui.capture_images import Ui_CaptureImages
+﻿from PySide2.QtWidgets import QDialog
+# from view.ui.capture_images import Ui_CaptureImages
 from view.camera_list import CameraList
 from view.q_camera_view_finder_with_guide import QCameraViewFinderWithGuide
 from model.camera_model import CameraModel
-from PyQt5.QtMultimedia import QCamera
-from PyQt5.QtCore import QSize
+from PySide2.QtMultimedia import QCamera
+from PySide2.QtCore import QSize
 from typing import Dict
 
 
 class ImageCaptureDialog(QDialog):
 
-    def __init__(self, image_save_location: str):
+    def __init__(self, app_engine, appctxt, image_save_location: str):
         super().__init__()
+        self.appctxt = appctxt
+        self.engine = app_engine
 
         self.setModal(True)
-        self.ui = Ui_CaptureImages()
-        self.ui.setupUi(self)
+        # self.ui = Ui_CaptureImages()
+        # self.ui.setupUi(self)
         self.camera_model = CameraModel.default()
         self.camera_model.cams: Dict[str, QCamera]
         self.image_save_location = image_save_location
-        self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
+        # self.ui.capture_button.clicked.connect(self.on_clicked_capture_button)
 
-        self.view_finder = QCameraViewFinderWithGuide()
-        self.view_finder.setFixedSize(QSize(640, 360))
-        self.ui.grid.addWidget(self.view_finder, 0, 0)
-        self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
+        # self.view_finder = QCameraViewFinderWithGuide()
+        # self.view_finder.setFixedSize(QSize(640, 360))
+        # self.ui.grid.addWidget(self.view_finder, 0, 0)
+        # self.camera_model.set_selected_camera_to_view_finder(self.view_finder)
 
-        self.select_camera_widget = CameraList()
-        self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
-        self.select_camera_widget.closed.connect(self.on_closed_camera_list)
-
-        self.ui.select_camera_button.clicked.connect(self.on_clicked_select_camera_button)
+        # self.select_camera_widget = CameraList()
+        # self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
+        # self.select_camera_widget.closed.connect(self.on_closed_camera_list)
+        # self.ui.select_camera_button.clicked.connect(self.on_clicked_select_camera_button)
 
         # size to fit
         self.adjustSize()
         self.setFixedSize(self.size())
+
+    def show(self):
+        self.engine.load(self.appctxt.get_resource('qml/image_capture_dialog.qml'))
+        self.rootObject = self.engine.rootObjects()[-1]
 
     def on_clicked_capture_button(self):
         self.camera_model.capture(directory=self.image_save_location)
@@ -45,7 +50,7 @@ class ImageCaptureDialog(QDialog):
     def on_clicked_select_camera_button(self):
         if self.select_camera_widget.isHidden():
             self.select_camera_widget = CameraList()
-            self.select_camera_widget.clicked.connect(self.on_clicked_camera_list)
+            self.select_camera_widget.clicked.connect(lambda: self.on_clicked_camera_list())
             self.select_camera_widget.closed.connect(self.on_closed_camera_list)
             self.select_camera_widget.show()
         else:

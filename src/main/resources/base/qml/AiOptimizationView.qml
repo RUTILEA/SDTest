@@ -20,6 +20,7 @@ Rectangle {
         width: root.width * 0.96
         height: under_topbar.height - 40 - (middleTabBase.y + middleTabBase.height * 0.5 + parent.width * 0.02)
         currentIndex: middleTabBase.currentMiddleTab
+        objectName: 'midbar'
 
         Rectangle {
             id: middleTabLeft_Content
@@ -29,6 +30,8 @@ Rectangle {
 
             property int allPic: 100
             property int selectedPic: 3
+
+           objectName: 'dataset_view'
 
             Rectangle {
                 id: selector
@@ -42,6 +45,8 @@ Rectangle {
                 property int columnheight: 30
                 property int indent: 30
                 property int currentColumnTab: 0
+
+                objectName: 'selector'
 
                 ColumnLayout {
                     SelectorButton {
@@ -140,14 +145,14 @@ Rectangle {
                         mytext: '既存の画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'addOldPicture'
+                        objectName: 'select_images_button'
                     }
 
                     GeneralButton {
                         mytext: 'カメラから画像を追加'
                         width: 140
                         height: 25
-                        objectName: 'addNewPicture'
+                        objectName: 'camera_button'
                     }
                 }
 
@@ -195,12 +200,15 @@ Rectangle {
                     rightPadding: 15
                     text: qsTr("前回のトレーニング：X月Y日")
                     color: '#666666'
+                    objectName: 'latest_training_date_label'
                 }
 
                 WideButton {
                     id: startTrainingButton
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
+
+                   objectName: 'train_button'
 
                     Row {
                         anchors.centerIn: parent
@@ -226,6 +234,8 @@ Rectangle {
         Rectangle {
            color: '#EEEEEE'
            radius: under_topbar.r
+
+           objectName: 'test_view'
 
            Text {
                text: qsTr("性能評価")

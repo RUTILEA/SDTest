@@ -3,9 +3,8 @@ from fbs_runtime.application_context.PySide2 import ApplicationContext
 from PySide2.QtWidgets import QMainWindow, QWidget, QLayout, QLabel, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, QSize, QObject, Signal
 from view.inspection import InspectionWidget
+from view.ai_optimization import AIOptimizationWidget
 from view.past_result import PastResultWidget
-# from view.ai_optimization import AIOptimizationWidget
-# from view.past_result import PastResultWidget
 from model.project import Project
 from model.learning_model import LearningModel
 from model.fbs import AppInfo
@@ -72,10 +71,13 @@ class MainWindow(QMainWindow):
 
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
+
         self.inspection_view = self.rootObject.findChild(QObject, 'inspection_view')
+        self.ai_optimization_view = self.rootObject.findChild(QObject, 'ai_optimization_view')
         self.past_result_view = self.rootObject.findChild(QObject, 'past_result_view')
 
         inspection_widget = InspectionWidget(self.engine, self.appctxt, self.inspection_view)
+        ai_optimization_widget = AIOptimizationWidget(self.engine, self.appctxt, self.ai_optimization_view)
         past_result_widget = PastResultWidget(self.engine, self.appctxt, self.past_result_view)
 
         try:

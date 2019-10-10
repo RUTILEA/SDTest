@@ -1,7 +1,7 @@
-﻿from PyQt5.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsProxyWidget, QLabel, QFrame
-from PyQt5.QtGui import QPixmap, QColor, QPen, QPalette
-from PyQt5.QtCore import QRectF, QSize, Qt, pyqtSignal, QPoint
-from view.ui.select_area_dialog import Ui_SelectAreaDialog
+﻿from PySide2.QtWidgets import QDialog, QGraphicsScene, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsProxyWidget, QLabel, QFrame
+from PySide2.QtGui import QPixmap, QColor, QPen, QPalette
+from PySide2.QtCore import QRectF, QSize, Qt, Signal, QPoint, QObject, QMetaObject, QGenericArgument, QUrl
+# from view.ui.select_area_dialog import Ui_SelectAreaDialog
 from model.dataset import Dataset
 from model.project import Project
 from model.supporting_model import TrimmingData
@@ -9,14 +9,20 @@ import os, cv2
 from pathlib import Path
 
 
+class SelectAreaSignal(QObject):
+
+    finish_selecting_area = Signal(TrimmingData)
+
+
 class SelectAreaDialog(QDialog):
 
-    finish_selecting_area = pyqtSignal(TrimmingData)
-
-    def __init__(self):
+    def __init__(self, app_engine, appctxt):
         super().__init__()
-        self.ui = Ui_SelectAreaDialog()
-        self.ui.setupUi(self)
+        self.appctxt = appctxt
+        self.engine = app_engine
+        self.rootObject = None
+
+        self.setModal(True)
 
         self.width = 200
         self.height = 200
@@ -28,20 +34,31 @@ class SelectAreaDialog(QDialog):
         self.select_area_label_proxy = None
         self.start_position = None
 
+        self.notation_label = None
+        self.ok_button = None
+        self.cancel_button = None
+        self.original_image_view = None
+
+        # if self.h <= self.height and self.w <= self.width:
+        #     self.size_flag = False
+        # if self.size_flag:
+        #     self.show_select_area_at_default_position()
+        # else:
+        #     self.notation_label.setText('この画像サイズは十分小さいため, 画像全体でトレーニングを行います.'
+        #                                    '\nこのままトレーニング開始ボタンを押してください.')
+
+    def show(self):
+        self.engine.load(self.appctxt.get_resource('qml/select_area_dialog.qml'))
+        self.rootObject = self.engine.rootObjects()[-1]
+
+        self.notation_label = self.rootObject.findChild(QObject, 'notation_label')
+        self.ok_button = self.rootObject.findChild(QObject, 'ok_button')
+        self.cancel_button = self.rootObject.findChild(QObject, 'cancel_button')
+        self.original_image_view = self.rootObject.findChild(QObject, 'original_image_view')
+        self.ok_button.clicked.connect(lambda: self.on_clicked_ok_button())
+        self.cancel_button.clicked.connect(lambda: self.on_clicked_cancel_button())
+
         self.get_ng_sample_image_path()
-
-        if self.h <= self.height and self.w <= self.width:
-            self.size_flag = False
-
-        if self.size_flag:
-            self.show_select_area_at_default_position()
-        else:
-            self.ui.notation_label.setText('この画像サイズは十分小さいため, 画像全体でトレーニングを行います.'
-                                           '\nこのままトレーニング開始ボタンを押してください.')
-            pass
-
-        self.ui.ok_button.clicked.connect(self.on_clicked_ok_button)
-        self.ui.cancel_button.clicked.connect(self.on_clicked_cancel_button)
 
     def get_ng_sample_image_path(self):
         test_ng_path = str(Dataset.images_path(Dataset.Category.TEST_NG))
@@ -50,18 +67,19 @@ class SelectAreaDialog(QDialog):
         if not test_ng_images:
             return
         original_image_path = os.path.join(test_ng_path, test_ng_images[0])
-        original_image = cv2.imread(original_image_path)
-        h, w, c = original_image.shape
-        self.h, self.w = h, w
-        original_image_shape = QSize(w+2, h+10)
-        original_image_item = QGraphicsPixmapItem(QPixmap(original_image_path))
-        original_image_item.setZValue(0)
-        self.original_image_scene = QGraphicsScene()
-        self.original_image_scene.addItem(original_image_item)
-        self.ui.original_image_view.setScene(self.original_image_scene)
-        self.ui.original_image_view.setBaseSize(original_image_shape)
-        self.ui.original_image_view.setMaximumSize(original_image_shape)
-        self.resize(self.w+32, self.h+72)
+        # original_image = cv2.imread(original_image_path)
+        # h, w, c = original_image.shape
+        # self.h, self.w = h, w
+        # original_image_shape = QSize(w+2, h+10)
+        # original_image_item = QGraphicsPixmapItem(QPixmap(original_image_path))
+        # original_image_item.setZValue(0)
+        # self.original_image_scene = QGraphicsScene()
+        # self.original_image_scene.addItem(original_image_item)
+        self.original_image_view.setProperty('source', QUrl.fromLocalFile(original_image_path))
+        # self.rootObject.setImage(self.original_image_scene)
+        # self.original_image_view.setBaseSize(original_image_shape)
+        # self.original_image_view.setMaximumSize(original_image_shape)
+        # self.resize(self.w+32, self.h+72)
 
     def show_select_area_at_default_position(self):
         trimming_data = Project.latest_trimming_data()
@@ -95,14 +113,14 @@ class SelectAreaDialog(QDialog):
             position = (self.start_position.x()+rel_position.x(), self.start_position.y()+rel_position.y())
             if position[0] < 0 or position[0] > self.w - self.width - 1 or position[1] < 0 or position[1] > self.h - self.height - 1:
                 print('Error: Please set area contained in the image.')
-                self.ui.notation_label.setText('エラー: 切り取る領域は画像内に収まるようにしてください.')
+                self.notation_label.setProperty('text', 'エラー: 切り取る領域は画像内に収まるようにしてください.')
             else:
                 trimming_data = TrimmingData(position=position, size=(self.width, self.height), needs_trimming=True)
                 self.finish_selecting_area.emit(trimming_data)
                 self.close()
 
     def on_clicked_cancel_button(self):
-        self.close()
+        self.rootObject.close()
 
     def closeEvent(self, QCloseEvent):
         self.close()

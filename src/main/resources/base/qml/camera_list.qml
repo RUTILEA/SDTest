@@ -29,7 +29,6 @@ ApplicationWindow {
 
                 Camera{
                     id: camera
-
                 }
 
                 VideoOutput {
