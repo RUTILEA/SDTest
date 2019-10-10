@@ -115,9 +115,6 @@ class MainWindow(QMainWindow):
 
     # def on_clicked_optimization_button(self):
     #     pass
-    #
-    # def on_clicked_past_result_button(self):
-    #     pass
 
     def on_clicked_past_result_button(self):
         pass
