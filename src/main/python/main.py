@@ -54,6 +54,9 @@ class AppContext(ApplicationContext):           # 1. Subclass ApplicationContext
         os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
         self.app.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
+        # Disable [?] button on dialogs
+        self.app.setAttribute(QtCore.Qt.AA_DisableWindowContextHelpButton, True)
+
         return self.app.exec_()
 
 
