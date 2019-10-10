@@ -3,10 +3,17 @@ import shutil
 from distutils.dir_util import copy_tree
 from typing import Optional, Set
 from pathlib import Path
+<<<<<<< Updated upstream
 from PyQt5.QtCore import Qt, QObject, QFileSystemWatcher, pyqtSignal, QRect, QSize
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
 from view.ui.dataset import Ui_Dataset
+=======
+from PySide2.QtCore import Qt, QObject, QFileSystemWatcher, Signal, QRect, QSize, QMetaObject
+from PySide2.QtGui import QPixmap
+from PySide2.QtWidgets import QWidget, QFileDialog, QLabel, QMenu, QMessageBox, QDesktopWidget
+# from view.ui.dataset import Ui_Dataset
+>>>>>>> Stashed changes
 from view.image_capture_dialog import ImageCaptureDialog
 from view.select_area_dialog import SelectAreaDialog
 from model.project import Project
@@ -25,6 +32,7 @@ class Thumbnail(QObject):
 class DatasetWidget(QWidget):
     def __init__(self):
         super().__init__()
+<<<<<<< Updated upstream
         self.ui = Ui_Dataset()
         self.ui.setupUi(self)
 
@@ -49,6 +57,47 @@ class DatasetWidget(QWidget):
         self._reload_images(Dataset.Category.TRAINING_OK)
         self.__reload_recent_training_date()
 
+=======
+        self.engine = app_engine
+        self.appctxt = appctxt
+        self.stack_view = stack_view
+
+        # self.all_thumbnails = []
+        # self.selected_thumbnails: Set[Thumbnail] = set()
+
+        # self.ui.image_list_widget.itemSelectionChanged.connect(self.on_changed_image_list_selection)
+        # self.ui.delete_images_button.clicked.connect(self.on_clicked_delete_images_button)
+        self.train_button = self.stack_view.findChild(QObject, 'train_button')
+        self.train_button.clicked.connect(self.on_clicked_train_button)
+
+        # self.ui.camera_and_images_menu = QMenu()
+        # self.ui.camera_and_images_menu.addAction(self.ui.select_images_action)
+        # self.ui.camera_and_images_menu.addAction(self.ui.camera_action)
+        # self.ui.camera_and_images_button.setMenu(self.ui.camera_and_images_menu)
+
+        self.selector = self.stack_view.findChild(QObject, 'selector')
+        self.select_images_button = self.stack_view.findChild(QObject, 'select_images_button')
+        self.camera_button = self.stack_view.findChild(QObject, 'camera_button')
+        self.select_images_button.clicked.connect(lambda: self.on_clicked_select_images_button())
+        self.camera_button.clicked.connect(lambda: self.on_clicked_camera_button())
+        self.latest_training_date_label = self.stack_view.findChild(QObject, 'latest_training_date_label')
+        self.train_OK_tab = self.stack_view.findChild(QObject, 'train_OK')
+        self.test_OK_tab = self.stack_view.findChild(QObject, 'test_OK')
+        self.test_NG_tab = self.stack_view.findChild(QObject, 'test_NG')
+        self.train_OK_tab.clicked.connect(lambda: self._reload_images())
+        self.test_OK_tab.clicked.connect(lambda: self._reload_images())
+        self.test_NG_tab.clicked.connect(lambda: self._reload_images())
+        self.train_OK_table = self.stack_view.findChild(QObject, 'train_OK_table')
+        self.test_OK_table = self.stack_view.findChild(QObject, 'test_OK_table')
+        self.test_NG_table = self.stack_view.findChild(QObject, 'test_NG_table')
+
+        # self.ui.image_list_widget.setCurrentItem(self.ui.image_list_widget.topLevelItem(0).child(0))  # FIXME: refactor
+        # self.ui.image_list_widget.expandAll()
+        #
+        self._reload_images()
+        # self.__reload_recent_training_date()
+        #
+>>>>>>> Stashed changes
         self.capture_dialog: Optional[ImageCaptureDialog] = None
 
         self.preview_window = PreviewWindow()
@@ -60,6 +109,7 @@ class DatasetWidget(QWidget):
         self.watcher.directoryChanged.connect(self.on_dataset_directory_changed)
 
         self.select_area_dialog = None
+<<<<<<< Updated upstream
 
         LearningModel.default().training_finished.connect(self.on_finished_training)
 
@@ -123,6 +173,86 @@ class DatasetWidget(QWidget):
         screen_center = QDesktopWidget().availableGeometry().center()
         preview_geometry.moveCenter(screen_center)
         self.preview_window.move(preview_geometry.topLeft())
+=======
+        self.select_area_signal = None
+
+        # LearningModel.default().training_finished.connect(self.on_finished_training)
+
+    def _reload_images(self):
+        image_num = 0
+        for selected_category, table in [(Dataset.Category.TRAINING_OK, self.train_OK_table), (Dataset.Category.TEST_OK, self.test_OK_table), (Dataset.Category.TEST_NG, self.test_NG_table)]:
+            image_paths = list(map(str, sorted(Dataset.images_path(selected_category).iterdir())))
+            image_names = [path.split('/')[-1] for path in image_paths]
+            table.setProperty('imagepatharray', image_paths)
+            table.setProperty('imagenamearray', image_names)
+            QMetaObject.invokeMethod(table, 'reloadTable')
+            image_num += len(image_names)
+
+        # # reset selection
+        # self.selected_thumbnails.clear()
+        # self.ui.delete_images_button.setEnabled(False)
+        #
+        # # reset grid area contents
+        # current_images_count = self.ui.images_grid_area.count()
+        # if current_images_count > 0:
+        #     for i in reversed(range(current_images_count)):
+        #         self.ui.images_grid_area.itemAt(i).widget().setParent(None)
+        #
+        # image_paths = sorted(Dataset.images_path(category).iterdir())
+        # nullable_thumbnails = [Thumbnail(path=image_path) for image_path in image_paths]
+        # self.all_thumbnails = [thumbnail for thumbnail in nullable_thumbnails if not thumbnail.pixmap.isNull()]
+        self.stack_view.setProperty('allPic', image_num)
+
+        # row = 0
+        # column = 0
+        # for thumbnail in self.all_thumbnails:
+        #     thumbnail_cell = ThumbnailCell(thumbnail=thumbnail)
+        #     thumbnail_cell.selection_changed.connect(self.on_changed_thumbnail_selection)
+        #     thumbnail_cell.double_clicked.connect(self.on_double_clicked_thumbnail)
+        #     self.ui.images_grid_area.addWidget(thumbnail_cell, row, column)
+        #
+        #     if column == 4:
+        #         row += 1
+        #         column = 0
+        #     else:
+        #         column += 1
+
+    # def on_changed_image_list_selection(self):
+    #     selected_category = self.__selected_dataset_category()
+    #     if selected_category is not None:
+    #         self._reload_images(selected_category)
+
+    # def on_changed_thumbnail_selection(self, selected: bool, thumbnail: Thumbnail):
+    #     if selected:
+    #         self.selected_thumbnails.add(thumbnail)
+    #     else:
+    #         self.selected_thumbnails.remove(thumbnail)
+    #
+    #     if self.selected_thumbnails:
+    #         number_of_images_description = f'{len(self.all_thumbnails)}枚 - {len(self.selected_thumbnails)}枚選択中'
+    #         self.ui.delete_images_button.setEnabled(True)
+    #     else:
+    #         number_of_images_description = f'{len(self.all_thumbnails)}枚'
+    #         self.ui.delete_images_button.setEnabled(False)
+
+
+
+#        self.stack_view.setProperty('selectedPic', number_of_images_description)
+
+
+
+    # def on_double_clicked_thumbnail(self, thumbnail: Thumbnail):
+    #     self.preview_window.set_thumbnail(thumbnail)
+    #     self.preview_window.show()
+    #     self.preview_window.activateWindow()
+    #     self.preview_window.raise_()
+    #
+    #     # move preview to center
+    #     preview_geometry: QRect = self.preview_window.frameGeometry()
+    #     screen_center = QDesktopWidget().availableGeometry().center()
+    #     preview_geometry.moveCenter(screen_center)
+    #     self.preview_window.move(preview_geometry.topLeft())
+>>>>>>> Stashed changes
 
     def on_clicked_camera_button(self):
         selected_category = self.__selected_dataset_category()
@@ -201,8 +331,12 @@ class DatasetWidget(QWidget):
         self.__reload_recent_training_date()
 
     def __selected_dataset_category(self) -> Optional[Dataset.Category]:
+<<<<<<< Updated upstream
         current_item = self.ui.image_list_widget.currentItem()
         current_item_text = current_item.text(0)
+=======
+        current_id = self.selector.property('currentColumnTab')
+>>>>>>> Stashed changes
         # FIXME: refactor
         if current_item_text == 'トレーニング用画像' or current_item_text == '性能評価用画像':
             return None

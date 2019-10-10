@@ -75,6 +75,6 @@ if __name__ == "__main__":
     multiprocessing.freeze_support()
 
     appctxt = AppContext()                      # 4. Instantiate the subclass
-    QtCore.qInstallMessageHandler(appctxt.qt_message_handler)
+    # QtCore.qInstallMessageHandler(appctxt.qt_message_handler)
     exit_code = appctxt.run()                   # 5. Invoke run()
     sys.exit(exit_code)

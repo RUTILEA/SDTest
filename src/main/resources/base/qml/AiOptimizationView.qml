@@ -23,8 +23,8 @@ Rectangle {
             color: '#EEEEEE'
             radius: under_topbar.r
 
-            property int allPic: 100
-            property int selectedPic: 3
+            property int allPic: 0
+            property int selectedPic: 0
 
             Rectangle {
                 id: selector
@@ -68,14 +68,14 @@ Rectangle {
                         iconSource: '../fonts/fontawesome/dumbbell_666666.png'
                         mytext: '良品'
                         mynumber: 1
-                        objectName: 'evaluation_OK'
+                        objectName: 'test_OK'
                     }
 
                     SelectorButton {
                         iconSource: '../fonts/fontawesome/dumbbell_666666.png'
                         mytext: '不良品'
                         mynumber: 2
-                        objectName: 'evaluation_NG'
+                        objectName: 'test_NG'
                     }
                 }
             }
@@ -102,6 +102,7 @@ Rectangle {
                         currentIndex: selector.currentColumnTab
                         anchors.fill: parent
 
+<<<<<<< Updated upstream
                         Text {
                             text: qsTr("text_1")
                         }
@@ -112,6 +113,24 @@ Rectangle {
 
                         Text {
                             text: qsTr("text_3")
+=======
+                        ImageNameTableView{
+                            implicitWidth: parent.width
+                            implicitHeight: parent.height
+                            objectName: 'train_OK_table'
+                        }
+
+                        ImageNameTableView{
+                            implicitWidth: parent.width
+                            implicitHeight: parent.height
+                            objectName: 'test_OK_table'
+                        }
+
+                        ImageNameTableView{
+                            implicitWidth: parent.width
+                            implicitHeight: parent.height
+                            objectName: 'test_NG_table'
+>>>>>>> Stashed changes
                         }
 
                     }
