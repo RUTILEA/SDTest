@@ -154,8 +154,12 @@ ApplicationWindow {
             objectName: 'inspection_view'
         }
 
-        AiOptimizationView {}
+        AiOptimizationView {
+            objectName: 'ai_optimization_view'
+        }
 
-        PastResultView {}
+        PastResultView {
+            objectName: 'past_result_view'
+        }
     }
 }

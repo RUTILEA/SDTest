@@ -26,6 +26,8 @@ Rectangle {
             property int allPic: 0
             property int selectedPic: 0
 
+           objectName: 'dataset_view'
+
             Rectangle {
                 id: selector
                 color: selectorbackground
@@ -102,18 +104,6 @@ Rectangle {
                         currentIndex: selector.currentColumnTab
                         anchors.fill: parent
 
-<<<<<<< Updated upstream
-                        Text {
-                            text: qsTr("text_1")
-                        }
-
-                        Text {
-                            text: qsTr("text_2")
-                        }
-
-                        Text {
-                            text: qsTr("text_3")
-=======
                         ImageNameTableView{
                             implicitWidth: parent.width
                             implicitHeight: parent.height
@@ -130,7 +120,6 @@ Rectangle {
                             implicitWidth: parent.width
                             implicitHeight: parent.height
                             objectName: 'test_NG_table'
->>>>>>> Stashed changes
                         }
 
                     }

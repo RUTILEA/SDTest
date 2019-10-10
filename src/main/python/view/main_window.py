@@ -70,6 +70,8 @@ class MainWindow(QMainWindow):
         # self.optimization_action.clicked.connect(lambda: self.on_clicked_optimization_button())
         # self.past_result_action.clicked.connect(lambda: self.on_clicked_past_result_button())
         self.inspection_view = self.rootObject.findChild(QObject, 'inspection_view')
+        self.ai_optimization_view = self.rootObject.findChild(QObject, 'ai_optimization_view')
+        self.past_result_view = self.rootObject.findChild(QObject, 'past_result_view')
 
         inspection_widget = InspectionWidget(self.engine, self.appctxt, self.inspection_view)
 
