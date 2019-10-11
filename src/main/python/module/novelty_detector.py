@@ -111,11 +111,12 @@ class NoveltyDetector:
             pretrained_func = ResNet50
             print('Neural Network: {}'.format(self.nn_name))
 
-        self.pretrained_nn = pretrained_func(include_top=False, weights=None, input_tensor=None, input_shape=self.input_shape, pooling=False)
-        
         weights_path = pathlib.Path("./src/main/python/module/weights.h5")
         if weights_path.is_file():
+            self.pretrained_nn = pretrained_func(include_top=False, weights=None, input_tensor=None, input_shape=self.input_shape, pooling=False)
             self.pretrained_nn.load_weights(weights_path.resolve())
+        else:
+            self.pretrained_nn = pretrained_func(include_top=False, weights='imagenet', input_tensor=None, input_shape=self.input_shape, pooling=False)
 
         len_pretrained_nn = len(self.pretrained_nn.layers)
         if not 0 < self.nth_layer < len_pretrained_nn:
