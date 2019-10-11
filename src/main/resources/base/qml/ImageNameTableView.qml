@@ -36,7 +36,7 @@ TableView {
                 onClicked: {
                     // list.currentIndex = index;
                     aiOptimize.image_filename = image_filename
-                    aiOptimize.imagesource = imagesource
+                    // aiOptimize.imagesource = imagesource
                     // check_box.change_state(check_box.checkState)
                 }
             }
@@ -63,7 +63,7 @@ TableView {
 
 
             }
-
+/*
             Image {
                 source: imagesource
                 anchors.verticalCenter: parent.verticalCenter
@@ -71,7 +71,7 @@ TableView {
                 width: 20
                 height: 15
             }
-
+*/
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 x: 70
@@ -92,7 +92,7 @@ TableView {
             imageModel.append(
                 {
                     image_filename: String(table_view.imagenamearray[i]),
-                    imagesource: String(table_view.imagepatharray[i])
+//                    imagesource: String(table_view.imagepatharray[i])
                 }
             );
         }

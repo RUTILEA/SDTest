@@ -51,9 +51,9 @@ class DatasetWidget(QWidget):
         self.train_OK_tab = self.stack_view.findChild(QObject, 'train_OK')
         self.test_OK_tab = self.stack_view.findChild(QObject, 'test_OK')
         self.test_NG_tab = self.stack_view.findChild(QObject, 'test_NG')
-        self.train_OK_tab.clicked.connect(lambda: self._reload_images())
-        self.test_OK_tab.clicked.connect(lambda: self._reload_images())
-        self.test_NG_tab.clicked.connect(lambda: self._reload_images())
+        self.train_OK_tab.clicked.connect(lambda: self._reload_images(Dataset.Category.TRAINING_OK, self.train_OK_table))
+        self.test_OK_tab.clicked.connect(lambda: self._reload_images(Dataset.Category.TEST_OK, self.test_OK_table))
+        self.test_NG_tab.clicked.connect(lambda: self._reload_images(Dataset.Category.TEST_NG, self.test_NG_table))
         self.train_OK_table = self.stack_view.findChild(QObject, 'train_OK_table')
         self.test_OK_table = self.stack_view.findChild(QObject, 'test_OK_table')
         self.test_NG_table = self.stack_view.findChild(QObject, 'test_NG_table')
@@ -61,7 +61,7 @@ class DatasetWidget(QWidget):
         # self.ui.image_list_widget.setCurrentItem(self.ui.image_list_widget.topLevelItem(0).child(0))  # FIXME: refactor
         # self.ui.image_list_widget.expandAll()
         #
-        self._reload_images()
+        self._reload_images(Dataset.Category.TRAINING_OK, self.train_OK_table)
         # self.__reload_recent_training_date()
         #
         self.capture_dialog: Optional[ImageCaptureDialog] = None
@@ -79,15 +79,13 @@ class DatasetWidget(QWidget):
 
         # LearningModel.default().training_finished.connect(self.on_finished_training)
 
-    def _reload_images(self):
-        image_num = 0
-        for selected_category, table in [(Dataset.Category.TRAINING_OK, self.train_OK_table), (Dataset.Category.TEST_OK, self.test_OK_table), (Dataset.Category.TEST_NG, self.test_NG_table)]:
-            image_paths = list(map(str, sorted(Dataset.images_path(selected_category).iterdir())))
-            image_names = [path.split('/')[-1] for path in image_paths]
-            table.setProperty('imagepatharray', image_paths)
-            table.setProperty('imagenamearray', image_names)
-            QMetaObject.invokeMethod(table, 'reloadTable')
-            image_num += len(image_names)
+    def _reload_images(self, category, table):
+        image_paths = list(map(str, sorted(Dataset.images_path(category).iterdir())))
+        image_names = [path.split('/')[-1] for path in image_paths]
+        table.setProperty('imagepatharray', image_paths)
+        table.setProperty('imagenamearray', image_names)
+        QMetaObject.invokeMethod(table, 'reloadTable')
+        self.stack_view.setProperty('allPic', len(os.listdir(Dataset.images_path(category))))
 
         # # reset selection
         # self.selected_thumbnails.clear()
@@ -102,7 +100,6 @@ class DatasetWidget(QWidget):
         # image_paths = sorted(Dataset.images_path(category).iterdir())
         # nullable_thumbnails = [Thumbnail(path=image_path) for image_path in image_paths]
         # self.all_thumbnails = [thumbnail for thumbnail in nullable_thumbnails if not thumbnail.pixmap.isNull()]
-        self.stack_view.setProperty('allPic', image_num)
 
         # row = 0
         # column = 0
@@ -120,8 +117,9 @@ class DatasetWidget(QWidget):
 
     # def on_changed_image_list_selection(self):
     #     selected_category = self.__selected_dataset_category()
-    #     if selected_category is not None:
-    #         self._reload_images(selected_category)
+    #     self.stack_view.setProperty('allPic', len(os.listdir(Dataset.images_path(selected_category))))
+    #     self._reload_images()
+
 
     # def on_changed_thumbnail_selection(self, selected: bool, thumbnail: Thumbnail):
     #     if selected:

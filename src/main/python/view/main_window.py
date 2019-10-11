@@ -113,8 +113,8 @@ class MainWindow(QMainWindow):
         pass
         # self.main_stacked_widget.widget(self.inspection_widget_id).set_camera_to_camera_preview()
 
-    # def on_clicked_optimization_button(self):
-    #     pass
+    def on_clicked_optimization_button(self):
+        pass
 
     def on_clicked_past_result_button(self):
         pass
