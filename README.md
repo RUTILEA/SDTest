@@ -68,7 +68,7 @@ Download the latest [release][link-installer-download] and run the installer.
     - On Mac/Linux: `source your_venv/bin/activate`
     - On Windows: `call your_venv\scripts\activate.bat`
 - `pip install -r requirements/base.txt -U` installs the required libraries (most notably, fbs and PyQt5). If this produces errors, try `pip install wheel` first and try again.
-- `pip install -r requirements/(YOUR-OS).txt -U` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command to any of `windows`, `mac` or `linux` before execution.
+- `pip install -r requirements/(YOUR-OS).txt -U` installs the additional required libraries for your operating system. Replace "(YOUR-OS)" in the command with one of `windows`, `mac` or `linux` and then execute.
 
 ### Run the app
 - `python src\build.py run` executes the app and you can debug it on console
