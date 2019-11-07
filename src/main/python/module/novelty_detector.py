@@ -87,7 +87,7 @@ class NoveltyDetector:
             pretrained_func = InceptionResNetV2
             print('Neural Network: {}'.format(self.nn_name))
         elif self.nn_name == 'MobileNet':
-            from keras.applications.mobile_net import MobileNet
+            from keras.applications.mobilenet import MobileNet
             pretrained_func = MobileNet
             print('Neural Network: {}'.format(self.nn_name))
         elif self.nn_name == 'MobileNetV2':
