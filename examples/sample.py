@@ -71,6 +71,7 @@ def execute_cmdline():
                         help='find directory, OKtrim, NGtrim')
                             
     args = parser.parse_args()
+    print(args)
     if args.trim:
         trainok_path = os.path.join(args.path, 'train', 'trim')
         testok_path = os.path.join(args.path, 'test', 'OKtrim')
@@ -94,9 +95,10 @@ def execute_cmdline():
     model_temp.fit_in_dir(trainok_path)
     model_temp.save('sample.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
+
     model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model.load('sample.joblib')
-    os.remove('sample.joblib')
+    # os.remove('sample.joblib')
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
     assert (model_temp.clf.get_params() == model.clf.get_params())
     assert (trainok_dists_temp == trainok_dists).all()
