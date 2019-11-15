@@ -13,6 +13,11 @@ from scipy.stats import median_absolute_deviation as mad, median_test, mannwhitn
 from statistics import median, stdev, mean
 from math import sqrt
 import csv
+from pathlib import Path
+from datetime import datetime
+from shutil import move, copy2
+import imageio
+
 
 def execute_cmdline():
     parser = argparse.ArgumentParser()
@@ -69,13 +74,81 @@ def execute_cmdline():
     parser.add_argument('-tr', '--trim',
                         action='store_true',
                         help='find directory, OKtrim, NGtrim')
+
+    parser.add_argument('-c', '--center',
+                        action='store_true',
+                        help='trim at center point')
+
+    parser.add_argument('-tsize', '--trimming_size',
+                        default=(200, 200),
+                        help='trim at center point',
+                        type=tuple)
+
+    parser.add_argument('-ap', '--anchor_point',
+                        default=(0, 0),
+                        help='',
+                        type=tuple)
                             
     args = parser.parse_args()
 
+    class TrimmingData():
+        def __init__(self, position: tuple, size: tuple, needs_trimming: bool):
+            self.position = position
+            self.size = size
+            self.needs_trimming = needs_trimming
+
     if args.trim:
-        trainok_path = os.path.join(args.path, 'train', 'trim')
-        testok_path = os.path.join(args.path, 'test', 'OKtrim')
-        testng_path = os.path.join(args.path, 'test', 'NGtrim')
+        Path('testimages/kakipi/test/NGtrim2').mkdir(exist_ok=True)
+        Path('testimages/kakipi/test/OKtrim2').mkdir(exist_ok=True)
+        Path('testimages/kakipi/train/OKtrim2').mkdir(exist_ok=True)
+
+        trainok_preprocess = (os.path.join(args.path, 'train', 'OK'), os.path.dirname(os.path.join(args.path, 'train', 'OK')), 'OK')
+        testok_preprocess = (os.path.join(args.path, 'test', 'OK'), os.path.dirname(os.path.join(args.path, 'test', 'OK')), 'OK')
+        testng_preprocess = (os.path.join(args.path, 'test', 'NG'), os.path.dirname(os.path.join(args.path, 'test', 'NG')), 'NG')
+        preprocess_pathlist = [trainok_preprocess, testok_preprocess, testng_preprocess]
+        # trainok_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
+        # trainok_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
+        # testng_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
+        # dirpathlist = [trainok_preprocess_dirpath, trainok_preprocess_dirpath, trainok_preprocess_dirpath]
+        #timestamp = str(datetime.now().isoformat()).replace(':', '-')
+
+        for preprocess_path in preprocess_pathlist:
+            p = Path(preprocess_path[0])
+            preprocess_imgpathlist = list(p.glob("*"))
+            print(preprocess_imgpathlist)
+            for preprocess_imgpath_posix in preprocess_imgpathlist:
+                preprocess_imgpath = str(preprocess_imgpath_posix)
+                # print(preprocess_imgpath)
+                _, ext = os.path.splitext(preprocess_imgpath)
+
+                file_name = f'cropped_{os.path.basename(preprocess_imgpath)}'
+                trimmed_image_path = os.path.join(preprocess_path[1], preprocess_path[2] + 'trim2', file_name)
+                # copy2(imgpath, copied_image_path)
+
+                print('examples/' + preprocess_imgpath)
+                im = imageio.imread(preprocess_imgpath)
+                im_width, im_height = im.shape[1], im.shape[0]
+                tr_width, tr_height = args.trimming_size[0], args.trimming_size[1]
+                trimming = not (im_width <= tr_width and im_height <= tr_height)
+                print(im_width, im_height, tr_width, tr_height)
+
+                if args.center:
+                    trimming_data = TrimmingData((((im_width - tr_width) / 2), ((im_height - tr_height) / 2)),
+                                                 (tr_width, tr_height), trimming)
+                else:
+                    trimming_data = TrimmingData(args.anchor_point, args.trimming_size, trimming)
+
+                # img = imageio.imread(preprocess_imgpath)
+                position = trimming_data.position
+                size = trimming_data.size
+                rect = im[int(position[1]):int(position[1]) + size[1], int(position[0]):int(position[0]) + size[0]]
+                imageio.imwrite(trimmed_image_path, rect)
+
+        trainok_path = os.path.join(preprocess_pathlist[0][1], 'OKtrim2')
+        testok_path = os.path.join(preprocess_pathlist[1][1], 'OKtrim2')
+        testng_path = os.path.join(preprocess_pathlist[2][1], 'NGtrim2')
+
+
     else:
         trainok_path = os.path.join(args.path, 'train', 'OK')
         testok_path = os.path.join(args.path, 'test', 'OK')
