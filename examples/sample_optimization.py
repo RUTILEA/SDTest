@@ -115,7 +115,6 @@ def execute_cmdline():
         for preprocess_path in preprocess_pathlist:
             p = Path(preprocess_path[0])
             preprocess_imgpathlist = list(p.glob("*"))
-            print(preprocess_imgpathlist)
             for preprocess_imgpath_posix in preprocess_imgpathlist:
                 preprocess_imgpath = str(preprocess_imgpath_posix)
                 # print(preprocess_imgpath)
@@ -124,13 +123,10 @@ def execute_cmdline():
                 file_name = f'cropped_{os.path.basename(preprocess_imgpath)}'
                 trimmed_image_path = os.path.join(preprocess_path[1], preprocess_path[2] + 'trim2', file_name)
                 # copy2(imgpath, copied_image_path)
-
-                print('examples/' + preprocess_imgpath)
                 im = imageio.imread(preprocess_imgpath)
                 im_width, im_height = im.shape[1], im.shape[0]
                 tr_width, tr_height = args.trimming_size[0], args.trimming_size[1]
                 trimming = not (im_width <= tr_width and im_height <= tr_height)
-                print(im_width, im_height, tr_width, tr_height)
 
                 if args.center:
                     trimming_data = TrimmingData((((im_width - tr_width) / 2), ((im_height - tr_height) / 2)),
@@ -166,7 +162,8 @@ def execute_cmdline():
     
     model_temp = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model_temp.fit_in_dir(trainok_path)
-    model_temp.save('learned_weight/sample.joblib')
+    weight_name = 'sample' + str(datetime.now().isoformat()).replace(':', '-')
+    model_temp.save('learned_weight/' + weight_name + '.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
     model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
