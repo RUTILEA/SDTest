@@ -8,7 +8,7 @@ import sys
 from sklearn.decomposition import PCA
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
-from novelty_detector import NoveltyDetector
+from module.novelty_detector import NoveltyDetector
 from scipy.stats import median_absolute_deviation as mad, median_test, mannwhitneyu as U_test
 from statistics import median, stdev, mean
 from math import sqrt
@@ -80,7 +80,7 @@ def execute_cmdline():
                         help='trim at center point')
 
     parser.add_argument('-tsize', '--trimming_size',
-                        default=(200, 200),
+                        default=(224, 224),
                         help='trim at center point',
                         type=tuple)
 
@@ -125,7 +125,7 @@ def execute_cmdline():
                 # copy2(imgpath, copied_image_path)
                 im = imageio.imread(preprocess_imgpath)
                 im_width, im_height = im.shape[1], im.shape[0]
-                tr_width, tr_height = args.trimming_size[0], args.trimming_size[1]
+                tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
                 trimming = not (im_width <= tr_width and im_height <= tr_height)
 
                 if args.center:
@@ -144,6 +144,7 @@ def execute_cmdline():
         testok_path = os.path.join(preprocess_pathlist[1][1], 'OKtrim2')
         testng_path = os.path.join(preprocess_pathlist[2][1], 'NGtrim2')
 
+        print('trim completed')
 
     else:
         trainok_path = os.path.join(args.path, 'train', 'OK')
@@ -164,10 +165,12 @@ def execute_cmdline():
     model_temp.fit_in_dir(trainok_path)
     weight_name = 'sample' + str(datetime.now().isoformat()).replace(':', '-')
     model_temp.save('learned_weight/' + weight_name + '.joblib')
+    # model_temp.save('learned_weight/sample.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
     model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
-    model.load('learned_weight/sample.joblib')
+    # model.load('learned_weight/sample.joblib')
+    model.load('learned_weight/' + weight_name + '.joblib')
     # os.remove('sample.joblib')
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
     assert (model_temp.clf.get_params() == model.clf.get_params())
@@ -183,6 +186,7 @@ def execute_cmdline():
 
     trainok_paths = model._get_paths_in_dir(trainok_path)
     train_imgs = model._read_imgs(trainok_paths)
+
     train_features = model.extracting_model.predict(train_imgs)
     train_dists = model.clf.decision_function(train_features)
 
