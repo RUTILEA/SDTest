@@ -23,6 +23,7 @@ def save_frame_camera_key(device_num, dir_path, basename, timestamp, ext='jpg', 
     while True:
         cv2.startWindowThread()
         ret, frame = cap.read()
+        # TODO:ここのエラー対処
         cv2.imshow(window_name, frame)
         key = cv2.waitKey(delay)
         if key == ord('c'):
