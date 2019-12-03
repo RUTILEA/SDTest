@@ -3,17 +3,11 @@ from datetime import datetime
 from shutil import move, copy2
 import imageio
 from module.novelty_detector import NoveltyDetector
+from module.trimming_data import TrimmingData
 import argparse
 import cv2
 import time
 from pathlib import Path
-
-
-class TrimmingData():
-    def __init__(self, position: tuple, size: tuple, needs_trimming: bool):
-        self.position = position
-        self.size = size
-        self.needs_trimming = needs_trimming
 
 
 def predict(image_paths_list, model):
@@ -41,14 +35,15 @@ def save_frame_camera_key(device_num, dir_path, basename, timestamp, ext='jpg', 
 
 
 def inspection(args):
+    # TODO:パス関係の整理（いまぐちゃぐちゃすぎる）
     Path('captured_image').mkdir(exist_ok=True)
     Path('captured_image/tmp').mkdir(exist_ok=True)
 
     timestamp = str(datetime.now().isoformat()).replace(':', '-')
     if args.camera:
-        save_frame_camera_key(0, 'captured_image', 'cap', timestamp)
+        save_frame_camera_key(args.camera_id, 'capimg', 'cap', timestamp)
         time.sleep(1)
-        original_image_path = 'captured_image/cap_' + timestamp + '.jpg'
+        original_image_path = 'capimg/cap_' + timestamp + '.jpg'
     elif args.fastmode:
         original_image_path = 'testimages/kakipi/test/OK/camera_0_2019-06-19T17-46-52.730279.jpg'
     elif args.path:
@@ -57,8 +52,7 @@ def inspection(args):
         original_image_path = input('image path: ')
 
     _, ext = os.path.splitext(original_image_path)
-    # timestamp = str(datetime.now().isoformat()).replace(':', '-')
-    file_name = f'camera_0_{timestamp}{ext}'
+    file_name = f'cam{args.camera_id}_{timestamp}{ext}'
     copied_image_path = os.path.join(os.path.dirname(__file__), 'captured_image', 'tmp', file_name)
     copy2(original_image_path, copied_image_path)
 
@@ -66,9 +60,16 @@ def inspection(args):
     image_path = copied_image_path
     save_path = os.path.dirname(image_path)
 
-    im = imageio.imread(copied_image_path)
+    im = imageio.imread(image_path)
     im_width, im_height = im.shape[1], im.shape[0]
-    tr_width, tr_height = args.trimming_size[0], args.trimming_size[1]
+
+    if args.nn == 'vgg':
+        tr_width, tr_height = (200, 200)
+    elif args.nn == 'MobileNet':
+        tr_width, tr_height = (224, 224)
+    else:
+        tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
+
     trimming = not (im_width <= tr_width and im_height <= tr_height)
 
     if args.center:
@@ -76,24 +77,21 @@ def inspection(args):
     else:
         trimming_data = TrimmingData(args.anchor_point, args.trimming_size, trimming)
 
-    img = imageio.imread(image_path)
+    # img = imageio.imread(image_path)
     file_name = os.path.basename(image_path)
     position = trimming_data.position
     size = trimming_data.size
-    rect = img[int(position[1]):int(position[1]) + size[1], int(position[0]):int(position[0]) + size[0]]
+    rect = im[int(position[1]):int(position[1]) + size[1], int(position[0]):int(position[0]) + size[0]]
     imageio.imwrite(os.path.join(save_path, file_name), rect)
 
-    model = NoveltyDetector()
-
+    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model.load(args.joblib)
-    score = predict(image_paths, model)[0]
 
+    score = predict(image_paths, model)[0]
     if score >= args.threshold:
-        print('良品です')
-        print(score)
+        print('良品 スコア：', score)
     else:
-        print('不良品です')
-        print(score)
+        print('不良品です　スコア：', score)
 
     os.remove(os.path.join('captured_image/tmp', file_name))
 
@@ -112,7 +110,7 @@ def execute_cmdline():
                         type=tuple)
 
     parser.add_argument('-ts', '--trimming_size',
-                        default=(200, 200),
+                        default=(224, 224),
                         help='''(width, height)''',
                         type=tuple)
 
@@ -144,6 +142,13 @@ def execute_cmdline():
                         help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor, ABOD, kNN',
                         type=str)
 
+    parser.add_argument('-pl', '--pool',
+                        default=None,
+                        type=str)
+    parser.add_argument('-pca', '--pca',
+                        type=int,
+                        default=None)
+
     parser.add_argument('-c', '--center',
                         action='store_true')
 
@@ -153,20 +158,26 @@ def execute_cmdline():
     parser.add_argument('-f', '--fastmode',
                         action='store_true')
 
+    parser.add_argument('-ci', '--camera_id',
+                        default=0,
+                        type=int)
+
     args = parser.parse_args()
 
-    while True:
-        inputtext = input('start or exit (s or e): ')
+    if args.fastmode:
+        inspection(args)
+    else:
+        while True:
+            inputtext = input('start or exit (s or e): ')
 
-        if inputtext in ['exit', 'e']:
-            break
-        elif inputtext in ['start', 's']:
-            inspection(args)
-
-            continue
-        else:
-            print('try again')
-            continue
+            if inputtext in ['exit', 'e']:
+                break
+            elif inputtext in ['start', 's']:
+                inspection(args)
+                continue
+            else:
+                print('try again')
+                continue
 
 
 if __name__ == '__main__':

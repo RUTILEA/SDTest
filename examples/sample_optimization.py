@@ -9,6 +9,7 @@ from sklearn.decomposition import PCA
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src/main/python/module'))
 from module.novelty_detector import NoveltyDetector
+from module.trimming_data import TrimmingData
 from scipy.stats import median_absolute_deviation as mad, median_test, mannwhitneyu as U_test
 from statistics import median, stdev, mean
 from math import sqrt
@@ -79,10 +80,10 @@ def execute_cmdline():
                         action='store_true',
                         help='trim at center point')
 
-    parser.add_argument('-tsize', '--trimming_size',
-                        default=(224, 224),
-                        help='trim at center point',
-                        type=tuple)
+    # parser.add_argument('-tsize', '--trimming_size',
+    #                     default=(224, 224),
+    #                     help='trim at center point',
+    #                     type=tuple)
 
     parser.add_argument('-ap', '--anchor_point',
                         default=(0, 0),
@@ -91,26 +92,21 @@ def execute_cmdline():
                             
     args = parser.parse_args()
 
-    class TrimmingData():
-        def __init__(self, position: tuple, size: tuple, needs_trimming: bool):
-            self.position = position
-            self.size = size
-            self.needs_trimming = needs_trimming
-
     if args.trim:
-        Path('testimages/kakipi/test/NGtrim2').mkdir(exist_ok=True)
-        Path('testimages/kakipi/test/OKtrim2').mkdir(exist_ok=True)
-        Path('testimages/kakipi/train/OKtrim2').mkdir(exist_ok=True)
-
+        Path('testimages/kakipi/test/NGtrim').mkdir(exist_ok=True)
+        Path('testimages/kakipi/test/OKtrim').mkdir(exist_ok=True)
+        Path('testimages/kakipi/train/OKtrim').mkdir(exist_ok=True)
         trainok_preprocess = (os.path.join(args.path, 'train', 'OK'), os.path.dirname(os.path.join(args.path, 'train', 'OK')), 'OK')
         testok_preprocess = (os.path.join(args.path, 'test', 'OK'), os.path.dirname(os.path.join(args.path, 'test', 'OK')), 'OK')
         testng_preprocess = (os.path.join(args.path, 'test', 'NG'), os.path.dirname(os.path.join(args.path, 'test', 'NG')), 'NG')
         preprocess_pathlist = [trainok_preprocess, testok_preprocess, testng_preprocess]
-        # trainok_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
-        # trainok_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
-        # testng_preprocess_dirpath = os.path.dirname(trainok_preprocess_path)
-        # dirpathlist = [trainok_preprocess_dirpath, trainok_preprocess_dirpath, trainok_preprocess_dirpath]
-        #timestamp = str(datetime.now().isoformat()).replace(':', '-')
+
+        if args.nn == 'vgg':
+            tr_width, tr_height = (200, 200)
+        elif args.nn == 'MobileNet':
+            tr_width, tr_height = (224, 224)
+        else:
+            tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
 
         for preprocess_path in preprocess_pathlist:
             p = Path(preprocess_path[0])
@@ -121,11 +117,11 @@ def execute_cmdline():
                 _, ext = os.path.splitext(preprocess_imgpath)
 
                 file_name = f'cropped_{os.path.basename(preprocess_imgpath)}'
-                trimmed_image_path = os.path.join(preprocess_path[1], preprocess_path[2] + 'trim2', file_name)
+                trimmed_image_path = os.path.join(preprocess_path[1], preprocess_path[2] + 'trim', file_name)
                 # copy2(imgpath, copied_image_path)
                 im = imageio.imread(preprocess_imgpath)
                 im_width, im_height = im.shape[1], im.shape[0]
-                tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
+                # tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
                 trimming = not (im_width <= tr_width and im_height <= tr_height)
 
                 if args.center:
@@ -134,17 +130,14 @@ def execute_cmdline():
                 else:
                     trimming_data = TrimmingData(args.anchor_point, args.trimming_size, trimming)
 
-                # img = imageio.imread(preprocess_imgpath)
                 position = trimming_data.position
                 size = trimming_data.size
                 rect = im[int(position[1]):int(position[1]) + size[1], int(position[0]):int(position[0]) + size[0]]
                 imageio.imwrite(trimmed_image_path, rect)
 
-        trainok_path = os.path.join(preprocess_pathlist[0][1], 'OKtrim2')
-        testok_path = os.path.join(preprocess_pathlist[1][1], 'OKtrim2')
-        testng_path = os.path.join(preprocess_pathlist[2][1], 'NGtrim2')
-
-        print('trim completed')
+        trainok_path = os.path.join(preprocess_pathlist[0][1], 'OKtrim')
+        testok_path = os.path.join(preprocess_pathlist[1][1], 'OKtrim')
+        testng_path = os.path.join(preprocess_pathlist[2][1], 'NGtrim')
 
     else:
         trainok_path = os.path.join(args.path, 'train', 'OK')
@@ -160,18 +153,17 @@ def execute_cmdline():
     if not os.path.exists(testng_path):
         print(testng_path, 'does not exist')
         sys.exit(1)
+
+    Path('learned_weight').mkdir(exist_ok=True)
     
     model_temp = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model_temp.fit_in_dir(trainok_path)
-    weight_name = 'sample' + str(datetime.now().isoformat()).replace(':', '-')
+    weight_name = 'weight' + str(datetime.now().isoformat()).replace(':', '-')
     model_temp.save('learned_weight/' + weight_name + '.joblib')
-    # model_temp.save('learned_weight/sample.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
     model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
-    # model.load('learned_weight/sample.joblib')
     model.load('learned_weight/' + weight_name + '.joblib')
-    # os.remove('sample.joblib')
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
     assert (model_temp.clf.get_params() == model.clf.get_params())
     assert (trainok_dists_temp == trainok_dists).all()
