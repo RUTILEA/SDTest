@@ -30,21 +30,19 @@ def save_frame_camera_key(device_num, dir_path, basename, timestamp, ext='jpg', 
             cv2.waitKey(10)
             cv2.destroyAllWindows()
             cv2.waitKey(10)
-            cv2.imwrite('{}_{}.{}'.format(base_path, timestamp, ext), frame)
+            imagefilename = '{}_{}.{}'.format(base_path, timestamp, ext)
+            cv2.imwrite(imagefilename, frame)
             cv2.waitKey(10)
-            break
+            return imagefilename
 
 
 def inspection(args):
-    # TODO:パス関係の整理（いまぐちゃぐちゃすぎる）
     Path('captured_image').mkdir(exist_ok=True)
     Path('captured_image/tmp').mkdir(exist_ok=True)
 
     timestamp = str(datetime.now().isoformat()).replace(':', '-')
     if args.camera:
-        save_frame_camera_key(args.camera_id, 'capimg', 'cap', timestamp)
-        time.sleep(1)
-        original_image_path = 'capimg/cap_' + timestamp + '.jpg'
+        original_image_path = save_frame_camera_key(args.camera_id, 'captured_image', 'cap', timestamp)
     elif args.fastmode:
         original_image_path = 'testimages/kakipi/test/OK/camera_0_2019-06-19T17-46-52.730279.jpg'
     elif args.path:

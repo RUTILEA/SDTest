@@ -158,7 +158,7 @@ def execute_cmdline():
     
     model_temp = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model_temp.fit_in_dir(trainok_path)
-    weight_name = 'weight' + str(datetime.now().isoformat()).replace(':', '-')
+    weight_name = 'weight_' + str(datetime.now().isoformat()).replace(':', '-')
     model_temp.save('learned_weight/' + weight_name + '.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
