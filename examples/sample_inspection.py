@@ -40,7 +40,7 @@ def inspection(args):
     Path('captured_image').mkdir(exist_ok=True)
     Path('captured_image/tmp').mkdir(exist_ok=True)
 
-    timestamp = str(datetime.now().isoformat()).replace(':', '-')
+    timestamp = str(datetime.now().isoformat()).replace(':', '-')[0:-7]
     if args.camera:
         original_image_path = save_frame_camera_key(args.camera_id, 'captured_image', 'cap', timestamp)
     elif args.fastmode:
@@ -83,7 +83,16 @@ def inspection(args):
     rect = im[int(position[1]):int(position[1]) + size[1], int(position[0]):int(position[0]) + size[0]]
     imageio.imwrite(os.path.join(save_path, file_name), rect)
 
-    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
+    if args.layer != 18:
+        layer = args.layer
+    elif args.nn in ['vgg']:
+        layer = 18
+    elif args.nn in ['MobileNet', 'MobileNetV2']:
+        layer = 95
+    else:
+        layer = args.layer
+
+    model = NoveltyDetector(nth_layer=layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model.load(args.joblib)
 
     score = predict(image_paths, model)[0]

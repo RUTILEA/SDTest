@@ -103,7 +103,7 @@ def execute_cmdline():
 
         if args.nn == 'vgg':
             tr_width, tr_height = (200, 200)
-        elif args.nn == 'MobileNet':
+        elif args.nn in ['MobileNet', 'MobileNetV2']:
             tr_width, tr_height = (224, 224)
         else:
             tr_width, tr_height = int(args.trimming_size[0]), int(args.trimming_size[1])
@@ -155,14 +155,24 @@ def execute_cmdline():
         sys.exit(1)
 
     Path('learned_weight').mkdir(exist_ok=True)
-    
-    model_temp = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
+
+    if args.layer != 18:
+        layer = args.layer
+    elif args.nn in ['vgg']:
+        layer = 18
+    elif args.nn in ['MobileNet', 'MobileNetV2']:
+        layer = 95
+    else:
+        layer = args.layer
+
+    model_temp = NoveltyDetector(nth_layer=layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model_temp.fit_in_dir(trainok_path)
-    weight_name = 'weight_' + str(datetime.now().isoformat()).replace(':', '-')
+    timestamp = str(datetime.now().isoformat()).replace(':', '-')[0:-7]
+    weight_name = 'weight_' + timestamp
     model_temp.save('learned_weight/' + weight_name + '.joblib')
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
-    model = NoveltyDetector(nth_layer=args.layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
+    model = NoveltyDetector(nth_layer=layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model.load('learned_weight/' + weight_name + '.joblib')
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
     assert (model_temp.clf.get_params() == model.clf.get_params())
@@ -254,7 +264,7 @@ def execute_cmdline():
     sns.distplot(testok_dists, kde=False, rug=False, label='TEST OK')
     sns.distplot(testng_dists, kde=False, rug=False, label='TEST NG')
     plt.title('Novelty detection on {}th layer on {} and {}'.format(
-        args.layer, args.nn, args.detector)
+        layer, args.nn, args.detector)
     )
     plt.xlabel('Signed distance to hyper plane')
     plt.ylabel('a.u.')
