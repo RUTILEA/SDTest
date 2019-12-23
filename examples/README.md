@@ -23,7 +23,7 @@
 ## 補足
 - sample_optimization.pyの主なオプションについて
     - -p ：データセットの場所を指定します。test/NG, test/OK, train/OKが含まれている必要があります。例：testimages/kakipi
-	- -tr ：トリミングを実施します
+	- -tr ：トリミングを実施します  
 	- -c ：トリミング範囲の中心を画像の中心に合わせます
 	- -ap tuple ：トリミング範囲の左上点を座標指定します
 	- -ts tuple ：トリミング範囲の大きさを(w, h)で指定します。

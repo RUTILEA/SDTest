@@ -93,9 +93,9 @@ def execute_cmdline():
     args = parser.parse_args()
 
     if args.trim:
-        Path('testimages/kakipi/test/NGtrim').mkdir(exist_ok=True)
-        Path('testimages/kakipi/test/OKtrim').mkdir(exist_ok=True)
-        Path('testimages/kakipi/train/OKtrim').mkdir(exist_ok=True)
+        Path(f'{args.path}/test/NGtrim').mkdir(exist_ok=True)
+        Path(f'{args.path}/test/OKtrim').mkdir(exist_ok=True)
+        Path(f'{args.path}/train/OKtrim').mkdir(exist_ok=True)
         trainok_preprocess = (os.path.join(args.path, 'train', 'OK'), os.path.dirname(os.path.join(args.path, 'train', 'OK')), 'OK')
         testok_preprocess = (os.path.join(args.path, 'test', 'OK'), os.path.dirname(os.path.join(args.path, 'test', 'OK')), 'OK')
         testng_preprocess = (os.path.join(args.path, 'test', 'NG'), os.path.dirname(os.path.join(args.path, 'test', 'NG')), 'NG')
