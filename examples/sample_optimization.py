@@ -168,12 +168,13 @@ def execute_cmdline():
     model_temp = NoveltyDetector(nth_layer=layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
     model_temp.fit_in_dir(trainok_path)
     timestamp = str(datetime.now().isoformat()).replace(':', '-')[0:-7]
-    weight_name = 'weight_' + timestamp
-    model_temp.save('learned_weight/' + weight_name + '.joblib')
+    datasetname = args.path.split('/')[-1]
+    weight_name = f'learned_weight/{datasetname}_{timestamp}.joblib'
+    model_temp.save(weight_name)
     _, trainok_dists_temp = model_temp.predict_in_dir(trainok_path)
 
     model = NoveltyDetector(nth_layer=layer, nn_name=args.nn, detector_name=args.detector, pool=args.pool, pca_n_components=args.pca)
-    model.load('learned_weight/' + weight_name + '.joblib')
+    model.load(weight_name)
     trainok_paths, trainok_dists = model.predict_in_dir(trainok_path)
     assert (model_temp.clf.get_params() == model.clf.get_params())
     assert (trainok_dists_temp == trainok_dists).all()

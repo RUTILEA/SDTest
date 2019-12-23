@@ -22,12 +22,12 @@ def save_frame_camera_key(device_num, dir_path, basename, timestamp, ext='jpg', 
     base_path = os.path.join(dir_path, basename)
     while True:
         cv2.startWindowThread()
-        ret, frame = cap.read()
-        # TODO:ここのエラー対処
+        _, frame = cap.read()
         cv2.imshow(window_name, frame)
         key = cv2.waitKey(delay)
         if key == ord('c'):
             cv2.waitKey(10)
+            cap.release()
             cv2.destroyAllWindows()
             cv2.waitKey(10)
             imagefilename = '{}_{}.{}'.format(base_path, timestamp, ext)
