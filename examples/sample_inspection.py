@@ -8,32 +8,52 @@ import argparse
 import cv2
 import time
 from pathlib import Path
+import numpy as np
+from module.CvOverlayImage import CvOverlayImage
 
 
 def predict(image_paths_list, model):
     return model.predict_paths(image_paths_list)
 
 
-def save_frame_camera_key(device_num, dir_path, basename, timestamp, ext='jpg', delay=10, window_name='frame'):
-    cap = cv2.VideoCapture(device_num)
+def save_frame_camera_key(args, dir_path, basename, timestamp, ext='jpg', delay=10, window_name='frame'):
+    cap = cv2.VideoCapture(args.camera_id)
     if not cap.isOpened():
         return
 
     base_path = os.path.join(dir_path, basename)
     while True:
-        cv2.startWindowThread()
+        # cv2.startWindowThread()
         _, frame = cap.read()
-        cv2.imshow(window_name, frame)
-        key = cv2.waitKey(delay)
-        if key == ord('c'):
-            cv2.waitKey(10)
-            cap.release()
-            cv2.destroyAllWindows()
-            cv2.waitKey(10)
+        if args.mirror is True:
+            frame = frame[:, ::-1]
+
+        if args.size is not None and len(args.size) == 2:
+            frame = cv2.resize(frame, args.size)
+
+        if args.camera_guide and min(args.size) >= 226:
+            guide = cv2.imread("view_finder_v3.png", cv2.IMREAD_UNCHANGED)
+            guide_height, guide_width = guide.shape[0:2]
+            frame_height, frame_width = frame.shape[0:2]
+            left_top = int(frame_width / 2 - guide_width / 2), int(frame_height / 2 - guide_height / 2)
+            finder = CvOverlayImage.overlay(frame, guide, left_top)
+            cv2.imshow('camera capture', finder)
+        elif args.camera_guide and min(args.size) < 226:
+            print('Size is too small. the size should be bigger than (226, 226)')
+        else:
+            cv2.imshow('camera capture', frame)
+
+        k = cv2.waitKey(1)
+        if k == 27:  # ESCで終了
+            break
+        elif k == 115:  # sで撮影
             imagefilename = '{}_{}.{}'.format(base_path, timestamp, ext)
             cv2.imwrite(imagefilename, frame)
-            cv2.waitKey(10)
+            cap.release()
+            cv2.destroyAllWindows()
             return imagefilename
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 def inspection(args):
@@ -42,7 +62,7 @@ def inspection(args):
 
     timestamp = str(datetime.now().isoformat()).replace(':', '-')[0:-7]
     if args.camera:
-        original_image_path = save_frame_camera_key(args.camera_id, 'captured_image', 'cap', timestamp)
+        original_image_path = save_frame_camera_key(args, 'captured_image', 'cap', timestamp)
     elif args.fastmode:
         original_image_path = 'testimages/kakipi/test/OK/camera_0_2019-06-19T17-46-52.730279.jpg'
     elif args.path:
@@ -169,6 +189,19 @@ def execute_cmdline():
     parser.add_argument('-ci', '--camera_id',
                         default=0,
                         type=int)
+
+    parser.add_argument('-s', '--size',
+                        default=(960, 720),
+                        help=''''(width, height)''',
+                        type=tuple)
+
+    parser.add_argument('-g', '--camera_guide',
+                        action='store_true',
+                        help='''enable camera guide''', )
+
+    parser.add_argument('-m', '--mirror',
+                        action='store_true',
+                        help='''enable mirror mode''', )
 
     args = parser.parse_args()
 

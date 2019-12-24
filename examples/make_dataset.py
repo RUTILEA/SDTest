@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 import argparse
-
+from module.CvOverlayImage import CvOverlayImage
 
 def capture_camera():
     """Capture video from camera"""
@@ -65,22 +65,18 @@ def capture_camera():
         if args.size is not None and len(args.size) == 2:
             frame = cv2.resize(frame, args.size)
 
-        if args.camera_guide:
-            guide = cv2.imread('view_finder_960_720_full.png', -1)
-            # guide_width, guide_height = guide.shape[0:2]
-            # frame_width, frame_height = frame.shape[0:2]
-            mask = guide[:, :, 3]
-            mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
-            mask = mask / 255.0
-            guide = guide[:, :, :3]
-            # left_top = int(frame_width/2-guide_width/2), int(frame_height/2-guide_height/2)
-            # finder = (frame[left_top[0]:left_top[0]+guide_width:,left_top[1]:left_top[1]+guide_height, :] * (1.0 - mask) + guide * mask).astype(np.uint8)
-            finder = (frame * (1.0 - mask) + guide * mask).astype(np.uint8)
+        if args.camera_guide and min(args.size) >= 226:
+            guide = cv2.imread("view_finder_v3.png", cv2.IMREAD_UNCHANGED)
+            guide_height, guide_width = guide.shape[0:2]
+            frame_height, frame_width = frame.shape[0:2]
+            left_top = int(frame_width / 2 - guide_width / 2), int(frame_height / 2 - guide_height / 2)
+            finder = CvOverlayImage.overlay(frame, guide, left_top)
             cv2.imshow('camera capture', finder)
+        elif args.camera_guide and min(args.size) < 226:
+            print('Size is too small. the size should be bigger than (226, 226)')
+
         else:
             cv2.imshow('camera capture', frame)
-
-
 
         k = cv2.waitKey(1)
         if k == 27:  # ESCで終了
