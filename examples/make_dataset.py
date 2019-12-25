@@ -21,7 +21,7 @@ def capture_camera():
                         type=int)
 
     parser.add_argument('-s', '--size',
-                        default=(960, 720),
+                        default=(355, 200),
                         help=''''(width, height)''',
                         type=tuple)
 

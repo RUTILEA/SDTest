@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 import numpy as np
 from module.CvOverlayImage import CvOverlayImage
+import json
 
 
 def predict(image_paths_list, model):
@@ -118,8 +119,19 @@ def inspection(args):
     score = predict(image_paths, model)[0]
     if score >= args.threshold:
         print('良品 スコア：', score)
+        judge = True
     else:
         print('不良品です　スコア：', score)
+        judge = False
+
+    dic = {
+        "result": {
+            "judge": judge,
+            "score": score
+        },
+    }
+
+    return json.dumps(dic)
 
     os.remove(os.path.join('captured_image/tmp', file_name))
 
@@ -191,7 +203,7 @@ def execute_cmdline():
                         type=int)
 
     parser.add_argument('-s', '--size',
-                        default=(960, 720),
+                        default=(335, 200),
                         help=''''(width, height)''',
                         type=tuple)
 
@@ -203,10 +215,17 @@ def execute_cmdline():
                         action='store_true',
                         help='''enable mirror mode''', )
 
+    parser.add_argument('-o', '--once',
+                        action='store_true',
+                        help='''inspect only once''', )
+
     args = parser.parse_args()
 
     if args.fastmode:
         inspection(args)
+    elif args.once:
+        result = inspection(args)
+        return result
     else:
         while True:
             inputtext = input('start or exit (s or e): ')
@@ -222,4 +241,6 @@ def execute_cmdline():
 
 
 if __name__ == '__main__':
-    execute_cmdline()
+    result = execute_cmdline()  # json
+    print(result)
+
