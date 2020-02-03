@@ -60,10 +60,10 @@ class NewProjectDialog(QWidget):
         save_location_path = self.ui.save_location_line.text()
         project_name = os.path.basename(self.ui.project_name_line.text())
 
-        if not self.is_valid_character(save_location_path):
+        if not self.is_valid_character(project_name, save_location_path):
             self.msgBox = QMessageBox()
-            self.msgBox.setText('プロジェクト名に禁止文字が含まれてます.\n'
-                                '英数字のみで入力してください.')
+            self.msgBox.setText('プロジェクト名またはディレクトリ名に、使用できない文字が含まれています。\n'
+                                '全角文字や特殊記号が使われている場合は、名前を変えるか別のディレクトリに変更してください。')
             self.msgBox.exec()
             return
 
@@ -127,11 +127,16 @@ class NewProjectDialog(QWidget):
         self.back_to_startup.emit()
         self.main_window = MainWindow()
 
-    def is_valid_character(self, letters):
+    def is_valid_character(self, project_name, save_location_path):
         forbidden_characters = ['\\', ':', '*', '?', '"', '<', '>', '|']
-        for letter in letters:
+        for letter in project_name:
             if unicodedata.east_asian_width(letter) != 'Na' or letter in forbidden_characters:
-                break
-        else:
-            return True
-        return False
+                return False
+            else:
+                continue
+        for letter2 in save_location_path:
+            if unicodedata.east_asian_width(letter2) != 'Na':
+                return False
+            else:
+                continue
+        return True

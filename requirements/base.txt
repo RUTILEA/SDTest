@@ -13,9 +13,9 @@ opencv-python
 
 ###### Requirements with Version Specifiers ######
 fbs[sentry] == 0.8.3
-PyQt5 == 5.9.2
+PyQt5 == 5.10
 PyInstaller == 3.4
-tensorflow == 1.*
-keras == 2.*
+tensorflow == 1.5.*
+keras == 2.2.*
 imageio == 2.*
 scikit-image == 0.*

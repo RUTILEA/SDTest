@@ -24,19 +24,19 @@ def execute_cmdline():
 
     parser.add_argument('-n','--nn',
                         nargs='?',
-                        default='ResNet',
+                        default='vgg',
                         help='''Select neural network model among Xception, ResNet(Default),
                         InceptionV3, InceptionResNetV2, MobileNet, MobileNetV2, DenseNet, NASNet''',
                         type=str)
 
     parser.add_argument('-l', '--layer',
                         nargs='?',
-                        default=24,
+                        default=18,
                         help='Select which layer to use as feature. Less channels work better.',
                         type=int)
     
     parser.add_argument('-d', '--detector',
-                        default='knn',
+                        default='svm',
                         help='Select novelty detector among RobustCovariance, IsolationForest, LocalOutlierFactor, ABOD, kNN',
                         type=str)
     
