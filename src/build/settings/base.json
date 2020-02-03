@@ -2,7 +2,7 @@
     "app_name": "SDTest",
     "author": "RUTILEA, Inc.",
     "main_module": "src/main/python/main.py",
-    "version": "0.5",
+    "version": "1.5",
     "hidden_imports": ["sklearn.utils._cython_blas", "sklearn.neighbors.typedefs", "sklearn.neighbors.quad_tree", "sklearn.tree._utils", "pywt._extensions._cwt"],
     "files_to_filter": [
         "src/freeze/base/SDTest.pfx"
